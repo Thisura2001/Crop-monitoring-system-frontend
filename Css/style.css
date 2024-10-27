@@ -1,0 +1,141 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f3f3f3;
+    overflow: hidden;
+}
+
+header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    width: 60px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.company-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #4CAF50;
+    line-height: 1.2;
+}
+
+.signup-btn {
+    margin-left: auto;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.signup-btn:hover {
+    background-color: #45a049;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 100px;
+}
+
+.text-container {
+    width: 50%;
+    max-width: 600px;
+    color: #333;
+    font-size: 28px;
+    font-weight: 300;
+    padding-left: 20px;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+#swiping-text {
+    display: flex;
+    align-items: center;
+    animation: fadeText 0.5s ease-in-out;
+    color: #333;
+}
+
+#next-arrow {
+    margin-left: 10px;
+    color: #4CAF50;
+    cursor: pointer;
+    font-size: 32px;
+    transition: transform 0.2s ease;
+}
+
+#next-arrow:hover {
+    transform: scale(1.1);
+}
+
+@keyframes fadeText {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.image-container {
+    width: 45%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.crop-image {
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.crop-image:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
