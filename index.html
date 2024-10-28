@@ -50,6 +50,16 @@
 
             <label for="password">Password</label>
             <input type="password" id="password" placeholder="Enter password" required>
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                    Select Your Role
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end">
+                    <li><button class="dropdown-item" type="button">MANAGER</button></li>
+                    <li><button class="dropdown-item" type="button">ADMINISTRATIVE</button></li>
+                    <li><button class="dropdown-item" type="button">SCIENTIST</button></li>
+                </ul>
+            </div>
 
             <button type="submit" id="btnlogin">Sign In</button>
         </form>

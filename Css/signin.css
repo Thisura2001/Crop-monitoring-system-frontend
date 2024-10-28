@@ -1,23 +1,32 @@
-body {
-    background-image: url('../assests/9145838.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+/* General reset */
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    box-sizing: border-box;
 }
-
 .signin-container {
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     padding: 50px;
     border-radius: 80px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 500px;
+    width: 400px;
     margin: auto;
     position: relative;
     z-index: 1;
     top: 50%;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+#signin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
 }
 
 h2 {
@@ -59,7 +68,7 @@ button:hover {
 .signup-link {
     text-align: center;
     margin-top: 15px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .signup-link a {
