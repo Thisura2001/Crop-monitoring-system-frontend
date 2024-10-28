@@ -2,7 +2,7 @@ const texts = [
     "Welcome to the Crop Management System.. ",
     "Efficiently manage your fields and crops.. ",
     "Maximize your agricultural productivity..",
-    "Track field performance and crop health ✅",
+    "Track field performance and crop  health ✅",
 ];
 
 let currentIndex = 0;
