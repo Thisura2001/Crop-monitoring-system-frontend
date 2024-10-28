@@ -11,8 +11,12 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #000000 !important;
     overflow: hidden;
+}
+
+#welcomePage {
+    background-color: black;
+    height: 100vh;
 }
 
 /* Section container */
@@ -91,7 +95,6 @@ main {
     width: 50vw;
     height: 100vh;
     background-color: #045a3b;
-    z-index: -2;
 }
 
 /* Circle container */
@@ -100,7 +103,7 @@ main {
     top: 50%;
     left: 25%;
     transform: translate(-50%, -50%);
-    z-index: -1;
+    z-index: 2; /* Ensure this is above the green background */
 }
 
 .circle {
@@ -166,6 +169,7 @@ main {
 }
 
 .text-container {
+    margin-top: 100px;
     max-width: 700px;
     margin-left: 50px;
     color: #333;
@@ -183,7 +187,7 @@ main {
     width: 25vw;
     height: 100vh;
     background-color: #045a3b;
-    z-index: -1;
+    z-index: 0.5;
 }
 
 #swiping-text {
