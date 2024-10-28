@@ -11,9 +11,79 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #000000!important;
+    background-color: #000000 !important;
     overflow: hidden;
 }
+
+/* Section container */
+section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: rgb(62, 62, 62);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+/* Logo styling */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    width: 60px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.company-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+/* Sign-in button */
+.signin-btn {
+    margin-left: auto;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.signin-btn:hover {
+    background-color: #45a049;
+}
+
+/* Main content styling */
+main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+/* Green background half */
 .green-background {
     position: fixed;
     top: 0;
@@ -24,6 +94,7 @@ body {
     z-index: -2;
 }
 
+/* Circle container */
 .circle-container {
     position: absolute;
     top: 50%;
@@ -43,12 +114,14 @@ body {
     align-items: center;
     border: 5px solid #ffffff;
 }
+
 .circle-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     opacity: 0.8;
 }
+
 header {
     position: absolute;
     top: 0;
@@ -79,21 +152,6 @@ header {
     line-height: 1.2;
 }
 
-.signin-btn {
-    margin-left: auto;
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    text-transform: uppercase;
-}
-
 .signin-btn:hover {
     background-color: #45a049;
 }
@@ -108,7 +166,8 @@ main {
 }
 
 .text-container {
-    max-width: 800px;
+    max-width: 700px;
+    margin-left: 50px;
     color: #333;
     font-size: 68px;
     line-height: 1.2;
@@ -128,7 +187,6 @@ main {
 }
 
 #swiping-text {
-    margin-right: 100px;
     margin-top: 330px;
     color: #ffffff;
     font-size: 30px;
@@ -188,7 +246,7 @@ main {
     display: flex;
     justify-content: flex-end;
     padding-right: 20px;
-    transform: translateX(50px);
+    transform: translateX(250px);
 }
 
 .crop-image {
