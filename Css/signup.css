@@ -1,0 +1,116 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.signup-container {
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    min-height: 60vh;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+    top: 10px;
+}
+
+/* Heading styles */
+.signup-container h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Label and input field styling */
+.signup-container label {
+    font-weight: 500;
+    color: #555;
+    font-size: 14px;
+}
+
+.signup-container input, .signup-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* Neutral dropdown button styles */
+.signup-container .btn-group .btn {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+}
+
+.signup-container .btn-group .btn:hover {
+    background-color: #e2e6ea;
+}
+
+/* Dropdown menu styles */
+.signup-container .dropdown-item {
+    background-color: #ffffff; /* White background for dropdown items */
+    color: #333;
+    padding: 5px;
+}
+
+/* Sign Up button */
+.signup-container button {
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.signup-container button:hover {
+    background-color: #218838;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .signup-container {
+        padding: 20px;
+        width: 90%;
+        min-height: 50vh;
+    }
+
+    .signup-container h1 {
+        font-size: 28px;
+    }
+
+    .signup-container input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .signup-container button {
+        font-size: 16px;
+    }
+}
