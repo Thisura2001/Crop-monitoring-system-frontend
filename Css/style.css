@@ -14,6 +14,47 @@ body {
     background-color: #000000;
     overflow: hidden;
 }
+/* Full height green background on the left */
+.green-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50vw; /* Adjust to cover half of the viewport width */
+    height: 100vh;
+    background-color: #045a3b;
+    z-index: -2;
+}
+
+/* Circle container to ensure positioning of the circle */
+.circle-container {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+/* Styling for the circle that overlaps both sections */
+.circle {
+    width: 300px; /* Diameter of the circle */
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent circle */
+    border-radius: 50%;
+    overflow: hidden; /* Hide overflow for background image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #ffffff; /* White circular border */
+}
+
+/* Background image inside the circle */
+.circle-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the circle without stretching */
+    opacity: 0.8; /* Optional: Adjust opacity for blending effect */
+}
+
 
 header {
     position: absolute;
@@ -45,7 +86,7 @@ header {
     line-height: 1.2;
 }
 
-.signup-btn {
+.signin-btn {
     margin-left: auto;
     background-color: #4CAF50;
     color: white;
@@ -60,7 +101,7 @@ header {
     text-transform: uppercase;
 }
 
-.signup-btn:hover {
+.signin-btn:hover {
     background-color: #45a049;
 }
 
@@ -74,7 +115,7 @@ main {
 }
 
 .text-container {
-    max-width: 600px;
+    max-width: 800px;
     color: #333;
     font-size: 68px;
     line-height: 1.2;
