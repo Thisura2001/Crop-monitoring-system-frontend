@@ -14,18 +14,16 @@ body {
     background-color: #000000;
     overflow: hidden;
 }
-/* Full height green background on the left */
 .green-background {
     position: fixed;
     top: 0;
     left: 0;
-    width: 50vw; /* Adjust to cover half of the viewport width */
+    width: 50vw;
     height: 100vh;
     background-color: #045a3b;
     z-index: -2;
 }
 
-/* Circle container to ensure positioning of the circle */
 .circle-container {
     position: absolute;
     top: 50%;
@@ -34,28 +32,23 @@ body {
     z-index: -1;
 }
 
-/* Styling for the circle that overlaps both sections */
 .circle {
-    width: 300px; /* Diameter of the circle */
+    width: 300px;
     height: 300px;
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent circle */
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
-    overflow: hidden; /* Hide overflow for background image */
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 5px solid #ffffff; /* White circular border */
+    border: 5px solid #ffffff;
 }
-
-/* Background image inside the circle */
 .circle-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the circle without stretching */
-    opacity: 0.8; /* Optional: Adjust opacity for blending effect */
+    object-fit: cover;
+    opacity: 0.8;
 }
-
-
 header {
     position: absolute;
     top: 0;
