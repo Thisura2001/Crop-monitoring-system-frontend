@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #ffffff;
+    background-color: #000000;
     overflow: hidden;
 }
 
@@ -74,28 +74,62 @@ main {
 }
 
 .text-container {
-    max-width: 500px;
+    max-width: 600px;
     color: #333;
     font-size: 68px;
     line-height: 1.2;
     position: relative;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    letter-spacing: 1px;
+}
+
+.green-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 25vw;
+    height: 100vh;
+    background-color: #045a3b;
+    z-index: -1;
 }
 
 #swiping-text {
-    transition: opacity 0.5s ease; /* Smooth transition for opacity */
-    opacity: 1; /* Initial opacity */
-    margin-top: 100px; /* Margin to adjust position */
-    color: #2d4b88; /* Text color */
-    font-size: 60px; /* Adjust font size */
-    font-weight: 300; /* Adjust font weight */
-    text-align: center; /* Center align text */
+    margin-right: 100px;
+    margin-top: 330px;
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    overflow: hidden;
+    letter-spacing: 0.1em;
 }
-#half{
 
+#swiping-text span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-20px);
 }
+
+#swiping-text {
+    line-height: 1.5;
+}
+
+@keyframes crazyLoading {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#half {}
 
 #next-arrow {
     margin-left: 20px;
@@ -115,17 +149,17 @@ main {
 }
 
 .image-container {
-    width: 45%;
+    width: 50%;
     max-width: 700px;
     display: flex;
     justify-content: flex-end;
     padding-right: 20px;
+    transform: translateX(50px);
 }
 
 .crop-image {
     max-width: 100%;
     border-radius: 20px;
-    /*box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);*/
     transition: transform 0.3s ease;
 }
 
