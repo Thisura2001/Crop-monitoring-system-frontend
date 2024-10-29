@@ -11,10 +11,11 @@
     justify-content: center;
     padding: 20px;
     width: 100%;
+    background: linear-gradient(45deg, #4d5dd8, #5868cc, #2133a8);
 }
 
 .signup-container {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(5, 34, 83);
     backdrop-filter: blur(10px);
     padding: 30px;
     border-radius: 40px;
@@ -24,14 +25,14 @@
     margin: auto;
     position: relative;
     z-index: 1;
-    top: 80px;
+    top: 40px;
 }
 
 /* Heading styles */
 .signup-container h1 {
     font-size: 32px;
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -39,7 +40,7 @@
 /* Label and input field styling */
 .signup-container label {
     font-weight: 500;
-    color: #555;
+    color: #ffffff;
     font-size: 14px;
 }
 
