@@ -14,7 +14,7 @@
     margin: auto;
     position: relative;
     z-index: 1;
-    top: 50%;
+    top: 100px;
 }
 form {
     display: flex;
