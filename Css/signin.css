@@ -9,30 +9,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    width: 100%;
-    background: linear-gradient(45deg, #bc87df, #6c39c3, #5800e3);
     min-height: 100vh;
+    background: linear-gradient(45deg, #bc87df, #6c39c3, #5800e3);
+    padding: 20px;
 }
 
+.signin-wrapper {
+    display: flex;
+    width: 900px; /* Total width of the container */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Image styling */
+.side-image {
+    width: 50%; /* Half the width of the wrapper */
+    height: auto;
+    object-fit: cover;
+}
+
+/* Sign-in container styling */
 .signin-container {
     background-color: #463975;
     padding: 3em;
-    border-radius: 65px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     color: #ffffff;
-    width: 450px;
-    margin: auto;
-    position: relative;
-    z-index: 1;
-    top: 100px;
+    width: 50%; /* Half the width of the wrapper */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
 h2 {
     margin-bottom: 20px;
     font-size: 30px;
-    text-align: center;
 }
 
 /* Form styling */
@@ -40,6 +52,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
 }
 
 label {
@@ -57,25 +70,25 @@ label {
     width: 100%;
     padding: 10px 45px 10px 45px;
     border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: 14px;
-    background-color: #ffffff;
-    color: #ffffff;
 }
 
 .input-group i {
     position: absolute;
-    left: 10px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #000000;
+    color: #463975;
     font-size: 16px;
 }
+
 button {
     padding: 10px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 50px!important;
+    border-radius: 20px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -84,6 +97,7 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
 .signup-link {
     text-align: center;
     margin-top: 15px;
