@@ -21,6 +21,13 @@ $("#text").on('click', function() {
     $("#signup").css("display", "block");
     $("#dashboard").css("display", "none");
 });
+
+$("#btnLogOut").on('click', function() {
+    $('#welcomePage').css("display", "none");
+    $('#signin').css("display", "block");
+    $("#signup").css("display", "none");
+    $("#dashboard").css("display", "none");
+})
 function selectRole(role) {
     document.getElementById('roleDropdown').innerText = role;
 }
