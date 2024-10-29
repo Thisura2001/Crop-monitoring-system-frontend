@@ -11,6 +11,8 @@
     justify-content: center;
     padding: 20px;
     width: 100%;
+    background: linear-gradient(45deg, #bc87df, #6c39c3, #5800e3);
+    min-height: 100vh;
 }
 
 .signin-container {
@@ -42,7 +44,7 @@ form {
 
 label {
     font-size: 14px;
-    color: #d1c4e9;
+    color: #ffffff;
     margin-bottom: 5px;
     text-align: left;
 }
