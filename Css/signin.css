@@ -4,63 +4,79 @@
     padding: 0;
     box-sizing: border-box;
 }
-.signin-container {
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    padding: 50px;
-    border-radius: 80px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    margin: auto;
-    position: relative;
-    z-index: 1;
-    top: 100px;
-}
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+
 #signin {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
     width: 100%;
+}
 
+.signin-container {
+    background-color: #463975;
+    padding: 3em;
+    border-radius: 65px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    width: 450px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+    top: 100px;
+    text-align: center;
 }
 
 h2 {
-    text-align: center;
     margin-bottom: 20px;
-    font-size: 50px;
+    font-size: 30px;
+    text-align: center;
 }
 
+/* Form styling */
 form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 label {
-    margin-bottom: 5px;
-}
-
-input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
     font-size: 14px;
+    color: #d1c4e9;
+    margin-bottom: 5px;
+    text-align: left;
 }
 
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 45px 10px 45px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #ffffff;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000;
+    font-size: 16px;
+}
 button {
     padding: 10px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 50px!important;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
@@ -73,7 +89,7 @@ button:hover {
 }
 
 .signup-link a {
-    color: #000000;
+    color: #3adc04;
     text-decoration: none;
     font-weight: bold;
 }
@@ -81,4 +97,3 @@ button:hover {
 .signup-link a:hover {
     text-decoration: underline;
 }
-
