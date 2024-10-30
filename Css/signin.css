@@ -20,6 +20,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     border-radius: 15px;
     overflow: hidden;
+    left: 0;
+    right: 0;
+    top: 100px;
+    bottom: 0;
+    margin: auto;
+    position: relative;
 }
 
 /* Image styling */
