@@ -9,24 +9,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    width: 100%;
+    min-height: 100vh;
     background: linear-gradient(45deg, #4d5dd8, #5868cc, #2133a8);
+    padding: 20px;
 }
 
-.signup-container {
-    background-color: rgb(5, 34, 83);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    min-height: 60vh;
+.signup-wrapper {
+    display: flex;
+    width: 900px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
     margin: auto;
     position: relative;
-    z-index: 1;
-    top: 40px;
+    height: 80vh;
+    align-items: stretch;
 }
+
+/* Image styling */
+.side-imageSignUp {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Signup container styling */
+.signup-container {
+    background-color: rgb(5, 34, 83);
+    padding: 2em;
+    color: #ffffff;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
 
 /* Heading styles */
 .signup-container h1 {
@@ -34,7 +54,6 @@
     font-weight: bold;
     color: #ffffff;
     margin-bottom: 20px;
-    text-align: center;
 }
 
 /* Label and input field styling */
@@ -42,38 +61,40 @@
     font-weight: 500;
     color: #ffffff;
     font-size: 14px;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
-.signup-container input, .signup-container select {
+.signup-container input {
     width: 100%;
     padding: 10px;
     font-size: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
     outline: none;
+    margin-bottom: 15px;
     transition: border-color 0.3s;
 }
 
-/* Neutral dropdown button styles */
+/* Button group for role selection */
 .signup-container .btn-group .btn {
     background-color: #f8f9fa;
     color: #333;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 5px;
+    padding: 10px;
     width: 100%;
     text-align: left;
+    margin-bottom: 15px;
 }
 
 .signup-container .btn-group .btn:hover {
     background-color: #e2e6ea;
 }
 
-/* Dropdown menu styles */
 .signup-container .dropdown-item {
-    background-color: #ffffff; /* White background for dropdown items */
     color: #333;
-    padding: 5px;
 }
 
 /* Sign Up button */
@@ -96,22 +117,18 @@
 
 /* Responsive Styling */
 @media (max-width: 768px) {
+    .signup-wrapper {
+        flex-direction: column;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .signup-container,
+    .side-image {
+        width: 100%;
+    }
+
     .signup-container {
         padding: 20px;
-        width: 90%;
-        min-height: 50vh;
-    }
-
-    .signup-container h1 {
-        font-size: 28px;
-    }
-
-    .signup-container input {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .signup-container button {
-        font-size: 16px;
     }
 }
