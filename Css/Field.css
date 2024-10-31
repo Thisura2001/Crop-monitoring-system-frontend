@@ -1,0 +1,64 @@
+/* General Section Styling */
+#field {
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Field Form Card Styling */
+#fieldFormCard {
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+/* Header Styling */
+#fieldFormCard .card-header {
+    background-color: #463975;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+#fieldFormCard .card-header h4 {
+    margin: 0;
+}
+
+#closeFieldForm {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+/* Form Styling */
+#FieldForm .form-label {
+    font-weight: bold;
+    color: #463975;
+}
+
+#FieldForm .form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#FieldForm .btn-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}

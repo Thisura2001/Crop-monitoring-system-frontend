@@ -1,0 +1,63 @@
+/* Container styling to center the form card */
+#vehicle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Styles for the form card */
+#vehicleFormCard {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: none;
+    position: relative;
+}
+
+/* Card header with close button */
+#vehicleFormCard .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Close button styling */
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+}
+
+/* Button to add new vehicle, aligned to the right */
+#addVehicleBtn {
+    float: right;
+}
+
+/* Form field styling */
+.card-body .form-label {
+    font-weight: 600;
+}
+
+.form-select, .form-control {
+    border-radius: 5px;
+    padding: 10px;
+}
+/* Table styling */
+.table-responsive {
+    margin-top: 50px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
