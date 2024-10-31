@@ -158,7 +158,11 @@
 </section>
 <section id="corp">
     <!-- Button to open the Crop form -->
-    <button class="btn btn-primary" id="addCropBtn" onclick="openCropForm()">Add New Crop</button>
+    <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-primary" id="addCropBtn">Add New Crop
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
 
     <!-- Crop Form Card -->
     <div class="card mt-3" id="cropFormCard" style="display: none;">
@@ -213,7 +217,9 @@
                 </div>
 
                 <!-- Save Button -->
-                <button type="submit" class="btn btn-success mt-3">Save</button>
+                <button type="submit" class="btn btn-success mt-3">Save
+                    <i class="fa-regular fa-floppy-disk"></i>
+                </button>
             </form>
         </div>
     </div>

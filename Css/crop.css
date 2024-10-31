@@ -10,7 +10,9 @@
     border-radius: 15px; /* Rounded corners */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Add shadow */
 }
+#addCropBtn{
 
+}
 /* Card Header Styling */
 .card-header {
     background-color: #463975; /* Header background color */
@@ -52,6 +54,7 @@
     border-radius: 20px; /* Rounded button corners */
     padding: 10px 20px; /* Button padding */
     font-size: 16px; /* Button font size */
+    width: 100px;
 }
 
 .btn-success:hover {
