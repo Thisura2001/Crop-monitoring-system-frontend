@@ -76,9 +76,6 @@ $("#btnLogOut").on('click', function() {
     $("#field").css( "display", "none");
     $("#navBar").css( "display", "none");
 })
-function selectRole(role) {
-    document.getElementById('roleDropdown').innerText = role;
-}
 $("#nav-staff").on('click', function() {
     $('#welcomePage').css("display", "none");
     $("#navBar").css("display", "block");
