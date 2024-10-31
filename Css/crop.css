@@ -1,0 +1,66 @@
+/* Main Section Styling */
+#corp {
+    padding: 20px; /* Add padding to the section */
+}
+
+/* Crop Form Card Styling */
+#cropFormCard {
+    max-width: 800px; /* Limit the width of the card */
+    margin: auto; /* Center the card horizontally */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Add shadow */
+}
+
+/* Card Header Styling */
+.card-header {
+    background-color: #463975; /* Header background color */
+    color: #ffffff; /* Header text color */
+    display: flex; /* Flex container */
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Center items vertically */
+}
+
+/* Close Button Styling */
+.btn-close {
+    background: transparent; /* Transparent background */
+    border: none; /* Remove border */
+    color: #ffffff; /* Close button color */
+}
+
+/* Form Field Styling */
+.form-label {
+    font-size: 14px; /* Label font size */
+    color: #463975; /* Label color */
+}
+
+.form-control {
+    border: 1px solid #ccc; /* Border for input fields */
+    border-radius: 5px; /* Rounded input corners */
+}
+
+/* Image Preview Styling */
+#imagePreview {
+    max-width: 100%; /* Ensure the image fits within the container */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 10px; /* Space above the image */
+}
+
+/* Button Styling */
+.btn-success {
+    background-color: #28a745; /* Success button color */
+    border: none; /* Remove border */
+    border-radius: 20px; /* Rounded button corners */
+    padding: 10px 20px; /* Button padding */
+    font-size: 16px; /* Button font size */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Darken button on hover */
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    #cropFormCard {
+        width: 100%; /* Full width on smaller screens */
+    }
+}

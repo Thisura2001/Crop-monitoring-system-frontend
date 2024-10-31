@@ -1,13 +1,14 @@
-// JavaScript to toggle the form card
-document.getElementById("addCropBtn").addEventListener("click", function() {
-    document.getElementById("cropFormCard").style.display = "block";
+// Get the elements
+const addCropBtn = document.getElementById('addCropBtn');
+const cropFormCard = document.getElementById('cropFormCard');
+const closeCropCard = document.getElementById('closeCropCard');
+
+// Show the crop card when clicking "Add New Crop"
+addCropBtn.addEventListener('click', () => {
+    cropFormCard.style.display = 'block';
 });
 
-// Handle form submission
-document.getElementById("cropForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    alert("Crop details saved!");
-    // Reset form and hide the card
-    this.reset();
-    document.getElementById("cropFormCard").style.display = "none";
+// Hide the crop card when clicking the close button
+closeCropCard.addEventListener('click', () => {
+    cropFormCard.style.display = 'none';
 });
