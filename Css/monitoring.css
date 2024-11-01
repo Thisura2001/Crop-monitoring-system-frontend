@@ -1,0 +1,64 @@
+/* Container styling to center the form card */
+#monitory {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Styles for the form card */
+#logFormCard {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: none;
+    position: relative;
+}
+
+/* Card header with close button */
+#logFormCard .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Close button styling */
+#logFormCard .btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+}
+
+/* Add Log button styling */
+#addLogBtn {
+    margin-top: 50px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+/* Form field styling */
+.card-body .form-label {
+    font-weight: 600;
+}
+
+.form-select, .form-control {
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #logFormCard {
+        max-width: 90%;
+    }
+
+    #addLogBtn {
+        width: 100%;
+    }
+}
