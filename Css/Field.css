@@ -9,6 +9,7 @@
 
 /* Field Form Card Styling */
 #fieldFormCard {
+    top: 50px;
     width: 100%;
     max-width: 800px;
     background: #fff;
@@ -16,6 +17,9 @@
     border-radius: 8px;
     overflow: hidden;
     margin: 0 auto;
+}
+#addFieldBtn{
+    top: 100px;
 }
 
 /* Header Styling */

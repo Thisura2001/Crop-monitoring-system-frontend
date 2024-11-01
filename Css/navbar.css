@@ -1,49 +1,109 @@
+/* Top Container */
+.top-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background-color: #36ae0f; /* Green background */
+    color: white;
+    text-align: center;
+    padding-top: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: -1;
+}
 
-.nav {
-    /*background: linear-gradient(45deg, #8ABFA3, #C9E9D2, #859F3D);*/
-    background-color: #87A2FF;
-    padding: 1em;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    max-height: 80vh;
-    top: 70px;
-    left: 20px;
-    border-radius: 20px;
-    position: relative;
-}.nav-link {
+.top-container h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.top-container p {
+    margin: 0;
     font-size: 1.1rem;
-    padding: 12px 20px!important;
+}
+
+/* Sidebar Navigation */
+.nav {
+    position: fixed;
+    top: 100px; /* Positioned below the top container */
+    left: 0;
+    width: 220px;
+    height: calc(100vh - 100px);
+    background-color: #36ae0f;
+    padding: 1em;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    padding: 12px 20px;
     border-radius: 6px;
     text-align: center;
     margin-top: 10px;
-     background-color: #1c2a3f !important;
-     color: #ffffff!important;
-     font-weight: 700!important;
-     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-     border: 2px solid #111515;
-     transition: background-color 0.3s;
-}
- #btnLogOut{
-     margin-top: 40px;
-
- }
-.nav-link:hover {
-    background-color: #3e7f2b !important;
-    color: #ffffff;
-}
-
-.nav-link.active {
-    background-color: #1abc9c;
+    background-color: #1c2a3f;
     color: #ffffff;
     font-weight: 700;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    border: 2px solid #1abc9c;
+    border: 2px solid #111515;
     transition: background-color 0.3s;
 }
+.nav-link.active {
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
+#nav-corp{
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
+#nav-equipment{
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
+#nav-field{
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
+#nav-monitoring{
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
 
-
+#nav-logout {
+    background-color: #e74c3c;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    margin-top: auto;
+}
+#nav-vehicle{
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
+#nav-staff{
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
+#nav-report{
+    background-color: #2d4b88;
+    color: #ffffff;
+    font-weight: 700;
+}
 .nav-item {
     margin: 0 10px;
 }
+
 .logout-button {
     background-color: #e74c3c;
     color: #ffffff;
@@ -51,27 +111,58 @@
     padding: 10px 15px;
     border-radius: 6px;
     transition: background-color 0.3s;
+    margin-top: auto;
+
 }
 
-/*!* Responsive styling *!*/
-/*@media (max-width: 768px) {*/
-/*    #dashboard .nav {*/
-/*        flex-direction: column;*/
-/*        align-items: stretch;*/
-/*    }*/
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .top-container {
+        height: 80px;
+        padding-top: 10px;
+    }
 
-/*    #dashboard .nav-item {*/
-/*        margin-bottom: 0.5em;*/
-/*    }*/
+    .top-container h1 {
+        font-size: 1.5rem;
+    }
 
-/*    #dashboard .nav-link {*/
-/*        width: 100%;*/
-/*        padding: 15px;*/
-/*    }*/
-/*}*/
+    .top-container p {
+        font-size: 0.9rem;
+    }
 
-/*@media (min-width: 769px) {*/
-/*    #dashboard .nav {*/
-/*        justify-content: space-around;*/
-/*    }*/
-/*}*/
+    .nav {
+        width: 180px;
+        padding: 0.5em;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+
+    #dashboard {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav {
+        width: 100%;
+        height: auto;
+        position: static;
+        flex-direction: row;
+        overflow-x: auto;
+        border-radius: 0;
+    }
+
+    .nav-link {
+        margin: 0 5px;
+        flex-shrink: 0;
+        font-size: 0.9rem;
+    }
+
+    #dashboard {
+        margin-left: 0;
+        padding: 100px 10px 10px;
+    }
+}
