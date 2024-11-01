@@ -196,6 +196,24 @@
                         <label for="fieldImg02" class="form-label">Field Image 02</label>
                         <input type="file" class="form-control" id="fieldImg02" accept="image/*" onchange="previewImage(event)">
                     </div>
+                    <div class="col-md-6">
+                        <label for="cmbStaffId" class="form-label">Staff ID</label>
+                        <select class="form-select" id="cmbStaffId" required>
+                            <option selected disabled value="">Select Staff Member...</option>
+                            <!-- Populate with dynamic options -->
+                            <option value="ST123">S-001</option>
+                            <option value="ST124">S-002</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cmbCropId" class="form-label">Crop ID</label>
+                        <select class="form-select" id="cmbCropId" required>
+                            <option selected disabled value="">Select Crop...</option>
+                            <!-- Populate with dynamic options -->
+                            <option value="ST123">CR-001</option>
+                            <option value="ST124">CR-002</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Save Button -->
@@ -261,8 +279,13 @@
 
                     <!-- Field -->
                     <div class="col-md-6">
-                        <label for="fieldDetails" class="form-label">Field Details</label>
-                        <input type="text" class="form-control" id="fieldDetails" placeholder="Enter field details" required>
+                        <label for="fieldId" class="form-label">Field ID</label>
+                        <select class="form-select" id="fieldId" required>
+                            <option selected disabled value="">Select Field...</option>
+                            <!-- Populate with dynamic options -->
+                            <option value="ST123">F-001</option>
+                            <option value="ST124">F-002</option>
+                        </select>
                     </div>
                 </div>
 

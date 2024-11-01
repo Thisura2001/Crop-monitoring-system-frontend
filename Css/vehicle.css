@@ -35,10 +35,16 @@
     color: #6c757d;
 }
 
-/* Button to add new vehicle, aligned to the right */
 #addVehicleBtn {
-    float: right;
+    margin-top: 50px;
+    margin-left: 10px!important;
+    padding: 10px 20px;
+    display: inline-block;
+    width: auto;
+    max-width: 80%;
+    font-size: 14px;
 }
+
 
 /* Form field styling */
 .card-body .form-label {
