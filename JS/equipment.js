@@ -1,7 +1,17 @@
-document.getElementById("addEquipmentBtn").addEventListener("click", function() {
-    document.getElementById("equipmentFormCard").style.display = "block";
+// Get the elements
+const addEquipmentBtn = document.getElementById('addEquipmentBtn');
+const equipmentFormCard = document.getElementById('equipmentFormCard');
+const closeEquipmentFormBtn = document.getElementById('closeEquipmentForm');
+
+// Function to show the equipment form card
+addEquipmentBtn.addEventListener('click', () => {
+    equipmentFormCard.style.display = 'block';
 });
 
+// Function to close the equipment form card
 function closeEquipmentForm() {
-    document.getElementById("equipmentFormCard").style.display = "none";
+    equipmentFormCard.style.display = 'none';
 }
+
+// Close button event
+closeEquipmentFormBtn.addEventListener('click', closeEquipmentForm);
