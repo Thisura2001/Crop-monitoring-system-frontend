@@ -26,6 +26,28 @@
     margin-right: 20px;
     margin-top: 70px;
 }
+/* Title styling */
+.field-title {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in; /* Apply fade-in animation */
+    color: #4CAF50;
+
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px); /* Move up slightly */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* Header Styling */
 #fieldFormCard .card-header {
