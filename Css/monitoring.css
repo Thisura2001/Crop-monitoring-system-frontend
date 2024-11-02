@@ -6,6 +6,7 @@
     justify-content: center;
     min-height: 100vh;
     background-color: #f8f9fa;
+    z-index: -2;
 }
 
 /* Styles for the form card */

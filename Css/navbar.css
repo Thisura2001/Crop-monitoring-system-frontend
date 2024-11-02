@@ -1,26 +1,54 @@
-/* Top Container */
+/* Top Container Styling */
 .top-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 20px;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    height: 100px;
-    background-color: #36ae0f; /* Green background */
+    width: 100%;
+    z-index:4;
+}
+
+/* Logo and Title Styling */
+.logo-and-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px; /* Adjust logo size as needed */
+    height: auto;
+    margin-right: 15px;
+}
+
+.title-text h1, .title-text p {
+    margin: 0;
+}
+
+/* Logout Button Styling */
+.logout-button {
+    background-color: #e74c3c; /* Red color for logout button */
     color: white;
-    text-align: center;
-    padding-top: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: -1;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.top-container h1 {
-    font-size: 1.8rem;
-    margin: 0;
+.logout-button:hover {
+    background-color: #c0392b; /* Darken button on hover */
 }
 
-.top-container p {
-    margin: 0;
-    font-size: 1.1rem;
+.logout-button i {
+    font-size: 1.2em;
 }
 
 /* Sidebar Navigation */
@@ -30,9 +58,8 @@
     left: 0;
     width: 220px;
     height: calc(100vh - 100px);
-    background-color: #36ae0f;
+    background-color: #4CAF50;
     padding: 1em;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
 }
@@ -42,7 +69,7 @@
     padding: 12px 20px;
     border-radius: 6px;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 30px;
     background-color: #1c2a3f;
     color: #ffffff;
     font-weight: 700;
@@ -139,10 +166,6 @@
         font-size: 1rem;
         padding: 10px 15px;
     }
-
-    #dashboard {
-        margin-left: 200px;
-    }
 }
 
 @media (max-width: 576px) {
@@ -159,10 +182,5 @@
         margin: 0 5px;
         flex-shrink: 0;
         font-size: 0.9rem;
-    }
-
-    #dashboard {
-        margin-left: 0;
-        padding: 100px 10px 10px;
     }
 }
