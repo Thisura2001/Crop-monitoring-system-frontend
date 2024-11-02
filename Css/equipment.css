@@ -21,7 +21,6 @@
     border-radius: 10px;
     display: none;
     position: relative;
-
 }
 
 /* Card header with close button */
@@ -42,13 +41,14 @@
 
 /* Add Equipment button styling */
 #addEquipmentBtn {
-    margin-top: 50px;
+    margin-top: 10px;
     margin-left: 10px !important;
     padding: 10px 20px;
     display: inline-block;
     width: auto;
     max-width: 80%;
     font-size: 14px;
+    font-weight: bold;
 }
 
 /* Form field styling */
@@ -72,4 +72,53 @@
 .table th, .table td {
     text-align: center;
     vertical-align: middle;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    /* Adjust padding and center the container */
+    #equipment {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    /* Adjust form card width for smaller screens */
+    #equipmentFormCard {
+        max-width: 100%;
+    }
+
+    /* Adjust button size for smaller screens */
+    #addEquipmentBtn {
+        font-size: 12px;
+        padding: 8px 15px;
+        max-width: 100%;
+    }
+
+    /* Adjust table width for smaller screens */
+    .table-responsive {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further adjustments for very small screens */
+    #equipmentFormCard .btn-close {
+        font-size: 1.2rem;
+    }
+
+    /* Make form labels smaller for better spacing */
+    .card-body .form-label {
+        font-size: 14px;
+    }
+
+    /* Decrease padding in form fields */
+    .form-select, .form-control {
+        padding: 8px;
+    }
+
+    /* Smaller font size in table headers */
+    .table th, .table td {
+        font-size: 12px;
+    }
 }

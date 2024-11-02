@@ -9,6 +9,8 @@
     padding: 10px 20px;
     margin-bottom: 20px;
     font-weight: bold;
+    margin-right: 20px;
+    margin-top: 70px;
 }
 
 /* Staff Form Card */
@@ -68,6 +70,7 @@
 #tblStaff {
     width: 100%;
     margin-top: 20px;
+    margin-left: 120px;
 }
 
 #tblStaff thead {
