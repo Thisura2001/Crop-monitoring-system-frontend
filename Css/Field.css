@@ -9,7 +9,7 @@
 
 /* Field Form Card Styling */
 #fieldFormCard {
-    top: 50px;
+    top: 10px;
     width: 100%;
     max-width: 800px;
     background: #fff;
@@ -19,7 +19,8 @@
     margin: 0 auto;
 }
 #addFieldBtn{
-    top: 100px;
+    margin-top: 100px;
+    z-index: 100;
 }
 
 /* Header Styling */

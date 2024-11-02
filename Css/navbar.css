@@ -1,55 +1,55 @@
 /* Top Container Styling */
-.top-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index:4;
-}
+/*.top-container {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*    background-color: #4CAF50; !* Green background *!*/
+/*    color: white;*/
+/*    padding: 20px;*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    z-index:-2;*/
+/*}*/
 
-/* Logo and Title Styling */
-.logo-and-title {
-    display: flex;
-    align-items: center;
-}
+/*!* Logo and Title Styling *!*/
+/*.logo-and-title {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
 
-.logo {
-    width: 50px; /* Adjust logo size as needed */
-    height: auto;
-    margin-right: 15px;
-}
+/*.logo {*/
+/*    width: 50px; !* Adjust logo size as needed *!*/
+/*    height: auto;*/
+/*    margin-right: 15px;*/
+/*}*/
 
-.title-text h1, .title-text p {
-    margin: 0;
-}
+/*.title-text h1, .title-text p {*/
+/*    margin: 0;*/
+/*}*/
 
-/* Logout Button Styling */
-.logout-button {
-    background-color: #e74c3c; /* Red color for logout button */
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
+/*!* Logout Button Styling *!*/
+/*.logout-button {*/
+/*    background-color: #e74c3c; !* Red color for logout button *!*/
+/*    color: white;*/
+/*    border: none;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*    font-size: 16px;*/
+/*    cursor: pointer;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 5px;*/
+/*}*/
 
-.logout-button:hover {
-    background-color: #c0392b; /* Darken button on hover */
-}
+/*.logout-button:hover {*/
+/*    background-color: #c0392b; !* Darken button on hover *!*/
+/*}*/
 
-.logout-button i {
-    font-size: 1.2em;
-}
+/*.logout-button i {*/
+/*    font-size: 1.2em;*/
+/*}*/
 
 /* Sidebar Navigation */
 .nav {

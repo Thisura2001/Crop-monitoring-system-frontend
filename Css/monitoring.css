@@ -6,7 +6,7 @@
     justify-content: center;
     min-height: 100vh;
     background-color: #f8f9fa;
-    z-index: -2;
+    z-index: -0.5;
 }
 
 /* Styles for the form card */
@@ -16,8 +16,7 @@
     margin: 0 auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    display: none;
-    position: relative;
+    display: block; /* Changed from display: none; to display: block; */
 }
 
 /* Card header with close button */
@@ -38,7 +37,7 @@
 
 /* Add Log button styling */
 #addLogBtn {
-    margin-top: 50px;
+    margin-top: 150px;
     padding: 10px 20px;
     font-size: 14px;
 }

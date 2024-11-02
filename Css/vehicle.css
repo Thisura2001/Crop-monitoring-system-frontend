@@ -6,7 +6,7 @@
     justify-content: center;
     min-height: 100vh;
     background-color: #f8f9fa;
-    z-index: -2;
+    z-index: -0.5;
 }
 
 /* Styles for the form card */
@@ -37,7 +37,7 @@
 }
 
 #addVehicleBtn {
-    margin-top: 50px;
+    margin-top: 150px;
     margin-left: 10px!important;
     padding: 10px 20px;
     display: inline-block;
