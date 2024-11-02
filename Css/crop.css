@@ -21,8 +21,8 @@
 }
 /* Card Header Styling */
 .card-header {
-    background-color: #463975;
-    color: #ffffff;
+    background-color: #4CAF50!important;
+    color: #ffffff!important;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -9,14 +9,15 @@
 
 /* Field Form Card Styling */
 #fieldFormCard {
-    top: 10px;
     width: 100%;
     max-width: 800px;
     background: #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
     overflow: hidden;
-    margin: 0 auto;
+    margin:  auto;
+    top: -80px;
+
 }
 #addFieldBtn{
     font-size: 16px;

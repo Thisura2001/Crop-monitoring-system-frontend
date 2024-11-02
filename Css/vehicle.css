@@ -37,7 +37,7 @@
 }
 
 #addVehicleBtn {
-    margin-top: 150px;
+    margin-top: 50px;
     margin-left: 10px!important;
     padding: 10px 20px;
     display: inline-block;
@@ -45,7 +45,7 @@
     max-width: 80%;
     font-size: 14px;
     transform: translateX(-20px);
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 
