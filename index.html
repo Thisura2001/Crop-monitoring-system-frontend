@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="Css/equipment.css">
     <link rel="stylesheet" href="Css/monitoring.css">
     <link rel="stylesheet" href="Css/DashBoard.css">
+    <link rel="stylesheet" href="Css/staff.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></head>
@@ -181,7 +182,182 @@
 </section>
 
 <section id="staff">
-    <h1>Welcome to Staff</h1>
+    <!-- Button to open the Staff form -->
+    <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-primary" id="addStaffBtn">Add New Staff <i class="fa-solid fa-plus"></i></button>
+    </div>
+
+    <!-- Staff Form Card -->
+    <div class="card mt-3" id="staffFormCard" style="display: none;">
+        <div class="card-header">
+            <h4>Add Staff Details</h4>
+            <button class="btn-close" id="closeStaffForm" onclick="closeStaffForm()">X</button>
+        </div>
+        <div class="card-body">
+            <form id="staffForm">
+                <div class="row g-3">
+                    <!-- Staff ID -->
+                    <div class="col-md-6">
+                        <label for="staffId" class="form-label">Staff ID</label>
+                        <input type="text" class="form-control" id="staffId" placeholder="Enter staff ID" required>
+                    </div>
+                    <!-- First Name -->
+                    <div class="col-md-6">
+                        <label for="StaffFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="StaffFirstName" placeholder="Enter first name" required>
+                    </div>
+                    <!-- Last Name -->
+                    <div class="col-md-6">
+                        <label for="StaffLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="StaffLastName" placeholder="Enter last name" required>
+                    </div>
+                    <!-- Designation -->
+                    <div class="col-md-6">
+                        <label for="designation" class="form-label">Designation</label>
+                        <input type="text" class="form-control" id="designation" placeholder="Enter designation" required>
+                    </div>
+                    <!-- Equipment -->
+                    <div class="col-md-6">
+                        <label for="StaffEquipment" class="form-label">Equipment</label>
+                        <select class="form-select" id="StaffEquipment" required>
+                            <option selected disabled value="">Select equipment...</option>
+                            <option value="Equipment1">Equipment 1</option>
+                            <option value="Equipment2">Equipment 2</option>
+                            <option value="Equipment3">Equipment 3</option>
+                        </select>
+                    </div>
+                    <!-- Field -->
+                    <div class="col-md-6">
+                        <label for="staffField" class="form-label">Field</label>
+                        <select class="form-select" id="staffField" required>
+                            <option selected disabled value="">Select field...</option>
+                            <option value="Field1">Field 1</option>
+                            <option value="Field2">Field 2</option>
+                            <option value="Field3">Field 3</option>
+                        </select>
+                    </div>
+                    <!-- Vehicle -->
+                    <div class="col-md-6">
+                        <label for="staffVehicle" class="form-label">Vehicle</label>
+                        <select class="form-select" id="staffVehicle" required>
+                            <option selected disabled value="">Select vehicle...</option>
+                            <option value="Vehicle1">Vehicle 1</option>
+                            <option value="Vehicle2">Vehicle 2</option>
+                            <option value="Vehicle3">Vehicle 3</option>
+                        </select>
+                    </div>
+                    <!-- Gender -->
+                    <div class="col-md-6">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-select" id="gender" required>
+                            <option selected disabled value="">Select gender...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <!-- Joined Date -->
+                    <div class="col-md-6">
+                        <label for="joinedDate" class="form-label">Joined Date</label>
+                        <input type="date" class="form-control" id="joinedDate" required>
+                    </div>
+                    <!-- DOB -->
+                    <div class="col-md-6">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" required>
+                    </div>
+                    <!-- Contact Number -->
+                    <div class="col-md-6">
+                        <label for="contactNo" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="contactNo" placeholder="Enter contact number" required>
+                    </div>
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label for="StaffEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="StaffEmail" placeholder="Enter email address" required>
+                    </div>
+                    <!-- Role -->
+                    <div class="col-md-6">
+                        <label for="StaffRole" class="form-label">Role</label>
+                        <select class="form-select" id="StaffRole" required>
+                            <option selected disabled value="">Select role...</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Field Staff">Field Staff</option>
+                        </select>
+                    </div>
+                    <!-- Address Lines -->
+                    <div class="col-md-6">
+                        <label for="addressLine1" class="form-label">Address Line 1</label>
+                        <input type="text" class="form-control" id="addressLine1" placeholder="Building no or name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="addressLine2" class="form-label">Address Line 2</label>
+                        <input type="text" class="form-control" id="addressLine2" placeholder="Lane" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="addressLine3" class="form-label">City</label>
+                        <input type="text" class="form-control" id="addressLine3" placeholder="City" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="addressLine4" class="form-label">State</label>
+                        <input type="text" class="form-control" id="addressLine4" placeholder="State" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="addressLine5" class="form-label">Postal Code</label>
+                        <input type="text" class="form-control" id="addressLine5" placeholder="Postal Code" required>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <button type="submit" class="btn btn-success mt-3">Save <i class="fa-regular fa-floppy-disk"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Staff Data Table -->
+    <div class="table-responsive mt-4">
+        <table class="table table-bordered table-striped" id="tblStaff">
+            <thead class="table-primary">
+            <tr>
+                <th>Staff ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Designation</th>
+                <th>Equipment</th>
+                <th>Field</th>
+                <th>Vehicle</th>
+                <th>Gender</th>
+                <th>Joined Date</th>
+                <th>DOB</th>
+                <th>Contact No.</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>City</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Sample row for display -->
+            <tr>
+                <td>ST001</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>Manager</td>
+                <td>Equipment 1</td>
+                <td>Field 1</td>
+                <td>Vehicle 1</td>
+                <td>Male</td>
+                <td>2020-01-01</td>
+                <td>1990-05-15</td>
+                <td>1234567890</td>
+                <td>john.doe@example.com</td>
+                <td>Manager</td>
+                <td>New York</td>
+            </tr>
+            <!-- Additional rows can be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
 </section>
 <section id="field">
     <!-- Button to open the Crop form -->
@@ -453,8 +629,8 @@
                         </div>
                         <!-- Staff ID (Foreign Key) -->
                         <div class="col-md-6">
-                            <label for="staffId" class="form-label">Staff ID</label>
-                            <select class="form-select" id="staffId" required>
+                            <label for="VehicleStaffId" class="form-label">Staff ID</label>
+                            <select class="form-select" id="VehicleStaffId" required>
                                 <option selected disabled value="">Select Staff...</option>
                                 <!-- Populate with dynamic options -->
                                 <option value="ST123">ST123 - John Doe</option>
@@ -469,8 +645,8 @@
             </div>
         </div>
         <!-- Vehicle Data Table -->
-        <div class="table-responsive mt-4">
-            <table class="table table-bordered table-striped">
+        <div class="table-responsive mt-4" >
+            <table class="table table-bordered table-striped" id="tblVehicle">
                 <thead class="table-primary">
                 <tr>
                     <th>Vehicle Code</th>
@@ -607,5 +783,6 @@
 <script src="JS/vehicle.js" type="module"></script>
 <script src="JS/equipment.js" type="module"></script>
 <script src="JS/monitory.js" type="module"></script>
+<script src="JS/staff.js" type="module"></script>
 </body>
 </html>

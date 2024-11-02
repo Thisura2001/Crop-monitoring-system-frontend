@@ -1,0 +1,113 @@
+/* Section styling for spacing */
+#staff {
+    margin-top: 50px;
+}
+
+/* Button styling for Add Staff button */
+#addStaffBtn {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Staff Form Card */
+#staffFormCard {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+#staffFormCard .card-header {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+#staffFormCard .card-header h4 {
+    margin: 0;
+}
+
+#staffFormCard .btn-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+}
+
+#staffFormCard .card-body {
+    padding: 20px;
+}
+
+/* Form Fields */
+#staffForm .form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+#staffForm .form-control, #staffForm .form-select {
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Save Button */
+#staffForm .btn-success {
+    font-size: 16px;
+    padding: 8px 20px;
+    font-weight: bold;
+}
+
+/* Staff Data Table */
+#tblStaff {
+    width: 100%;
+    margin-top: 20px;
+}
+
+#tblStaff thead {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    text-align: left;
+}
+
+#tblStaff th, #tblStaff td {
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#tblStaff tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#tblStaff tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #staffFormCard, #tblStaff {
+        max-width: 100%;
+    }
+
+    #staffForm .col-md-6 {
+        flex: 1 1 100%;
+    }
+
+    #addStaffBtn {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    #staffForm .btn-success {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+    }
+}

@@ -11,12 +11,13 @@
 
 /* Styles for the form card */
 #logFormCard {
+    top: -100px;
     max-width: 700px;
     width: 100%;
     margin: 0 auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    display: block; /* Changed from display: none; to display: block; */
+    display: block;
 }
 
 /* Card header with close button */
@@ -37,10 +38,13 @@
 
 /* Add Log button styling */
 #addLogBtn {
-    margin-top: 150px;
+    margin-top: 100px;
     padding: 10px 20px;
     font-size: 14px;
+    transform: translateX(-20px);
+
 }
+
 
 /* Form field styling */
 .card-body .form-label {
