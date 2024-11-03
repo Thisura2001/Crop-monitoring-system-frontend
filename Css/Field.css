@@ -20,11 +20,11 @@
 
 }
 #addFieldBtn{
-    font-size: 16px;
+    font-size: 12px;
     padding: 10px 20px;
     margin-bottom: 20px;
     font-weight: bold;
-    margin-right: 20px;
+    margin-right: 10px;
     margin-top: 70px;
 }
 /* Title styling */
@@ -73,7 +73,7 @@
     #fieldCardsContainer {
         grid-template-columns: 1fr;
         gap: 20px; /* Reduce gap for smaller screens */
-        margin-left: 50px; /* Remove the left margin for small screens */
+        margin-left: 50px;
     }
 }
 
