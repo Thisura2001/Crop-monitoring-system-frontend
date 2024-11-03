@@ -13,7 +13,6 @@ closeFieldForm.addEventListener('click', () => {
     fieldFormCard.style.display = 'none';
 });
 
-
 ///////////////////////////////////////////////////
 
 function closeFiledForm() {
