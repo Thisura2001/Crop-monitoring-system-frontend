@@ -65,7 +65,7 @@ document.getElementById("FieldForm").addEventListener("submit", function (e) {
                 <p><strong>Staff:</strong> ${staff}</p>
                 <p><strong>Crop:</strong> ${crop}</p>
                 <button class="btn btn-success">Update</button>
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger" id="FieldCardDeleteBtn">Delete</button>
             </div>
         `;
 
@@ -75,4 +75,26 @@ document.getElementById("FieldForm").addEventListener("submit", function (e) {
     // Reset the form and close it if necessary
     document.getElementById("FieldForm").reset();
     closeFiledForm();
+    // Add event listener to the Delete button
+    card.querySelector("#FieldCardDeleteBtn").addEventListener("click", function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete this card?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                card.remove();
+                Swal.fire(
+                    'Deleted!',
+                    'The card has been deleted.',
+                    'success'
+                );
+            }
+        });
+    });
 });
