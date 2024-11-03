@@ -429,25 +429,67 @@
             </form>
         </div>
     </div>
-    <!-- Section for displaying saved field cards -->
-    <div id="fieldCardsContainer" class="d-flex flex-wrap" ></div>
+    <div id="fieldCardsContainer" class="d-flex flex-wrap"></div>
+
     <!-- Popup Modal for Updating Card -->
-    <div id="updateFieldModal" style="display: none;">
+    <div id="updateFieldModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeUpdateModal()">X</div>
         <div class="modal-content">
-            <h5>Update Field Details</h5>
-            <label>Code:</label><input type="text" id="updateCode" class="form-control">
-            <label>Name:</label><input type="text" id="updateName" class="form-control">
-            <label>Location:</label><input type="text" id="updateLocation" class="form-control">
-            <label>Extent Size:</label><input type="text" id="updateExtent" class="form-control">
-            <label>Staff:</label><input type="text" id="updateStaff" class="form-control">
-            <label>Crop:</label><input type="text" id="updateCrop" class="form-control">
+            <h3>Update Field Details</h3>
 
-            <!-- Image upload fields -->
-            <label>Field Image 1:</label><input type="file" id="updateFieldImg1" class="form-control">
-            <label>Field Image 2:</label><input type="file" id="updateFieldImg2" class="form-control">
+            <!-- Code -->
+            <div class="form-group">
+                <label for="updateCode">Code:</label>
+                <input type="text" id="updateCode" class="form-control">
+            </div>
 
-            <button id="saveUpdatedField" class="btn btn-success">Save</button>
-            <button onclick="closeUpdateModal()" class="btn btn-secondary">Cancel</button>
+            <!-- Name -->
+            <div class="form-group">
+                <label for="updateName">Name:</label>
+                <input type="text" id="updateName" class="form-control">
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label for="updateLocation">Location:</label>
+                <input type="text" id="updateLocation" class="form-control">
+            </div>
+
+            <!-- Extent Size -->
+            <div class="form-group">
+                <label for="updateExtent">Extent Size:</label>
+                <input type="text" id="updateExtent" class="form-control">
+            </div>
+
+            <!-- Staff -->
+            <div class="form-group">
+                <label for="updateStaff">Staff:</label>
+                <input type="text" id="updateStaff" class="form-control">
+            </div>
+
+            <!-- Crop -->
+            <div class="form-group">
+                <label for="updateCrop">Crop:</label>
+                <input type="text" id="updateCrop" class="form-control">
+            </div>
+
+            <!-- Field Image 1 -->
+            <div class="form-group">
+                <label for="updateFieldImg1">Field Image 1:</label>
+                <input type="file" id="updateFieldImg1" class="form-control">
+            </div>
+
+            <!-- Field Image 2 -->
+            <div class="form-group">
+                <label for="updateFieldImg2">Field Image 2:</label>
+                <input type="file" id="updateFieldImg2" class="form-control">
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button id="saveUpdatedField" class="btn btn-success">Update</button>
+                <button onclick="closeUpdateModal()" class="btn btn-secondary">Cancel</button>
+            </div>
         </div>
     </div>
 
