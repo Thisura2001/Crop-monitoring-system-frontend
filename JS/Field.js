@@ -2,6 +2,7 @@
 const addFieldBtn = document.getElementById('addFieldBtn');
 const fieldFormCard = document.getElementById('fieldFormCard');
 const closeFieldForm = document.getElementById('closeFieldForm');
+const closeUpdateModalBtn = document.getElementById('closeUpdateModalBtn');
 
 // Show the field card when clicking "Add New Field"
 addFieldBtn.addEventListener('click', () => {
@@ -123,9 +124,9 @@ function openUpdateModal(card) {
 }
 
 // Close update modal
-function closeUpdateModal() {
+closeUpdateModalBtn.addEventListener("click", function () {
     document.getElementById("updateFieldModal").style.display = "none";
-}
+})
 
 // Function to save updated data to the card
 document.getElementById("saveUpdatedField").addEventListener("click", function () {
