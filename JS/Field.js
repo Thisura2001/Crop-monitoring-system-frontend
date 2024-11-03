@@ -15,6 +15,7 @@ closeFieldForm.addEventListener('click', () => {
 
 ///////////////////////////////////////////////////
 
+// Close the field form modal function
 function closeFiledForm() {
     document.getElementById("fieldFormCard").style.display = "none";
 }
@@ -37,37 +38,36 @@ document.getElementById("FieldForm").addEventListener("submit", function (e) {
     let img1Preview = '', img2Preview = '';
 
     if (img1) {
-        img1Preview = `<img src="${URL.createObjectURL(img1)}" class="card-img" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 1">`;
+        img1Preview = `<img src="${URL.createObjectURL(img1)}" class="card-img field-img1" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 1">`;
     }
 
     if (img2) {
-        img2Preview = `<img src="${URL.createObjectURL(img2)}" class="card-img" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 2">`;
+        img2Preview = `<img src="${URL.createObjectURL(img2)}" class="card-img field-img2" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 2">`;
     }
 
-    // Create a new card with fixed width and limited height
+    // Create a new card
     const card = document.createElement("div");
     card.className = "card mt-3";
-    card.style.width = "300px"; // Set fixed width
-    card.style.maxHeight = "500px"; // Limit card height to avoid it being too tall
-    card.style.overflowY = "auto"; // Enable scrolling if content overflows
-
+    card.style.width = "300px";
+    card.style.maxHeight = "500px";
+    card.style.overflowY = "auto";
     card.innerHTML = `
-            <div class="card-header">
-                <h5>Field Details</h5>
-            </div>
-            <div class="card-body">
-                ${img1Preview}
-                ${img2Preview}
-                <p><strong>Code:</strong> ${code}</p>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Location:</strong> ${location}</p>
-                <p><strong>Extent Size:</strong> ${extent}</p>
-                <p><strong>Staff:</strong> ${staff}</p>
-                <p><strong>Crop:</strong> ${crop}</p>
-                <button class="btn btn-success">Update</button>
-                <button class="btn btn-danger" id="FieldCardDeleteBtn">Delete</button>
-            </div>
-        `;
+        <div class="card-header">
+            <h5>Field Details</h5>
+        </div>
+        <div class="card-body">
+            ${img1Preview}
+            ${img2Preview}
+            <p><strong>Code:</strong> <span class="field-code">${code}</span></p>
+            <p><strong>Name:</strong> <span class="field-name">${name}</span></p>
+            <p><strong>Location:</strong> <span class="field-location">${location}</span></p>
+            <p><strong>Extent Size:</strong> <span class="field-extent">${extent}</span></p>
+            <p><strong>Staff:</strong> <span class="field-staff">${staff}</span></p>
+            <p><strong>Crop:</strong> <span class="field-crop">${crop}</span></p>
+            <button class="btn btn-success fieldCardUpdateBtn">Update</button>
+            <button class="btn btn-danger FieldCardDeleteBtn">Delete</button>
+        </div>
+    `;
 
     // Append the new card to the container
     document.getElementById("fieldCardsContainer").appendChild(card);
@@ -75,8 +75,14 @@ document.getElementById("FieldForm").addEventListener("submit", function (e) {
     // Reset the form and close it if necessary
     document.getElementById("FieldForm").reset();
     closeFiledForm();
-    // Add event listener to the Delete button
-    card.querySelector("#FieldCardDeleteBtn").addEventListener("click", function () {
+});
+
+// Event listener for delete and update buttons with event delegation
+document.getElementById("fieldCardsContainer").addEventListener("click", function (e) {
+    const card = e.target.closest(".card");
+
+    // Handle Delete button
+    if (e.target.classList.contains("FieldCardDeleteBtn")) {
         Swal.fire({
             title: 'Are you sure?',
             text: "Do you want to delete this card?",
@@ -89,12 +95,66 @@ document.getElementById("FieldForm").addEventListener("submit", function (e) {
         }).then((result) => {
             if (result.isConfirmed) {
                 card.remove();
-                Swal.fire(
-                    'Deleted!',
-                    'The card has been deleted.',
-                    'success'
-                );
+                Swal.fire('Deleted!', 'The card has been deleted.', 'success');
             }
         });
-    });
+    }
+
+    // Handle Update button
+    if (e.target.classList.contains("fieldCardUpdateBtn")) {
+        openUpdateModal(card);
+    }
+});
+
+// Function to open the update modal and populate it with the current card data
+function openUpdateModal(card) {
+    document.updateTargetCard = card; // Store reference to the target card for updating
+
+    // Populate modal fields with current card data
+    document.getElementById("updateCode").value = card.querySelector(".field-code").textContent;
+    document.getElementById("updateName").value = card.querySelector(".field-name").textContent;
+    document.getElementById("updateLocation").value = card.querySelector(".field-location").textContent;
+    document.getElementById("updateExtent").value = card.querySelector(".field-extent").textContent;
+    document.getElementById("updateStaff").value = card.querySelector(".field-staff").textContent;
+    document.getElementById("updateCrop").value = card.querySelector(".field-crop").textContent;
+
+    // Show the modal
+    document.getElementById("updateFieldModal").style.display = "block";
+}
+
+// Close update modal
+function closeUpdateModal() {
+    document.getElementById("updateFieldModal").style.display = "none";
+}
+
+// Function to save updated data to the card
+document.getElementById("saveUpdatedField").addEventListener("click", function () {
+    const card = document.updateTargetCard;
+
+    // Update card content with new values from the modal
+    card.querySelector(".field-code").textContent = document.getElementById("updateCode").value;
+    card.querySelector(".field-name").textContent = document.getElementById("updateName").value;
+    card.querySelector(".field-location").textContent = document.getElementById("updateLocation").value;
+    card.querySelector(".field-extent").textContent = document.getElementById("updateExtent").value;
+    card.querySelector(".field-staff").textContent = document.getElementById("updateStaff").value;
+    card.querySelector(".field-crop").textContent = document.getElementById("updateCrop").value;
+
+    // Handle image updates
+    const img1 = document.getElementById("updateFieldImg1").files[0];
+    const img2 = document.getElementById("updateFieldImg2").files[0];
+
+    if (img1) {
+        const img1Preview = `<img src="${URL.createObjectURL(img1)}" class="card-img" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 1">`;
+        card.querySelector(".field-img1").innerHTML = img1Preview;
+    }
+    if (img2) {
+        const img2Preview = `<img src="${URL.createObjectURL(img2)}" class="card-img" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 2">`;
+        card.querySelector(".field-img2").innerHTML = img2Preview;
+    }
+
+    // Show success message using SweetAlert
+    Swal.fire("Update Successful!", "Field details have been updated.", "success");
+
+    // Close the modal
+    closeUpdateModal();
 });

@@ -369,7 +369,7 @@
         </button>
     </div>
 
-    <!-- Crop Form Card -->
+    <!-- Field Form Card -->
     <div class="card mt-3" id="fieldFormCard" style="display: none;">
         <div class="card-header">
             <h4>Add Field Details</h4>
@@ -431,6 +431,26 @@
     </div>
     <!-- Section for displaying saved field cards -->
     <div id="fieldCardsContainer" class="d-flex flex-wrap" ></div>
+    <!-- Popup Modal for Updating Card -->
+    <div id="updateFieldModal" style="display: none;">
+        <div class="modal-content">
+            <h5>Update Field Details</h5>
+            <label>Code:</label><input type="text" id="updateCode" class="form-control">
+            <label>Name:</label><input type="text" id="updateName" class="form-control">
+            <label>Location:</label><input type="text" id="updateLocation" class="form-control">
+            <label>Extent Size:</label><input type="text" id="updateExtent" class="form-control">
+            <label>Staff:</label><input type="text" id="updateStaff" class="form-control">
+            <label>Crop:</label><input type="text" id="updateCrop" class="form-control">
+
+            <!-- Image upload fields -->
+            <label>Field Image 1:</label><input type="file" id="updateFieldImg1" class="form-control">
+            <label>Field Image 2:</label><input type="file" id="updateFieldImg2" class="form-control">
+
+            <button id="saveUpdatedField" class="btn btn-success">Save</button>
+            <button onclick="closeUpdateModal()" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+
 </section>
 
 <section id="corp">
