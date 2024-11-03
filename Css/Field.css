@@ -52,10 +52,28 @@
 
 
 
-#fieldCardsContainer{
+#fieldCardsContainer {
     margin-left: 300px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on larger screens */
     gap: 70px;
     margin-top: -100px;
 }
+
+/* For medium screens (e.g., tablets), reduce to 2 columns */
+@media (max-width: 768px) {
+    #fieldCardsContainer {
+        grid-template-columns: repeat(2, 1fr);
+        margin-left: 0; /* Adjust the margin for smaller screens */
+    }
+}
+
+/* For small screens (e.g., phones), stack cards vertically in 1 column */
+@media (max-width: 576px) {
+    #fieldCardsContainer {
+        grid-template-columns: 1fr;
+        gap: 20px; /* Reduce gap for smaller screens */
+        margin-left: 50px; /* Remove the left margin for small screens */
+    }
+}
+
