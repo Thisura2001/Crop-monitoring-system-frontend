@@ -109,7 +109,7 @@ function openUpdateCropModal($cropCard) {
 
     // Populate modal fields
     $('#updateCropCode').val($cropCard.find('.crop-code').text());
-    $('#updateCropCommonName').val($cropCard.find('h5').text());
+    $('#updateCropCommonName').val($cropCard.find('.crop-common-name').text());
     $('#updateCropScientificName').val($cropCard.find('.crop-scientific-name').text());
     $('#updateCropCategory').val($cropCard.find('.crop-category').text());
     $('#updateCropSeason').val($cropCard.find('.crop-season').text());
@@ -129,7 +129,7 @@ $('#saveUpdatedCrop').on('click', function () {
 
     // Update card content with new values
     $cropCard.find('.crop-code').text($('#updateCropCode').val());
-    $cropCard.find('h5').text($('#updateCropCommonName').val());
+    $cropCard.find('.crop-common-name').text($('#updateCropCommonName').val());
     $cropCard.find('.crop-scientific-name').text($('#updateCropScientificName').val());
     $cropCard.find('.crop-category').text($('#updateCropCategory').val());
     $cropCard.find('.crop-season').text($('#updateCropSeason').val());
