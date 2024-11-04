@@ -22,7 +22,7 @@ function closeFiledForm() {
 }
 
 // Function to handle form submission
-document.getElementById("FieldForm").addEventListener("submit", function (e) {
+$("#fieldSaveBtn").on('click',function (e) {
     e.preventDefault();
 
     // Get form field values
@@ -129,7 +129,7 @@ closeUpdateModalBtn.addEventListener("click", function () {
 })
 
 // Function to save updated data to the card
-document.getElementById("saveUpdatedField").addEventListener("click", function () {
+$("#saveUpdatedField").on('click', function () {
     const card = document.updateTargetCard;
 
     // Update card content with new values from the modal
