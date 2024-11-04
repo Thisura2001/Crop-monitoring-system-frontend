@@ -93,6 +93,14 @@
     #cropFormCard {
         width: 100%;
     }
+    .crop-title{
+        font-size: 40px;
+        margin-left: -120px;
+    }
+    #cropFormCard{
+        margin-left: -200px;
+        width: 200%;
+    }
 }
 
 
