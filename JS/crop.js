@@ -1,24 +1,24 @@
 // Elements
-const addCropBtn = document.getElementById('addCropBtn');
-const cropFormCard = document.getElementById('cropFormCard');
-const closeCropForm = document.getElementById('closeCropForm');
-const corpCardsContainer = document.getElementById("corpCardsContainer");
-const updateCropModal = document.getElementById("updateCropModal");
-const closeUpdateCropModalBtn = document.getElementById("closeUpdateCropModalBtn");
+const $addCropBtn = $('#addCropBtn');
+const $cropFormCard = $('#cropFormCard');
+const $closeCropForm = $('#closeCropForm');
+const $corpCardsContainer = $('#corpCardsContainer');
+const $updateCropModal = $('#updateCropModal');
+const $closeUpdateCropModalBtn = $('#closeUpdateCropModalBtn');
 
 // Show crop form when clicking "Add New Crop"
-addCropBtn.addEventListener('click', () => {
-    cropFormCard.style.display = 'block';
+$addCropBtn.on('click', function () {
+    $cropFormCard.show();
 });
 
 // Hide the crop form when clicking close
-closeCropForm.addEventListener('click', () => {
-    cropFormCard.style.display = 'none';
+$closeCropForm.on('click', function () {
+    closeCropFormModal();
 });
 
 // Function to close crop form modal
 function closeCropFormModal() {
-    cropFormCard.style.display = "none";
+    $cropFormCard.hide();
 }
 
 // Preview image function
@@ -26,22 +26,23 @@ function previewImage(event) {
     const file = event.target.files[0];
     if (file) {
         const imgPreview = URL.createObjectURL(file);
-        document.getElementById("cropImagePreview").src = imgPreview;
+        $('#cropImagePreview').attr('src', imgPreview);
     }
 }
 
 // Handle crop form submission
-$("#cropForm").on('submit', function (e) {
+$('#cropForm').on('submit', function (e) {
     e.preventDefault();
 
     // Get form data
-    const cropCode = document.getElementById("cropCode").value;
-    const cropCommonName = document.getElementById("cropCommonName").value;
-    const cropScientificName = document.getElementById("cropScientificName").value;
-    const cropCategory = document.getElementById("cropCategory").value;
-    const cropSeason = document.getElementById("cropSeason").value;
-    const fieldId = document.getElementById("fieldId").value;
-    const cropImageFile = document.getElementById("cropImageFile").files[0];
+    const header = $('#cropFormTitle').text();
+    const cropCode = $('#cropCode').val();
+    const cropCommonName = $('#cropCommonName').val();
+    const cropScientificName = $('#cropScientificName').val();
+    const cropCategory = $('#cropCategory').val();
+    const cropSeason = $('#cropSeason').val();
+    const fieldId = $('#fieldId').val();
+    const cropImageFile = $('#cropImageFile')[0].files[0];
     let cropImagePreview = "";
 
     if (cropImageFile) {
@@ -49,38 +50,36 @@ $("#cropForm").on('submit', function (e) {
     }
 
     // Create crop card
-    const cropCard = document.createElement("div");
-    cropCard.className = "card mt-3";
-    cropCard.style.width = "300px";
-    cropCard.style.maxHeight = "500px";
-    cropCard.style.overflowY = "auto";
-    cropCard.innerHTML = `
-        <div class="card-header">
-            <h5>${cropCommonName}</h5>
+    const $cropCard = $(`
+        <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
+            <div class="card-header">
+                <h5>${header}</h5>
+            </div>
+            <div class="card-body">
+                ${cropImagePreview}
+                <p><strong>Code:</strong> <span class="crop-code">${cropCode}</span></p>
+                <p><strong>Scientific Name:</strong> <span class="crop-scientific-name">${cropScientificName}</span></p>
+                <p><strong>Common Name:</strong> <span class="crop-common-name">${cropCommonName}</span></p>
+                <p><strong>Category:</strong> <span class="crop-category">${cropCategory}</span></p>
+                <p><strong>Season:</strong> <span class="crop-season">${cropSeason}</span></p>
+                <p><strong>Field ID:</strong> <span class="crop-field-id">${fieldId}</span></p>
+                <button class="btn btn-success cropCardUpdateBtn">Update</button>
+                <button class="btn btn-danger cropCardDeleteBtn">Delete</button>
+            </div>
         </div>
-        <div class="card-body">
-            ${cropImagePreview}
-            <p><strong>Code:</strong> <span class="crop-code">${cropCode}</span></p>
-            <p><strong>Scientific Name:</strong> <span class="crop-scientific-name">${cropScientificName}</span></p>
-            <p><strong>Category:</strong> <span class="crop-category">${cropCategory}</span></p>
-            <p><strong>Season:</strong> <span class="crop-season">${cropSeason}</span></p>
-            <p><strong>Field ID:</strong> <span class="crop-field-id">${fieldId}</span></p>
-            <button class="btn btn-success cropCardUpdateBtn">Update</button>
-            <button class="btn btn-danger cropCardDeleteBtn">Delete</button>
-        </div>
-    `;
+    `);
 
-    corpCardsContainer.appendChild(cropCard);
-    document.getElementById("cropForm").reset();
+    $corpCardsContainer.append($cropCard);
+    $('#cropForm')[0].reset(); // Reset form
     closeCropFormModal();
 });
 
 // Event listener for delete and update
-corpCardsContainer.addEventListener("click", function (e) {
-    const cropCard = e.target.closest(".card");
+$corpCardsContainer.on('click', '.cropCardDeleteBtn, .cropCardUpdateBtn', function (e) {
+    const $cropCard = $(this).closest('.card');
 
     // Delete button
-    if (e.target.classList.contains("cropCardDeleteBtn")) {
+    if ($(this).hasClass('cropCardDeleteBtn')) {
         Swal.fire({
             title: 'Are you sure?',
             text: "Do you want to delete this crop card?",
@@ -92,56 +91,56 @@ corpCardsContainer.addEventListener("click", function (e) {
             cancelButtonText: 'No, cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                cropCard.remove();
+                $cropCard.remove();
                 Swal.fire('Deleted!', 'Your crop card has been deleted.', 'success');
             }
         });
     }
 
     // Update button
-    if (e.target.classList.contains("cropCardUpdateBtn")) {
-        openUpdateCropModal(cropCard);
+    if ($(this).hasClass('cropCardUpdateBtn')) {
+        openUpdateCropModal($cropCard);
     }
 });
 
 // Open update modal with current card data
-function openUpdateCropModal(cropCard) {
-    document.updateTargetCropCard = cropCard;
+function openUpdateCropModal($cropCard) {
+    document.updateTargetCropCard = $cropCard[0]; // Store the DOM element
 
     // Populate modal fields
-    document.getElementById("updateCropCode").value = cropCard.querySelector(".crop-code").textContent;
-    document.getElementById("updateCropCommonName").value = cropCard.querySelector("h5").textContent;
-    document.getElementById("updateCropScientificName").value = cropCard.querySelector(".crop-scientific-name").textContent;
-    document.getElementById("updateCropCategory").value = cropCard.querySelector(".crop-category").textContent;
-    document.getElementById("updateCropSeason").value = cropCard.querySelector(".crop-season").textContent;
-    document.getElementById("updateFieldId").value = cropCard.querySelector(".crop-field-id").textContent;
+    $('#updateCropCode').val($cropCard.find('.crop-code').text());
+    $('#updateCropCommonName').val($cropCard.find('h5').text());
+    $('#updateCropScientificName').val($cropCard.find('.crop-scientific-name').text());
+    $('#updateCropCategory').val($cropCard.find('.crop-category').text());
+    $('#updateCropSeason').val($cropCard.find('.crop-season').text());
+    $('#updateFieldId').val($cropCard.find('.crop-field-id').text());
 
-    updateCropModal.style.display = "block";
+    $updateCropModal.show();
 }
 
 // Close update modal
-closeUpdateCropModalBtn.addEventListener("click", function () {
-    updateCropModal.style.display = "none";
+$closeUpdateCropModalBtn.on('click', function () {
+    $updateCropModal.hide();
 });
 
 // Save updated crop data
-$("#saveUpdatedCrop").on('click', function () {
-    const cropCard = document.updateTargetCropCard;
+$('#saveUpdatedCrop').on('click', function () {
+    const $cropCard = $(document.updateTargetCropCard); // Use jQuery to wrap the DOM element
 
     // Update card content with new values
-    cropCard.querySelector(".crop-code").textContent = document.getElementById("updateCropCode").value;
-    cropCard.querySelector("h5").textContent = document.getElementById("updateCropCommonName").value;
-    cropCard.querySelector(".crop-scientific-name").textContent = document.getElementById("updateCropScientificName").value;
-    cropCard.querySelector(".crop-category").textContent = document.getElementById("updateCropCategory").value;
-    cropCard.querySelector(".crop-season").textContent = document.getElementById("updateCropSeason").value;
-    cropCard.querySelector(".crop-field-id").textContent = document.getElementById("updateFieldId").value;
+    $cropCard.find('.crop-code').text($('#updateCropCode').val());
+    $cropCard.find('h5').text($('#updateCropCommonName').val());
+    $cropCard.find('.crop-scientific-name').text($('#updateCropScientificName').val());
+    $cropCard.find('.crop-category').text($('#updateCropCategory').val());
+    $cropCard.find('.crop-season').text($('#updateCropSeason').val());
+    $cropCard.find('.crop-field-id').text($('#updateFieldId').val());
 
     // Update image preview if a new one is selected
-    const updatedImg = document.getElementById("updateCropImg1").files[0];
+    const updatedImg = $('#updateCropImg1')[0].files[0];
     if (updatedImg) {
-        cropCard.querySelector(".crop-img").src = URL.createObjectURL(updatedImg);
+        $cropCard.find('.crop-img').attr('src', URL.createObjectURL(updatedImg));
     }
 
     Swal.fire("Updated!", "Crop details have been updated.", "success");
-    updateCropModal.style.display = "none";
+    $updateCropModal.hide();
 });
