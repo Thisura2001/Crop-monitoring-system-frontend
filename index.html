@@ -572,6 +572,62 @@
     </div>
     <!-- Section for displaying saved corp cards -->
     <div id="corpCardsContainer" class="d-flex flex-wrap" ></div>
+
+    <!-- Crop Update Modal -->
+    <div id="updateCropModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeUpdateCropModal()">X</div>
+        <div class="modal-content">
+            <h3>Update Crop Details</h3>
+
+            <!-- Crop Code -->
+            <div class="form-group">
+                <label for="updateCropCode">Crop Code:</label>
+                <input type="text" id="updateCropCode" class="form-control">
+            </div>
+
+            <!-- Common Name -->
+            <div class="form-group">
+                <label for="updateCropCommonName">Common Name:</label>
+                <input type="text" id="updateCropCommonName" class="form-control">
+            </div>
+
+            <!-- Scientific Name -->
+            <div class="form-group">
+                <label for="updateCropScientificName">Scientific Name:</label>
+                <input type="text" id="updateCropScientificName" class="form-control">
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+                <label for="updateCropCategory">Category:</label>
+                <input type="text" id="updateCropCategory" class="form-control">
+            </div>
+
+            <!-- Season -->
+            <div class="form-group">
+                <label for="updateCropSeason">Season:</label>
+                <input type="text" id="updateCropSeason" class="form-control">
+            </div>
+
+            <!-- Field -->
+            <div class="form-group">
+                <label for="updateFieldId">Field ID:</label>
+                <input type="text" id="updateFieldId" class="form-control">
+            </div>
+
+            <!-- Crop Image 1 -->
+            <div class="form-group">
+                <label for="updateCropImg1">Crop Image:</label>
+                <input type="file" id="updateCropImg1" class="form-control">
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button id="saveUpdatedCrop" class="btn btn-success">Update</button>
+                <button class="btn btn-secondary" id="closeUpdateCropModalBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
 </section>
 <section id="monitory">
     <h2 class="field-title">Log Management...

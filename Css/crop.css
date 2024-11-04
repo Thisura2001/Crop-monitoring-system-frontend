@@ -94,3 +94,89 @@
         width: 100%;
     }
 }
+
+
+
+
+
+/* Container for Crop Cards */
+#cropCardsContainer {
+    margin-left: 300px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on larger screens */
+    gap: 70px;
+    margin-top: -100px;
+}
+
+/* Medium screens (e.g., tablets): 2 columns */
+@media (max-width: 768px) {
+    #cropCardsContainer {
+        grid-template-columns: repeat(2, 1fr);
+        margin-left: 0; /* Adjust margin for smaller screens */
+    }
+}
+
+/* Small screens (e.g., phones): 1 column */
+@media (max-width: 576px) {
+    #cropCardsContainer {
+        grid-template-columns: 1fr;
+        gap: 20px; /* Reduce gap for smaller screens */
+        margin-left: 50px;
+    }
+}
+
+/* Center the crop update modal */
+#updateCropModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f2e3d1; /* Light background for the crop modal */
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    height: fit-content;
+}
+
+#updateCropModal label {
+    color: black;
+    font-weight: bold;
+}
+
+#updateCropModal h3 {
+    margin-top: 0;
+    font-weight: bolder;
+    font-size: 24px;
+    color: #4b8a3d; /* Greenish color for crop modal header */
+    text-align: center;
+}
+
+/* Overlay background for crop modal */
+.crop-modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Responsive adjustments for the crop modal */
+@media (max-width: 600px) {
+    #updateCropModal {
+        width: 90%;
+    }
+}
