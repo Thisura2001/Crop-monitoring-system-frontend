@@ -31,7 +31,7 @@ function previewImage(event) {
 }
 
 // Handle crop form submission
-$('#cropForm').on('submit', function (e) {
+$('#cropSaveBtn').on('click', function (e) {
     e.preventDefault();
 
     // Get form data

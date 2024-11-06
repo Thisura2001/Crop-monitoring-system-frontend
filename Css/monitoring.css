@@ -67,3 +67,79 @@
         width: 100%;
     }
 }
+/* Center the update modal for log service */
+#updateLogModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e0f7fa;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    max-width: 450px;
+    width: 100%;
+    box-sizing: border-box;
+    height: fit-content;
+}
+
+#updateLogModal label {
+    color: black;
+    font-weight: bold;
+}
+
+#updateLogModal h3 {
+    margin-top: 0;
+    font-weight: bolder;
+    font-size: 24px;
+    color: #00796b;
+    text-align: center;
+}
+
+/* Overlay background for modal */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    #updateLogModal {
+        width: 90%;
+    }
+}
+
+/* Add additional styling for inputs and form elements */
+#updateLogModal input, #updateLogModal select, #updateLogModal textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#updateLogModal .log-img-preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+#updateLogModal .file-input-wrapper {
+    margin-top: 10px;
+}

@@ -5,6 +5,7 @@ const $closeLogForm = $('#closeLogForm');
 const $logCardsContainer = $('#logCardsContainer');
 const $updateLogModal = $('#updateLogModal');
 const $closeUpdateLogModalBtn = $('#closeUpdateLogModalBtn');
+let updateTargetLogCard = null; // Track the current log card for updating
 
 // Show log form when clicking "Add New Log"
 $addLogBtn.on('click', function () {
@@ -30,8 +31,15 @@ function previewLogImage(event) {
     }
 }
 
+// Handle the case where the select field may allow multiple selections or single selection
+function getSelectValues(selectId) {
+    const select = $(selectId);
+    const values = select.val();
+    return Array.isArray(values) ? values.join(', ') : values;
+}
+
 // Handle log form submission
-$('#logForm').on('submit', function (e) {
+$('#saveLogBtn').on('click', function (e) {
     e.preventDefault();
 
     // Get form data
@@ -39,9 +47,9 @@ $('#logForm').on('submit', function (e) {
     const logCode = $('#logCode').val();
     const logDate = $('#logDate').val();
     const logDetails = $('#logDetails').val();
-    const fieldList = $('#fieldList').val().join(', ');
-    const cropList = $('#cropList').val().join(', ');
-    const staffList = $('#staffList').val().join(', ');
+    const fieldList = getSelectValues('#fieldList');
+    const cropList = getSelectValues('#cropList');
+    const staffList = getSelectValues('#staffList');
     const observedImageFile = $('#observedImage')[0].files[0];
     let observedImagePreview = "";
 
@@ -71,46 +79,55 @@ $('#logForm').on('submit', function (e) {
 
     $logCardsContainer.append($logCard);
     $('#logForm')[0].reset(); // Reset form
+    $('#observedImagePreview').attr('src', ''); // Clear image preview
     closeLogFormModal();
 });
 
-// Event listener for delete and update
-$logCardsContainer.on('click', '.logCardDeleteBtn, .logCardUpdateBtn', function (e) {
+
+/// Event listener for delete
+$logCardsContainer.on('click', '.logCardDeleteBtn', function (e) {
     const $logCard = $(this).closest('.card');
 
-    // Delete button
-    if ($(this).hasClass('logCardDeleteBtn')) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to delete this log card?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $logCard.remove();
-                Swal.fire('Deleted!', 'Your log card has been deleted.', 'success');
-            }
-        });
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to delete this log card?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $logCard.remove();
+            Swal.fire('Deleted!', 'Your log card has been deleted.', 'success');
+        }
+    });
+});
 
-    // Update button
-    if ($(this).hasClass('logCardUpdateBtn')) {
-        openUpdateLogModal($logCard);
-    }
+// Event listener for update
+$logCardsContainer.on('click', '.logCardUpdateBtn', function (e) {
+    const $logCard = $(this).closest('.card');
+    openUpdateLogModal($logCard);
 });
 
 // Open update modal with current card data
 function openUpdateLogModal($logCard) {
-    document.updateTargetLogCard = $logCard[0]; // Store the DOM element
+    updateTargetLogCard = $logCard; // Store the jQuery log card element for updating
 
     // Populate modal fields
     $('#updateLogCode').val($logCard.find('.log-code').text());
     $('#updateLogDate').val($logCard.find('.log-date').text());
     $('#updateLogDetails').val($logCard.find('.log-details').text());
+    $('#updateFieldList').val($logCard.find('.log-field-list').text().split(', '));
+    $('#updateCropList').val($logCard.find('.log-crop-list').text().split(', '));
+    $('#updateStaffList').val($logCard.find('.log-staff-list').text().split(', '));
+
+    // Set the image preview if available
+    const imgSrc = $logCard.find('.log-img').attr('src');
+    if (imgSrc) {
+        $('#updateObservedImagePreview').attr('src', imgSrc);
+    }
 
     $updateLogModal.show();
 }
@@ -122,17 +139,22 @@ $closeUpdateLogModalBtn.on('click', function () {
 
 // Save updated log data
 $('#saveUpdatedLog').on('click', function () {
-    const $logCard = $(document.updateTargetLogCard); // Use jQuery to wrap the DOM element
+    if (!updateTargetLogCard) return;
 
     // Update card content with new values
-    $logCard.find('.log-code').text($('#updateLogCode').val());
-    $logCard.find('.log-date').text($('#updateLogDate').val());
-    $logCard.find('.log-details').text($('#updateLogDetails').val());
+    updateTargetLogCard.find('.log-code').text($('#updateLogCode').val());
+    updateTargetLogCard.find('.log-date').text($('#updateLogDate').val());
+    updateTargetLogCard.find('.log-details').text($('#updateLogDetails').val());
+
+    // Ensure join() is used for array fields (multiple items)
+    updateTargetLogCard.find('.log-field-list').text($('#updateFieldList').val().join(', '));
+    updateTargetLogCard.find('.log-crop-list').text($('#updateCropList').val().join(', '));
+    updateTargetLogCard.find('.log-staff-list').text($('#updateStaffList').val().join(', '));
 
     // Update image preview if a new one is selected
     const updatedImg = $('#updateObservedImage')[0].files[0];
     if (updatedImg) {
-        $logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
+        updateTargetLogCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
     }
 
     Swal.fire("Updated!", "Log details have been updated.", "success");
