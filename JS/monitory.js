@@ -71,8 +71,8 @@ $('#saveLogBtn').on('click', function (e) {
                 <p><strong>Field List:</strong> <span class="log-field-list">${fieldList}</span></p>
                 <p><strong>Crop List:</strong> <span class="log-crop-list">${cropList}</span></p>
                 <p><strong>Staff List:</strong> <span class="log-staff-list">${staffList}</span></p>
-                <button class="btn btn-success logCardUpdateBtn">Update</button>
-                <button class="btn btn-danger logCardDeleteBtn">Delete</button>
+                <button class="btn btn-success" id="logCardUpdateBtn">Update</button>
+                <button class="btn btn-danger" id="logCardDeleteBtn">Delete</button>
             </div>
         </div>
     `);
@@ -84,7 +84,7 @@ $('#saveLogBtn').on('click', function (e) {
 });
 
 // Event listener for delete
-$logCardsContainer.on('click', '.logCardDeleteBtn', function (e) {
+$('#logCardDeleteBtn').on('click', function (e){
     const $logCard = $(this).closest('.card');
 
     Swal.fire({
