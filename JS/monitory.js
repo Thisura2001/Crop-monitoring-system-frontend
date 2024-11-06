@@ -26,6 +26,7 @@ $('#logForm').on('submit', function (e) {
     e.preventDefault();
 
     // Get form data
+    const header = $('#logFormTitle').text();
     const logCode = $('#logCode').val();
     const logDate = $('#logDate').val();
     const logDetails = $('#logDetails').val();
@@ -36,17 +37,18 @@ $('#logForm').on('submit', function (e) {
     let observedImagePreview = "";
 
     if (observedImageFile) {
-        observedImagePreview = `<img src="${URL.createObjectURL(observedImageFile)}" class="card-img" style="width: 100%; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Observed Image">`;
+        observedImagePreview = `<img src="${URL.createObjectURL(observedImageFile)}" class="log-img" style="width: 100%; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Observed Image">`;
     }
 
     // Create log card
     const logCard = $(`
         <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
             <div class="card-header">
-                <h5>Log: ${logCode}</h5>
+                <h5>Log Details</h5> <!-- Added log-code class -->
             </div>
             <div class="card-body">
                 ${observedImagePreview}
+                 <p><strong>Log ID:</strong> <span class="log-code">${logCode}</span></p>
                 <p><strong>Log Date:</strong> <span class="log-date">${logDate}</span></p>
                 <p><strong>Details:</strong> <span class="log-details">${logDetails}</span></p>
                 <p><strong>Field ID:</strong> <span class="log-field-id">${fieldId}</span></p>
@@ -95,7 +97,7 @@ function openUpdateLogModal(logCard) {
     document.updateTargetLogCard = logCard[0]; // Store the DOM element
 
     // Populate modal fields
-    $('#updateLogCode').val(logCard.find('.log-code').text());
+    $('#updateLogCode').val(logCard.find('.log-code').text().replace('Log: ', '')); // Remove "Log: " text
     $('#updateLogDate').val(logCard.find('.log-date').text());
     $('#updateLogDetails').val(logCard.find('.log-details').text());
     $('#updateFieldList').val(logCard.find('.log-field-id').text());
@@ -125,7 +127,9 @@ $('#saveUpdatedLog').on('click', function () {
     // Update image preview if a new one is selected
     const updatedImg = $('#updateObservedImage')[0].files[0];
     if (updatedImg) {
-        logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
+        logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg)); // Update the image source
+    } else {
+        logCard.find('.log-img').attr('src', ''); // Reset image if no new file
     }
 
     Swal.fire("Updated!", "Log details have been updated.", "success");
