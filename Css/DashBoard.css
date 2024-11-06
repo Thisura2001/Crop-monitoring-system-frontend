@@ -1,4 +1,101 @@
-#dashboard{
-    margin-left: 240px; /* Space for the fixed sidebar */
-    padding: 120px 20px 20px;
+/* Dashboard CSS */
+#dashboard {
+    padding-left: 260px; /* Adjust to avoid overlap with sidebar */
+    background-color: #f4f4f9;
+    min-height: 100vh;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+.currentTimeWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #172851; /* Green background color */
+    color: #fff; /* White text color */
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px auto;
+    width: fit-content;
+}
+
+#currentTime {
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+.staticCard  {
+    background-color: #5d9b49;
+    color: #000;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.staticCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.staticCard h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bolder;
+}
+
+.staticCard p {
+    font-size: 2rem;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+
+/* Responsive Grid Layout */
+@media (min-width: 768px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.charts {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .charts {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.chart-container {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
 }

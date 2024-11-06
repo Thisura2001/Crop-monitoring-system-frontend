@@ -179,7 +179,35 @@
 
 <!-- Dashboard Section -->
 <section id="dashboard">
-    <h1>Welcome to the Dashboard</h1>
+    <!-- Time Display -->
+    <div class="currentTimeWrapper">
+        <div id="currentTime"></div>
+    </div>
+    <main class="flex-1 p-6">
+<!--        <h1 class="text-3xl font-bold mb-6">Welcome to the Dashboard</h1>-->
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 staticCard">
+            <div class="card bg-white shadow-md p-5 rounded-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Crops
+                    <i class="fa-solid fa-seedling"></i>
+                </h2>
+                <p class="text-2xl font-bold" id="cropCount">50</p>
+            </div>
+            <div class="card bg-white shadow-md p-5 rounded-lg">
+                <h2 class="text-xl font-semibold mb-2">Total Vehicles
+                    <i class="fa-solid fa-car"></i>
+                </h2>
+                <p class="text-2xl font-bold" id="vehicleCount">20</p>
+            </div>
+            <div class="card bg-white shadow-md p-5 rounded-lg">
+                <h2 class="text-xl font-semibold mb-2">Equipment Count
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                </h2>
+                <p class="text-2xl font-bold" id="equipmentCount">15</p>
+            </div>
+        </div>
+    </main>
 </section>
 
 <section id="staff">
@@ -954,6 +982,8 @@
 <script src="JS/equipment.js" type="module"></script>
 <script src="JS/monitory.js" type="module"></script>
 <script src="JS/staff.js" type="module"></script>
+<script src="JS/dashboard.js" type="module"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
