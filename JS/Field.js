@@ -1,24 +1,24 @@
-// Get the elements
-const $addFieldBtn = $('#addFieldBtn');
-const $fieldFormCard = $('#fieldFormCard');
-const $closeFieldForm = $('#closeFieldForm');
-const $closeUpdateModalBtn = $('#closeUpdateModalBtn');
-const $fieldCardsContainer = $('#fieldCardsContainer');
-const $updateFieldModal = $('#updateFieldModal');
+// Elements
+const addFieldBtn = $('#addFieldBtn');
+const fieldFormCard = $('#fieldFormCard');
+const closeFieldForm = $('#closeFieldForm');
+const closeUpdateModalBtn = $('#closeUpdateModalBtn');
+const fieldCardsContainer = $('#fieldCardsContainer');
+const updateFieldModal = $('#updateFieldModal');
 
 // Show the field card when clicking "Add New Field"
-$addFieldBtn.on('click', () => {
-    $fieldFormCard.show();
+addFieldBtn.on('click', () => {
+    fieldFormCard.show();
 });
 
 // Hide the field card when clicking the close button
-$closeFieldForm.on('click', () => {
-    $fieldFormCard.hide();
+closeFieldForm.on('click', () => {
+    fieldFormCard.hide();
 });
 
 // Close the field form modal function
 function closeFiledForm() {
-    $fieldFormCard.hide();
+    fieldFormCard.hide();
 }
 
 // Function to handle form submission
@@ -67,7 +67,7 @@ $("#fieldSaveBtn").on('click', function (e) {
     `);
 
     // Append the new card to the container
-    $fieldCardsContainer.append(card);
+    fieldCardsContainer.append(card);
 
     // Reset the form and close it if necessary
     $("#FieldForm")[0].reset();
@@ -75,7 +75,7 @@ $("#fieldSaveBtn").on('click', function (e) {
 });
 
 // Event listener for delete and update buttons with event delegation
-$fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
+fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
     const card = $(this).closest(".card");
     Swal.fire({
         title: 'Are you sure?',
@@ -95,7 +95,7 @@ $fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
 });
 
 // Handle Update button
-$fieldCardsContainer.on("click", ".fieldCardUpdateBtn", function () {
+fieldCardsContainer.on("click", ".fieldCardUpdateBtn", function () {
     const card = $(this).closest(".card");
     openUpdateModal(card);
 });
@@ -113,12 +113,12 @@ function openUpdateModal(card) {
     // $("#updateCrop").val(card.find(".field-crop").text());
 
     // Show the modal
-    $updateFieldModal.show();
+    updateFieldModal.show();
 }
 
 // Close update modal
-$closeUpdateModalBtn.on("click", function () {
-    $updateFieldModal.hide();
+closeUpdateModalBtn.on("click", function () {
+    updateFieldModal.hide();
 });
 
 // Function to save updated data to the card
