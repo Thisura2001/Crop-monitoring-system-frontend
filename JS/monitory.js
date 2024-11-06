@@ -83,8 +83,7 @@ $('#saveLogBtn').on('click', function (e) {
     closeLogFormModal();
 });
 
-
-/// Event listener for delete
+// Event listener for delete
 $logCardsContainer.on('click', '.logCardDeleteBtn', function (e) {
     const $logCard = $(this).closest('.card');
 
@@ -123,11 +122,8 @@ function openUpdateLogModal($logCard) {
     $('#updateCropList').val($logCard.find('.log-crop-list').text().split(', '));
     $('#updateStaffList').val($logCard.find('.log-staff-list').text().split(', '));
 
-    // Set the image preview if available
-    const imgSrc = $logCard.find('.log-img').attr('src');
-    if (imgSrc) {
-        $('#updateObservedImagePreview').attr('src', imgSrc);
-    }
+    // Clear the image upload field
+    $('#updateObservedImage').val('');
 
     $updateLogModal.show();
 }
@@ -150,12 +146,6 @@ $('#saveUpdatedLog').on('click', function () {
     updateTargetLogCard.find('.log-field-list').text($('#updateFieldList').val().join(', '));
     updateTargetLogCard.find('.log-crop-list').text($('#updateCropList').val().join(', '));
     updateTargetLogCard.find('.log-staff-list').text($('#updateStaffList').val().join(', '));
-
-    // Update image preview if a new one is selected
-    const updatedImg = $('#updateObservedImage')[0].files[0];
-    if (updatedImg) {
-        updateTargetLogCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
-    }
 
     Swal.fire("Updated!", "Log details have been updated.", "success");
     $updateLogModal.hide();

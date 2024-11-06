@@ -726,7 +726,38 @@
             <!-- Observed Image -->
             <div class="form-group">
                 <label for="updateObservedImage">Observed Image:</label>
-                <input type="file" id="updateObservedImage" class="form-control">
+                <input type="file" id="updateObservedImage" class="form-control" onchange="previewUpdateLogImage(event)">
+                <img id="updateObservedImagePreview" class="mt-2" style="width: 100%; max-height: 150px; display: none;" />
+            </div>
+
+            <!-- Field List -->
+            <div class="form-group">
+                <label for="updateFieldList">Field List:</label>
+                <select class="form-select" id="updateFieldList">
+                    <option value="Field1">Field1</option>
+                    <option value="Field2">Field2</option>
+                    <option value="Field3">Field3</option>
+                </select>
+            </div>
+
+            <!-- Crop List -->
+            <div class="form-group">
+                <label for="updateCropList">Crop List:</label>
+                <select class="form-select" id="updateCropList">
+                    <option value="Crop1">Crop1</option>
+                    <option value="Crop2">Crop2</option>
+                    <option value="Crop3">Crop3</option>
+                </select>
+            </div>
+
+            <!-- Staff List -->
+            <div class="form-group">
+                <label for="updateStaffList">Staff List:</label>
+                <select class="form-select" id="updateStaffList">
+                    <option value="ST123">ST123 - John Doe</option>
+                    <option value="ST124">ST124 - Jane Smith</option>
+                    <option value="ST125">ST125 - Kamal</option>
+                </select>
             </div>
 
             <!-- Buttons -->
