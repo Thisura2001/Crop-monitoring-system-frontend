@@ -411,15 +411,6 @@
                             <option value="ST124">S-002</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label for="cmbCropId" class="form-label">Crop ID</label>
-                        <select class="form-select" id="cmbCropId" required>
-                            <option selected disabled value="">Select Crop...</option>
-                            <!-- Populate with dynamic options -->
-                            <option value="ST123">CR-001</option>
-                            <option value="ST124">CR-002</option>
-                        </select>
-                    </div>
                 </div>
 
                 <!-- Save Button -->
@@ -467,11 +458,11 @@
                 <input type="text" id="updateStaff" class="form-control">
             </div>
 
-            <!-- Crop -->
-            <div class="form-group">
-                <label for="updateCrop">Crop:</label>
-                <input type="text" id="updateCrop" class="form-control">
-            </div>
+<!--            &lt;!&ndash; Crop &ndash;&gt;-->
+<!--            <div class="form-group">-->
+<!--                <label for="updateCrop">Crop:</label>-->
+<!--                <input type="text" id="updateCrop" class="form-control">-->
+<!--            </div>-->
 
             <!-- Field Image 1 -->
             <div class="form-group">
@@ -698,6 +689,46 @@
                 <!-- Save Button -->
                 <button type="submit" class="btn btn-success mt-3">Save <i class="fa-regular fa-floppy-disk"></i></button>
             </form>
+        </div>
+    </div>
+    <!-- Section for displaying saved log cards -->
+    <div id="logCardsContainer" class="d-flex flex-wrap"></div>
+
+    <!-- Log Update Modal -->
+    <div id="updateLogModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeUpdateLogModal()">X</div>
+        <div class="modal-content">
+            <h3>Update Log Details</h3>
+
+            <!-- Log Code -->
+            <div class="form-group">
+                <label for="updateLogCode">Log Code:</label>
+                <input type="text" id="updateLogCode" class="form-control">
+            </div>
+
+            <!-- Log Date -->
+            <div class="form-group">
+                <label for="updateLogDate">Log Date:</label>
+                <input type="date" id="updateLogDate" class="form-control">
+            </div>
+
+            <!-- Log Details / Observation -->
+            <div class="form-group">
+                <label for="updateLogDetails">Log Details / Observation:</label>
+                <textarea id="updateLogDetails" class="form-control"></textarea>
+            </div>
+
+            <!-- Observed Image -->
+            <div class="form-group">
+                <label for="updateObservedImage">Observed Image:</label>
+                <input type="file" id="updateObservedImage" class="form-control">
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button id="saveUpdatedLog" class="btn btn-success">Update</button>
+                <button class="btn btn-secondary" onclick="closeUpdateLogModal()">Cancel</button>
+            </div>
         </div>
     </div>
 </section>
