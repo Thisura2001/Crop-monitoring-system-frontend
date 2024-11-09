@@ -30,8 +30,6 @@ $("#fieldSaveBtn").on('click', function (e) {
     const name = $("#fieldName").val();
     const location = $("#location").val();
     const extent = $("#extent").val();
-    const staff = $("#cmbStaffId option:selected").text();
-    const crop = $("#cmbCropId option:selected").text();
 
     // Get the uploaded images and create previews
     const img1 = $("#fieldImg01")[0].files[0];
@@ -59,7 +57,6 @@ $("#fieldSaveBtn").on('click', function (e) {
                 <p><strong>Name:</strong> <span class="field-name">${name}</span></p>
                 <p><strong>Location:</strong> <span class="field-location">${location}</span></p>
                 <p><strong>Extent Size:</strong> <span class="field-extent">${extent}</span></p>
-                <p><strong>Staff:</strong> <span class="field-staff">${staff}</span></p>
                 <button class="btn btn-success fieldCardUpdateBtn">Update</button>
                 <button class="btn btn-danger FieldCardDeleteBtn">Delete</button>
             </div>
@@ -109,8 +106,6 @@ function openUpdateModal(card) {
     $("#updateName").val(card.find(".field-name").text());
     $("#updateLocation").val(card.find(".field-location").text());
     $("#updateExtent").val(card.find(".field-extent").text());
-    $("#updateStaff").val(card.find(".field-staff").text());
-    // $("#updateCrop").val(card.find(".field-crop").text());
 
     // Show the modal
     updateFieldModal.show();
@@ -130,8 +125,6 @@ $("#saveUpdatedField").on('click', function () {
     card.find(".field-name").text($("#updateName").val());
     card.find(".field-location").text($("#updateLocation").val());
     card.find(".field-extent").text($("#updateExtent").val());
-    card.find(".field-staff").text($("#updateStaff").val());
-    // card.find(".field-crop").text($("#updateCrop").val());
 
     // Handle image updates
     const img1 = $("#updateFieldImg1")[0].files[0];
