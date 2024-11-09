@@ -19,12 +19,6 @@
     display: none;
     position: relative;
 }
-#btnVehicleUpdate{
-    width: 100px;
-    margin-left: 120px;
-    margin-top: -52px!important;
-
-}
 /* Card header with close button */
 #vehicleFormCard .card-header {
     display: flex;

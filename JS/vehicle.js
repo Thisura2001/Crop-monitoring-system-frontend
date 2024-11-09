@@ -24,6 +24,21 @@ closeVehicleFormBtn.addEventListener('click', closeVehicleForm);
 $(document).ready(function() {
     let editingRow = null; // Track the row being edited
 
+    // Show the vehicle form card when "Add New Vehicle" button is clicked
+    $("#addVehicleBtn").on("click", function() {
+        $("#vehicleFormCard").show();
+        $("#btnVehicleSave").show();
+        $("#btnVehicleUpdate").hide();
+        $("#vehicleForm")[0].reset(); // Clear form fields
+        editingRow = null;
+    });
+
+    // Close the vehicle form card
+    $("#closeVehicleForm").on("click", function() {
+        $("#vehicleFormCard").hide();
+        $("#vehicleForm")[0].reset();
+        editingRow = null;
+    });
     // Handle Save button click for adding a new vehicle
     $("#btnVehicleSave").on("click", function(event) {
         event.preventDefault();
@@ -135,5 +150,8 @@ $(document).ready(function() {
         $("#fuelType").val(editingRow.find("td:eq(3)").text());
         $("#status").val(editingRow.find("td:eq(4)").text());
         $("#VehicleStaffId").val(editingRow.find("td:eq(5)").text());
+
+        $("#btnVehicleSave").hide();
+        $("#btnVehicleUpdate").show();
     });
 });

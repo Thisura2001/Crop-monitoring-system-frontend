@@ -23,6 +23,22 @@ closeEquipmentFormBtn.addEventListener('click', closeEquipmentForm);
 $(document).ready(function() {
     let editingRow = null; // Track the row being edited
 
+    // Show the equipment form card when "Add New Equipment" button is clicked
+    $("#addEquipmentBtn").on("click", function() {
+        $("#equipmentFormCard").show();
+        $("#btnEquipmentSave").show();
+        $("#btnEquipmentUpdate").hide();
+        $("#equipmentForm")[0].reset(); // Clear form fields
+        editingRow = null;
+    });
+
+    // Close the equipment form card
+    $("#closeEquipmentForm").on("click", function() {
+        $("#equipmentFormCard").hide();
+        $("#equipmentForm")[0].reset();
+        editingRow = null;
+    });
+
     // Handle Save button click for adding new equipment
     $("#btnEquipmentSave").on("click", function(event) {
         event.preventDefault();
@@ -134,5 +150,8 @@ $(document).ready(function() {
         $("#equipmentStatus").val(editingRow.find("td:eq(3)").text());
         $("#assignedStaff").val(editingRow.find("td:eq(4)").text());
         $("#assignedField").val(editingRow.find("td:eq(5)").text());
+
+        $("#btnEquipmentSave").hide();
+        $("#btnEquipmentUpdate").show();
     });
 });

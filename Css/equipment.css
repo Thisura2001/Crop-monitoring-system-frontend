@@ -50,12 +50,6 @@
     font-size: 14px;
     font-weight: bold;
 }
-#btnEquipmentUpdate{
-    width: 100px;
-    margin-left: 120px;
-    margin-top: -52px!important;
-
-}
 /* Form field styling */
 .card-body .form-label {
     font-weight: 600;
