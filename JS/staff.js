@@ -43,7 +43,6 @@ $(document).ready(function() {
         // Get form values
         const staffId = $("#staffId").val();
         const firstName = $("#StaffFirstName").val();
-        const lastName = $("#StaffLastName").val();
         const designation = $("#designation").val();
         const field = $("#staffField").val();
         const vehicle = $("#staffVehicle").val();
@@ -60,7 +59,6 @@ $(document).ready(function() {
             <tr>
                 <td>${staffId}</td>
                 <td>${firstName}</td>
-                <td>${lastName}</td>
                 <td>${designation}</td>
                 <td>${field}</td>
                 <td>${vehicle}</td>
@@ -92,7 +90,6 @@ $(document).ready(function() {
         const updatedValues = {
             staffId: $("#staffId").val(),
             firstName: $("#StaffFirstName").val(),
-            lastName: $("#StaffLastName").val(),
             designation: $("#designation").val(),
             field: $("#staffField").val(),
             vehicle: $("#staffVehicle").val(),
@@ -164,17 +161,16 @@ $(document).ready(function() {
 
         $("#staffId").val(rowData[0]);
         $("#StaffFirstName").val(rowData[1]);
-        $("#StaffLastName").val(rowData[2]);
-        $("#designation").val(rowData[3]);
-        $("#staffField").val(rowData[4]);
-        $("#staffVehicle").val(rowData[5]);
-        $("#gender").val(rowData[6]);
-        $("#joinedDate").val(rowData[7]);
-        $("#dob").val(rowData[8]);
-        $("#contactNo").val(rowData[9]);
-        $("#StaffEmail").val(rowData[10]);
-        $("#StaffRole").val(rowData[11]);
-        $("#addressLine3").val(rowData[12]);
+        $("#designation").val(rowData[2]);
+        $("#staffField").val(rowData[3]);
+        $("#staffVehicle").val(rowData[4]);
+        $("#gender").val(rowData[5]);
+        $("#joinedDate").val(rowData[6]);
+        $("#dob").val(rowData[7]);
+        $("#contactNo").val(rowData[8]);
+        $("#StaffEmail").val(rowData[9]);
+        $("#StaffRole").val(rowData[10]);
+        $("#addressLine3").val(rowData[11]);
 
         // Show the form card and toggle buttons
         $("#staffFormCard").show();
