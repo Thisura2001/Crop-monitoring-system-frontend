@@ -19,7 +19,12 @@
     display: none;
     position: relative;
 }
+#btnVehicleUpdate{
+    width: 100px;
+    margin-left: 120px;
+    margin-top: -52px!important;
 
+}
 /* Card header with close button */
 #vehicleFormCard .card-header {
     display: flex;
@@ -47,7 +52,17 @@
     transform: translateX(-20px);
     font-weight: bolder;
 }
-
+#updateFormBtn{
+    margin-top: 50px;
+    margin-left: 10px!important;
+    padding: 10px 20px;
+    display: inline-block;
+    width: auto;
+    max-width: 80%;
+    font-size: 14px;
+    transform: translateX(-20px);
+    font-weight: bolder;
+}
 
 /* Form field styling */
 .card-body .form-label {
