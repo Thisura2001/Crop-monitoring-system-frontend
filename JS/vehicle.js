@@ -39,7 +39,9 @@ $(document).ready(function() {
                 <td>${fuelType}</td>
                 <td>${status}</td>
                 <td>${staffId}</td>
-                <td><button class="btn btn-danger btn-sm delete-row">Delete</button></td>
+                <td><button class="btn btn-danger btn-sm delete-row">
+                <i class="fa-solid fa-trash"></i>
+                </button></td>
             </tr>
         `;
 
@@ -53,6 +55,28 @@ $(document).ready(function() {
 
     // Handle delete button click for dynamically added rows
     $("#tblVehicle").on("click", ".delete-row", function() {
-        $(this).closest("tr").remove();
+        const row = $(this).closest("tr");
+
+        // Show SweetAlert confirmation dialog
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you really want to delete this row?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                row.remove();
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "The row has been deleted.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        });
     });
 });
