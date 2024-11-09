@@ -123,13 +123,10 @@ $('#saveUpdatedLog').on('click', function () {
     logCard.find('.log-field-id').text($('#updateFieldList').val());
     logCard.find('.log-crop-id').text($('#updateCropList').val());
     logCard.find('.log-staff-id').text($('#updateStaffList').val());
-
-    // Update image preview if a new one is selected
     const updatedImg = $('#updateObservedImage')[0].files[0];
+
     if (updatedImg) {
         logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg)); // Update the image source
-    } else {
-        logCard.find('.log-img').attr('src', ''); // Reset image if no new file
     }
 
     Swal.fire("Updated!", "Log details have been updated.", "success");
