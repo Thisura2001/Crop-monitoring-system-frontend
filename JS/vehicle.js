@@ -35,7 +35,6 @@ $(document).ready(function() {
         const fuelType = $("#fuelType").val();
         const status = $("#status").val();
         const staffId = $("#VehicleStaffId").val();
-
         // Create a new row with form data and action buttons
         const newRow = `
             <tr>

@@ -942,7 +942,8 @@
                 </div>
 
                 <!-- Save Button -->
-                <button type="submit" class="btn btn-success mt-3">Save <i class="fa-regular fa-floppy-disk"></i></button>
+                <button type="submit" class="btn btn-success mt-3" id="btnEquipmentSave">Save <i class="fa-regular fa-floppy-disk"></i></button>
+                <button type="submit" class="btn btn-warning mt-3" id="btnEquipmentUpdate">Update <i class="fa-solid fa-pen-to-square"></i></button>
             </form>
         </div>
     </div>
@@ -958,17 +959,14 @@
                 <th>Status</th>
                 <th>Assigned Staff</th>
                 <th>Assigned Field</th>
+                <th>Delete</th>
+                <th>Update</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="equipmentTbody">
             <!-- Sample row for display -->
             <tr>
-                <td>EQ001</td>
-                <td>Drill Machine</td>
-                <td>Electrical</td>
-                <td>Available</td>
-                <td>ST001</td>
-                <td>FLD001</td>
+
             </tr>
             <!-- Additional rows can be dynamically added here -->
             </tbody>
