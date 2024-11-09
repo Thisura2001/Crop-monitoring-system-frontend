@@ -45,7 +45,6 @@ $(document).ready(function() {
         const firstName = $("#StaffFirstName").val();
         const designation = $("#designation").val();
         const field = $("#staffField").val();
-        const vehicle = $("#staffVehicle").val();
         const gender = $("#gender").val();
         const joinedDate = $("#joinedDate").val();
         const dob = $("#dob").val();
@@ -61,7 +60,6 @@ $(document).ready(function() {
                 <td>${firstName}</td>
                 <td>${designation}</td>
                 <td>${field}</td>
-                <td>${vehicle}</td>
                 <td>${gender}</td>
                 <td>${joinedDate}</td>
                 <td>${dob}</td>
@@ -92,7 +90,6 @@ $(document).ready(function() {
             firstName: $("#StaffFirstName").val(),
             designation: $("#designation").val(),
             field: $("#staffField").val(),
-            vehicle: $("#staffVehicle").val(),
             gender: $("#gender").val(),
             joinedDate: $("#joinedDate").val(),
             dob: $("#dob").val(),
@@ -163,14 +160,13 @@ $(document).ready(function() {
         $("#StaffFirstName").val(rowData[1]);
         $("#designation").val(rowData[2]);
         $("#staffField").val(rowData[3]);
-        $("#staffVehicle").val(rowData[4]);
-        $("#gender").val(rowData[5]);
-        $("#joinedDate").val(rowData[6]);
-        $("#dob").val(rowData[7]);
-        $("#contactNo").val(rowData[8]);
-        $("#StaffEmail").val(rowData[9]);
-        $("#StaffRole").val(rowData[10]);
-        $("#addressLine3").val(rowData[11]);
+        $("#gender").val(rowData[4]);
+        $("#joinedDate").val(rowData[5]);
+        $("#dob").val(rowData[6]);
+        $("#contactNo").val(rowData[7]);
+        $("#StaffEmail").val(rowData[8]);
+        $("#StaffRole").val(rowData[9]);
+        $("#addressLine3").val(rowData[10]);
 
         // Show the form card and toggle buttons
         $("#staffFormCard").show();
