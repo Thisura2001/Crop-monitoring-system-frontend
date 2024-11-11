@@ -56,3 +56,6 @@ function resetInterval() {
 // Initial display and start auto-swiping
 showText(currentIndex);
 startAutoSwipe();
+function selectRole(role) {
+    document.getElementById("roleDropdown").textContent = role;
+}

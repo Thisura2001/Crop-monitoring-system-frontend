@@ -99,20 +99,7 @@
 
 /* Sign Up button */
 .signup-container button {
-    padding: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-}
-
-.signup-container button:hover {
-    background-color: #218838;
+ font-weight: bolder;
 }
 
 /* Responsive Styling */
