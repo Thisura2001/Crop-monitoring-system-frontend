@@ -36,49 +36,77 @@ $(document).ready(function() {
         editingRow = null;
     });
 
-    // Handle Save button click for adding new staff
     $("#btnStaffSave").on("click", function(event) {
         event.preventDefault();
 
         // Get form values
-        const staffId = $("#staffId").val();
-        const firstName = $("#StaffFirstName").val();
-        const designation = $("#designation").val();
-        const field = $("#staffField").val();
-        const gender = $("#gender").val();
-        const joinedDate = $("#joinedDate").val();
-        const dob = $("#dob").val();
-        const contactNo = $("#contactNo").val();
-        const email = $("#StaffEmail").val();
-        const role = $("#StaffRole").val();
-        const city = $("#addressLine3").val();
+        const staffData = {
+            staffId: $("#staffId").val(),
+            firstName: $("#StaffFirstName").val(),
+            designation: $("#designation").val(),
+            field: $("#staffField").val(),
+            gender: $("#gender").val(),
+            joinedDate: $("#joinedDate").val(),
+            dob: $("#dob").val(),
+            contactNo: $("#contactNo").val(),
+            email: $("#StaffEmail").val(),
+            role: $("#StaffRole").val(),
+            city: $("#addressLine3").val()
+        };
 
-        // Create a new row with the staff details
-        const newRow = `
-            <tr>
-                <td>${staffId}</td>
-                <td>${firstName}</td>
-                <td>${designation}</td>
-                <td>${field}</td>
-                <td>${gender}</td>
-                <td>${joinedDate}</td>
-                <td>${dob}</td>
-                <td>${contactNo}</td>
-                <td>${email}</td>
-                <td>${role}</td>
-                <td>${city}</td>
-                <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
-                <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
-            </tr>
-        `;
+        // AJAX request to send data to the server
+        $.ajax({
+            url: "http://localhost:9090/greenShadow/api/v1/staff",  // replace with your actual endpoint
+            type: "POST",
+            contentType: "application/json",
+            data: staffData,
+            success: function(response) {
+                // Create a new row with the staff details
+                const newRow = `
+                <tr>
+                    <td>${staffData.staffId}</td>
+                    <td>${staffData.firstName}</td>
+                    <td>${staffData.designation}</td>
+                    <td>${staffData.field}</td>
+                    <td>${staffData.gender}</td>
+                    <td>${staffData.joinedDate}</td>
+                    <td>${staffData.dob}</td>
+                    <td>${staffData.contactNo}</td>
+                    <td>${staffData.email}</td>
+                    <td>${staffData.role}</td>
+                    <td>${staffData.city}</td>
+                    <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
+                    <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                </tr>
+            `;
 
-        // Append the new row to the table
-        $("#staffTbody").append(newRow);
+                // Append the new row to the table
+                $("#staffTbody").append(newRow);
 
-        // Hide the form card and reset the form
-        $("#staffFormCard").hide();
-        $("#staffForm")[0].reset();
+                // Hide the form card and reset the form
+                $("#staffFormCard").hide();
+                $("#staffForm")[0].reset();
+
+                // Display success message with SweetAlert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Staff Added',
+                    text: 'The staff member has been added successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            },
+            error: function(xhr, status, error) {
+                // Display error message with SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'There was an issue adding the staff member. Please try again.',
+                });
+            }
+        });
     });
+
 
     // Handle Update button click to edit existing row
     $("#btnStaffUpdate").on("click", function(event) {
@@ -99,12 +127,10 @@ $(document).ready(function() {
             city: $("#addressLine3").val()
         };
 
-        // Update the editing row with the new values
         $(editingRow).find("td").each(function(index) {
             $(this).text(Object.values(updatedValues)[index]);
         });
 
-        // Success message and reset form
         Swal.fire({
             title: "Updated!",
             text: "The staff details have been updated.",
@@ -113,13 +139,11 @@ $(document).ready(function() {
             showConfirmButton: false
         });
 
-        // Reset the form and variables
         editingRow = null;
         $("#staffFormCard").hide();
         $("#staffForm")[0].reset();
     });
 
-// Handle row deletion with confirmation using SweetAlert
     $(document).on("click", ".delete-row", function() {
         const rowToDelete = $(this).closest("tr");
 

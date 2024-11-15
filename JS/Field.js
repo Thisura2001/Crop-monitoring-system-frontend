@@ -99,7 +99,7 @@ fieldCardsContainer.on("click", ".fieldCardUpdateBtn", function () {
 
 // Function to open the update modal and populate it with the current card data
 function openUpdateModal(card) {
-    document.updateTargetCard = card; // Store reference to the target card for updating
+    document.updateTargetCard = card;
 
     // Populate modal fields with current card data
     $("#updateCode").val(card.find(".field-code").text());

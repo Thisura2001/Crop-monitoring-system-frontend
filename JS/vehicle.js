@@ -2,19 +2,17 @@
 const addVehicleBtn = document.getElementById('addVehicleBtn');
 const vehicleFormCard = document.getElementById('vehicleFormCard');
 const closeVehicleFormBtn = document.getElementById('closeVehicleForm');
-let editingRow = null; // Track the row being edited
+let editingRow = null;
 
-// Show the vehicle form card for adding a new vehicle
 addVehicleBtn.addEventListener('click', () => {
     vehicleFormCard.style.display = 'block';
-    editingRow = null; // Set editingRow to null when adding a new entry
-    $("#vehicleForm")[0].reset(); // Clear form fields
+    editingRow = null;
+    $("#vehicleForm")[0].reset();
 });
 
-// Function to close the vehicle form card
 function closeVehicleForm() {
     vehicleFormCard.style.display = 'none';
-    $("#vehicleForm")[0].reset(); // Clear form fields when closing
+    $("#vehicleForm")[0].reset();
 }
 
 // Close button event
@@ -22,14 +20,14 @@ closeVehicleFormBtn.addEventListener('click', closeVehicleForm);
 
 ///////////////////////////////////////////////////////////////////
 $(document).ready(function() {
-    let editingRow = null; // Track the row being edited
+    let editingRow = null;
 
     // Show the vehicle form card when "Add New Vehicle" button is clicked
     $("#addVehicleBtn").on("click", function() {
         $("#vehicleFormCard").show();
         $("#btnVehicleSave").show();
         $("#btnVehicleUpdate").hide();
-        $("#vehicleForm")[0].reset(); // Clear form fields
+        $("#vehicleForm")[0].reset();
         editingRow = null;
     });
 
@@ -50,7 +48,6 @@ $(document).ready(function() {
         const fuelType = $("#fuelType").val();
         const status = $("#status").val();
         const staffId = $("#VehicleStaffId").val();
-        // Create a new row with form data and action buttons
         const newRow = `
             <tr>
                 <td>${vehicleCode}</td>
@@ -72,7 +69,6 @@ $(document).ready(function() {
         $("#vehicleFormCard").hide();
     });
 
-    // Handle Update button click for updating an existing row
     $("#btnVehicleUpdate").on("click", function(event) {
         event.preventDefault();
 
@@ -102,7 +98,7 @@ $(document).ready(function() {
                 showConfirmButton: false
             });
 
-            editingRow = null; // Reset editingRow after updating
+            editingRow = null;
 
             // Clear the form fields and hide the form card
             $("#vehicleForm")[0].reset();

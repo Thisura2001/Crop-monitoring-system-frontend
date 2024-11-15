@@ -2,33 +2,33 @@
 const addEquipmentBtn = document.getElementById('addEquipmentBtn');
 const equipmentFormCard = document.getElementById('equipmentFormCard');
 const closeEquipmentFormBtn = document.getElementById('closeEquipmentForm');
-let editingRow = null; // Track the row being edited
+let editingRow = null;
 
 // Show the equipment form card for adding new equipment
 addEquipmentBtn.addEventListener('click', () => {
     equipmentFormCard.style.display = 'block';
-    editingRow = null; // Reset editingRow when adding new entry
-    $("#equipmentForm")[0].reset(); // Clear form fields
+    editingRow = null;
+    $("#equipmentForm")[0].reset();
 });
 
 // Close the equipment form card
 function closeEquipmentForm() {
     equipmentFormCard.style.display = 'none';
-    $("#equipmentForm")[0].reset(); // Clear form fields
+    $("#equipmentForm")[0].reset();
 }
 
 // Close button event
 closeEquipmentFormBtn.addEventListener('click', closeEquipmentForm);
 
 $(document).ready(function() {
-    let editingRow = null; // Track the row being edited
+    let editingRow = null;
 
     // Show the equipment form card when "Add New Equipment" button is clicked
     $("#addEquipmentBtn").on("click", function() {
         $("#equipmentFormCard").show();
         $("#btnEquipmentSave").show();
         $("#btnEquipmentUpdate").hide();
-        $("#equipmentForm")[0].reset(); // Clear form fields
+        $("#equipmentForm")[0].reset();
         editingRow = null;
     });
 

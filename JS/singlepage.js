@@ -154,3 +154,6 @@ $("#nav-equipment").on('click', function() {
     $("#vehicle").css( "display", "none");
     $("#field").css( "display", "none");
 })
+function toggleNav() {
+    document.querySelector('.nav').classList.toggle('active');
+}

@@ -6,26 +6,18 @@ const logCardsContainer = $('#logCardsContainer');
 const updateLogModal = $('#updateLogModal');
 const closeUpdateLogModalBtn = $('#closeUpdateLogModalBtn');
 
-// Show log form when clicking "Add New Log"
 addLogBtn.on('click', function () {
     logFormCard.show();
 });
-
-// Hide the log form when clicking close
 closeLogForm.on('click', function () {
     closeLogFormModal();
 });
-
-// Function to close log form modal
 function closeLogFormModal() {
     logFormCard.hide();
 }
-
-// Handle log form submission with AJAX
 $('#logForm').on('submit', function (e) {
     e.preventDefault();
 
-    // Get form data
     const header = $('#logFormTitle').text();
     const logCode = $('#logCode').val();
     const logDate = $('#logDate').val();
@@ -44,7 +36,7 @@ $('#logForm').on('submit', function (e) {
     const logCard = $(`
         <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
             <div class="card-header">
-                <h5>Log Details</h5> <!-- Added log-code class -->
+                <h5>Log Details</h5>
             </div>
             <div class="card-body">
                 ${observedImagePreview}
@@ -60,13 +52,12 @@ $('#logForm').on('submit', function (e) {
         </div>
     `);
     logCardsContainer.append(logCard);
-    $('#logForm')[0].reset(); // Reset form
+    $('#logForm')[0].reset();
     closeLogFormModal();
 });
 
-// Event listener for Delete with confirmation
 logCardsContainer.on('click', '.logCardDeleteBtn', function () {
-    const logCard = $(this).closest('.card'); // Find the closest card to the button
+    const logCard = $(this).closest('.card');
 
     // Show confirmation dialog
     Swal.fire({
@@ -80,24 +71,22 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
         cancelButtonText: 'No, cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            logCard.remove(); // Remove the log card from DOM
+            logCard.remove();
             Swal.fire('Deleted!', 'Your log has been deleted.', 'success');
         }
     });
 });
 
-// Event listener for Update
 logCardsContainer.on('click', '.logCardUpdateBtn', function () {
-    const logCard = $(this).closest('.card'); // Find the closest card to the button
-    openUpdateLogModal(logCard); // Open the modal for editing
+    const logCard = $(this).closest('.card');
+    openUpdateLogModal(logCard);
 });
 
-// Open update modal with current card data
 function openUpdateLogModal(logCard) {
-    document.updateTargetLogCard = logCard[0]; // Store the DOM element
+    document.updateTargetLogCard = logCard[0];
 
     // Populate modal fields
-    $('#updateLogCode').val(logCard.find('.log-code').text().replace('Log: ', '')); // Remove "Log: " text
+    $('#updateLogCode').val(logCard.find('.log-code').text().replace('Log: ', ''));
     $('#updateLogDate').val(logCard.find('.log-date').text());
     $('#updateLogDetails').val(logCard.find('.log-details').text());
     $('#updateFieldList').val(logCard.find('.log-field-id').text());
@@ -107,16 +96,13 @@ function openUpdateLogModal(logCard) {
     updateLogModal.show();
 }
 
-// Close update modal
 closeUpdateLogModalBtn.on('click', function () {
     updateLogModal.hide();
 });
 
-// Save updated log data
 $('#saveUpdatedLog').on('click', function () {
-    const logCard = $(document.updateTargetLogCard); // Use jQuery to wrap the DOM element
+    const logCard = $(document.updateTargetLogCard);
 
-    // Update card content with new values
     logCard.find('.log-code').text($('#updateLogCode').val());
     logCard.find('.log-date').text($('#updateLogDate').val());
     logCard.find('.log-details').text($('#updateLogDetails').val());
@@ -126,7 +112,7 @@ $('#saveUpdatedLog').on('click', function () {
     const updatedImg = $('#updateObservedImage')[0].files[0];
 
     if (updatedImg) {
-        logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg)); // Update the image source
+        logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
     }
 
     Swal.fire("Updated!", "Log details have been updated.", "success");
