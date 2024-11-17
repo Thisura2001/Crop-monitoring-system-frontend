@@ -20,56 +20,95 @@ closeFieldForm.on('click', () => {
 function closeFiledForm() {
     fieldFormCard.hide();
 }
-
 // Function to handle form submission
-$("#fieldSaveBtn").on('click', function (e) {
+$("#fieldSaveBtn").on("click", function (e) {
     e.preventDefault();
 
-    // Get form field values
-    const code = $("#filedCode").val();
-    const name = $("#fieldName").val();
+    // Collect form values
+    const fieldName = $("#fieldName").val();
     const location = $("#location").val();
     const extent = $("#extent").val();
+    // Get the file objects
+    const fieldImg1 = $("#fieldImg01")[0].files[0]; // Access the first file for fieldImg01
+    const fieldImg2 = $("#fieldImg02")[0].files[0]; // Access the first file for fieldImg02
 
-    // Get the uploaded images and create previews
-    const img1 = $("#fieldImg01")[0].files[0];
-    const img2 = $("#fieldImg02")[0].files[0];
-    let img1Preview = '', img2Preview = '';
-
-    if (img1) {
-        img1Preview = `<img src="${URL.createObjectURL(img1)}" class="card-img field-img1" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 1">`;
+// Check if files are selected
+    if (fieldImg1) {
+        console.log("Field Image 1:", fieldImg1);
+    }
+    if (fieldImg2) {
+        console.log("Field Image 2:", fieldImg2);
     }
 
-    if (img2) {
-        img2Preview = `<img src="${URL.createObjectURL(img2)}" class="card-img field-img2" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 2">`;
+
+    // Validate inputs
+    if (!fieldName || !location || !extent || !fieldImg1 || !fieldImg2) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Please fill in all fields and select both images!',
+        });
+        return;
     }
 
-    // Create a new card
-    const card = $(`
-        <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
-            <div class="card-header">
-                <h5>Field Details</h5>
-            </div>
-            <div class="card-body">
-                ${img1Preview}
-                ${img2Preview}
-                <p><strong>Code:</strong> <span class="field-code">${code}</span></p>
-                <p><strong>Name:</strong> <span class="field-name">${name}</span></p>
-                <p><strong>Location:</strong> <span class="field-location">${location}</span></p>
-                <p><strong>Extent Size:</strong> <span class="field-extent">${extent}</span></p>
-                <button class="btn btn-success fieldCardUpdateBtn">Update</button>
-                <button class="btn btn-danger FieldCardDeleteBtn">Delete</button>
-            </div>
-        </div>
-    `);
+    // Create FormData object
+    const formData = new FormData();
+    formData.append("fieldName", fieldName);
+    formData.append("location", location);
+    formData.append("extend", extent);
+    formData.append("fieldImg1", fieldImg1);
+    formData.append("fieldImg2", fieldImg2);
 
-    // Append the new card to the container
-    fieldCardsContainer.append(card);
+    // AJAX request
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust the endpoint if necessary
+        type: "POST",
+        data: formData,
+        processData: false, // Required for FormData
+        contentType: false, // Required for FormData
+        success: function (response) {
+            // Display success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Field Saved',
+                text: 'Field data has been saved successfully!',
+                showConfirmButton: false,
+                timer: 1500,
+            });
 
-    // Reset the form and close it if necessary
-    $("#FieldForm")[0].reset();
-    closeFiledForm();
+            // Optionally display the added field in the frontend
+            const newCard = `
+                <div class="card mt-3" style="width: 300px;">
+                    <div class="card-header">
+                        <h5>Field Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="${URL.createObjectURL(fieldImg1)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
+                        <img src="${URL.createObjectURL(fieldImg2)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
+                        <p><strong>Field Name:</strong> ${fieldName}</p>
+                        <p><strong>Location:</strong> ${location}</p>
+                        <p><strong>Extent Size:</strong> ${extent}</p>
+                        <button class="btn btn-danger FieldCardDeleteBtn">Delete</button>
+                        <button class="btn btn-primary fieldCardUpdateBtn">Update</button>
+                    </div>
+                </div>
+            `;
+            $("#fieldCardsContainer").append(newCard);
+
+            // Reset the form
+            $("#FieldForm")[0].reset();
+        },
+        error: function (xhr, status, error) {
+            // Display error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while saving the field data. Please try again.',
+            });
+        },
+    });
 });
+
 
 // Event listener for delete and update buttons with event delegation
 fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {

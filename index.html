@@ -224,12 +224,7 @@
                     <!-- Gender -->
                     <div class="col-md-6">
                         <label for="gender" class="form-label">Gender</label>
-                        <select class="form-select" id="gender" required>
-                            <option selected disabled value="">Select gender...</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <input type="text" class="form-control" id="gender" placeholder="Enter Gender" required>
                     </div>
                     <!-- Joined Date -->
                     <div class="col-md-6">
@@ -253,13 +248,8 @@
                     </div>
                     <!-- Role -->
                     <div class="col-md-6">
-                        <label for="StaffRole" class="form-label">Role</label>
-                        <select class="form-select" id="StaffRole" required>
-                            <option selected disabled value="">Select role...</option>
-                            <option value="Manager">Manager</option>
-                            <option value="Supervisor">Supervisor</option>
-                            <option value="Field Staff">Field Staff</option>
-                        </select>
+                        <label for="role" class="form-label">Role</label>
+                        <input type="text" class="form-control" id="role" placeholder="Enter role" required>
                     </div>
                     <div class="col-md-6">
                         <label for="addressLine3" class="form-label">City</label>
@@ -337,11 +327,13 @@
                     </div>
                     <div class="col-md-6">
                         <label for="fieldImg01" class="form-label">Field Image 01</label>
-                        <input type="file" class="form-control" id="fieldImg01" accept="image/*" onchange="previewImage(event)">
+                        <input type="file" class="form-control" id="fieldImg01" accept="image/*">
+                        <div id="fieldImgPreview01" style="margin-top: 10px;"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="fieldImg02" class="form-label">Field Image 02</label>
-                        <input type="file" class="form-control" id="fieldImg02" accept="image/*" onchange="previewImage(event)">
+                        <input type="file" class="form-control" id="fieldImg02" accept="image/*">
+                        <div id="fieldImgPreview02" style="margin-top: 10px;"></div>
                     </div>
                 </div>
 

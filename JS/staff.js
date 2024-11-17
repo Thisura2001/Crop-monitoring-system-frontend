@@ -39,55 +39,47 @@ $(document).ready(function() {
     $("#btnStaffSave").on("click", function(event) {
         event.preventDefault();
 
-        // Get form values
         const staffData = {
-            staffId: $("#staffId").val(),
+            id: null,
             firstName: $("#StaffFirstName").val(),
             designation: $("#designation").val(),
-            field: $("#staffField").val(),
+            fields: [$("#staffField").val()],
             gender: $("#gender").val(),
-            joinedDate: $("#joinedDate").val(),
+            joined_date: $("#joinedDate").val(),
             dob: $("#dob").val(),
-            contactNo: $("#contactNo").val(),
+            contact_no: $("#contactNo").val(),
             email: $("#StaffEmail").val(),
             role: $("#StaffRole").val(),
-            city: $("#addressLine3").val()
+            address: $("#addressLine3").val()
         };
 
-        // AJAX request to send data to the server
+        const staffJason = JSON.stringify(staffData);
+
         $.ajax({
-            url: "http://localhost:9090/greenShadow/api/v1/staff",  // replace with your actual endpoint
+            url: "http://localhost:9090/greenShadow/api/v1/staff",
             type: "POST",
             contentType: "application/json",
-            data: staffData,
+            data: staffJason,
             success: function(response) {
-                // Create a new row with the staff details
                 const newRow = `
-                <tr>
-                    <td>${staffData.staffId}</td>
-                    <td>${staffData.firstName}</td>
-                    <td>${staffData.designation}</td>
-                    <td>${staffData.field}</td>
-                    <td>${staffData.gender}</td>
-                    <td>${staffData.joinedDate}</td>
-                    <td>${staffData.dob}</td>
-                    <td>${staffData.contactNo}</td>
-                    <td>${staffData.email}</td>
-                    <td>${staffData.role}</td>
-                    <td>${staffData.city}</td>
-                    <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
-                    <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
-                </tr>
-            `;
-
-                // Append the new row to the table
+            <tr>
+                <td>${staffData.firstName}</td>
+                <td>${staffData.designation}</td>
+                <td>${staffData.fields.join(", ")}</td>
+                <td>${staffData.gender}</td>
+                <td>${staffData.joined_date}</td>
+                <td>${staffData.dob}</td>
+                <td>${staffData.contact_no}</td>
+                <td>${staffData.email}</td>
+                <td>${staffData.role}</td>
+                <td>${staffData.address}</td>
+                <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
+                <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
+            </tr>
+        `;
                 $("#staffTbody").append(newRow);
-
-                // Hide the form card and reset the form
                 $("#staffFormCard").hide();
                 $("#staffForm")[0].reset();
-
-                // Display success message with SweetAlert
                 Swal.fire({
                     icon: 'success',
                     title: 'Staff Added',
@@ -97,7 +89,6 @@ $(document).ready(function() {
                 });
             },
             error: function(xhr, status, error) {
-                // Display error message with SweetAlert
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -106,6 +97,7 @@ $(document).ready(function() {
             }
         });
     });
+
 
 
     // Handle Update button click to edit existing row
