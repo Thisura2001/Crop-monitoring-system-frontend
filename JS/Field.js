@@ -51,13 +51,15 @@ $(document).ready(function () {
             const card = `
                 <div class="card mt-3" style="width: 300px;">
                     <div class="card-header">
-                        <h5>${field.fieldName || "Unknown Field"}</h5>
+                        <h5>Field Details</h5>
                     </div>
                     <div class="card-body">
                         <img src="data:image/jpeg;base64,${field.fieldImg1}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
                         <img src="data:image/jpeg;base64,${field.fieldImg2}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
+                        <p><strong>Field Name:</strong> ${field.fieldName || "Not Specified"}</p>
                         <p><strong>Location:</strong> ${field.location || "Not Specified"}</p>
                         <p><strong>Extent:</strong> ${field.extend || "Not Specified"}</p>
+                        
                         <button class="btn btn-danger FieldCardDeleteBtn" data-id="${field.id}">Delete</button>
                         <button class="btn btn-primary FieldCardUpdateBtn" data-id="${field.id}">Update</button>
                     </div>
@@ -66,16 +68,16 @@ $(document).ready(function () {
             container.append(card); // Append card to container
         });
 
-        // Attach event listeners to dynamically created buttons
-        $(".FieldCardDeleteBtn").on("click", function () {
-            const fieldId = $(this).data("id");
-            deleteField(fieldId); // Call delete function
-        });
-
-        $(".FieldCardUpdateBtn").on("click", function () {
-            const fieldId = $(this).data("id");
-            updateField(fieldId); // Call update function
-        });
+        // // Attach event listeners to dynamically created buttons
+        // $(".FieldCardDeleteBtn").on("click", function () {
+        //     const fieldId = $(this).data("id");
+        //     deleteField(fieldId); // Call delete function
+        // });
+        //
+        // $(".FieldCardUpdateBtn").on("click", function () {
+        //     const fieldId = $(this).data("id");
+        //     updateField(fieldId); // Call update function
+        // });
     }
 
     // Fetch all fields on page load
