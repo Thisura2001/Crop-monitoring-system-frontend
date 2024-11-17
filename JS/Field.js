@@ -20,6 +20,69 @@ closeFieldForm.on('click', () => {
 function closeFiledForm() {
     fieldFormCard.hide();
 }
+$(document).ready(function () {
+    // Function to load all fields
+    function loadFields() {
+        $.ajax({
+            url: "http://localhost:9090/greenShadow/api/v1/field", // Replace with your API endpoint
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                renderFields(response); // Render the fields if the response is successful
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching fields:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred while fetching field data. Please try again.",
+                });
+            },
+        });
+    }
+
+    // Function to render the fields as cards
+    function renderFields(fields) {
+        const container = $("#fieldCardsContainer");
+        container.empty(); // Clear any existing cards
+
+        fields.forEach(function (field) {
+            // Generate card HTML dynamically
+            const card = `
+                <div class="card mt-3" style="width: 300px;">
+                    <div class="card-header">
+                        <h5>${field.fieldName || "Unknown Field"}</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="data:image/jpeg;base64,${field.fieldImg1}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
+                        <img src="data:image/jpeg;base64,${field.fieldImg2}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
+                        <p><strong>Location:</strong> ${field.location || "Not Specified"}</p>
+                        <p><strong>Extent:</strong> ${field.extend || "Not Specified"}</p>
+                        <button class="btn btn-danger FieldCardDeleteBtn" data-id="${field.id}">Delete</button>
+                        <button class="btn btn-primary FieldCardUpdateBtn" data-id="${field.id}">Update</button>
+                    </div>
+                </div>
+            `;
+            container.append(card); // Append card to container
+        });
+
+        // Attach event listeners to dynamically created buttons
+        $(".FieldCardDeleteBtn").on("click", function () {
+            const fieldId = $(this).data("id");
+            deleteField(fieldId); // Call delete function
+        });
+
+        $(".FieldCardUpdateBtn").on("click", function () {
+            const fieldId = $(this).data("id");
+            updateField(fieldId); // Call update function
+        });
+    }
+
+    // Fetch all fields on page load
+    loadFields();
+});
+
+
 // Function to handle form submission
 $("#fieldSaveBtn").on("click", function (e) {
     e.preventDefault();
