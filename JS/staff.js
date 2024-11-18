@@ -40,7 +40,7 @@ $(document).ready(function() {
         event.preventDefault();
 
         const staffData = {
-            id: null,
+            staff_id: $("#staffId").val(),
             firstName: $("#StaffFirstName").val(),
             designation: $("#designation").val(),
             fields: [$("#staffField").val()],
@@ -63,6 +63,7 @@ $(document).ready(function() {
             success: function(response) {
                 const newRow = `
             <tr>
+                <td>${staffData.staff_id}</td>
                 <td>${staffData.firstName}</td>
                 <td>${staffData.designation}</td>
                 <td>${staffData.fields.join(", ")}</td>
