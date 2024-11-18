@@ -25,7 +25,6 @@ $("#fieldSaveBtn").on("click", function (e) {
     e.preventDefault();
 
     // Collect form values
-    const code = $("#filedCode").val();
     const fieldName = $("#fieldName").val();
     const location = $("#location").val();
     const extent = $("#extent").val();
@@ -54,7 +53,6 @@ $("#fieldSaveBtn").on("click", function (e) {
 
     // Create FormData object
     const formData = new FormData();
-    formData.append("filedCode", code);
     formData.append("fieldName", fieldName);
     formData.append("location", location);
     formData.append("extend", extent);
@@ -87,7 +85,6 @@ $("#fieldSaveBtn").on("click", function (e) {
                     <div class="card-body">
                         <img src="${URL.createObjectURL(fieldImg1)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
                         <img src="${URL.createObjectURL(fieldImg2)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
-                        <p><strong>Code:</strong> ${code}</p>
                         <p><strong>Field Name:</strong> ${fieldName}</p>
                         <p><strong>Location:</strong> ${location}</p>
                         <p><strong>Extent Size:</strong> ${extent}</p>
@@ -148,8 +145,7 @@ $(document).ready(function () {
                     <div class="card-body">
                         <img src="data:image/jpeg;base64,${field.fieldImg1}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
                         <img src="data:image/jpeg;base64,${field.fieldImg2}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
-                        <p><strong>Code:</strong> ${field.fieldCode || "Not Specified"}</p>
-                        <p><strong>Field Name:</strong> ${field.fieldName || "Not Specified"}</p>
+                            <p><strong>Field Name:</strong> ${field.fieldName || "Not Specified"}</p>
                         <p><strong>Location:</strong> ${field.location || "Not Specified"}</p>
                         <p><strong>Extent:</strong> ${field.extend || "Not Specified"}</p>
                         
@@ -185,9 +181,6 @@ fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
         }
     });
 });
-
-
-// Handle Update button
 // Handle Update button
 fieldCardsContainer.on("click", ".FieldCardUpdateBtn", function () {
     console.log("update btn clicked");
