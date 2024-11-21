@@ -24,15 +24,12 @@ function closeFiledForm() {
 $("#fieldSaveBtn").on("click", function (e) {
     e.preventDefault();
 
-    // Collect form values
     const fieldName = $("#fieldName").val();
     const location = $("#location").val();
     const extent = $("#extent").val();
-    // Get the file objects
-    const fieldImg1 = $("#fieldImg01")[0].files[0]; // Access the first file for fieldImg01
-    const fieldImg2 = $("#fieldImg02")[0].files[0]; // Access the first file for fieldImg02
+    const fieldImg1 = $("#fieldImg01")[0].files[0];
+    const fieldImg2 = $("#fieldImg02")[0].files[0];
 
-// Check if files are selected
     if (fieldImg1) {
         console.log("Field Image 1:", fieldImg1);
     }
@@ -40,8 +37,6 @@ $("#fieldSaveBtn").on("click", function (e) {
         console.log("Field Image 2:", fieldImg2);
     }
 
-
-    // Validate inputs
     if (!fieldName || !location || !extent || !fieldImg1 || !fieldImg2) {
         Swal.fire({
             icon: 'error',
@@ -64,8 +59,8 @@ $("#fieldSaveBtn").on("click", function (e) {
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust the endpoint if necessary
         type: "POST",
         data: formData,
-        processData: false, // Required for FormData
-        contentType: false, // Required for FormData
+        processData: false,
+        contentType: false,
         success: function (response) {
             // Display success message
             Swal.fire({
@@ -145,7 +140,9 @@ $(document).ready(function () {
                     <div class="card-body">
                         <img src="data:image/jpeg;base64,${field.fieldImg1}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
                         <img src="data:image/jpeg;base64,${field.fieldImg2}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
-                            <p><strong>Field Name:</strong> ${field.fieldName || "Not Specified"}</p>
+                        
+                        <p><strong>Field ID:</strong> ${field.fieldId || "Not Specified"}</p> <!-- Add Field ID here -->
+                        <p><strong>Field Name:</strong> ${field.fieldName || "Not Specified"}</p>
                         <p><strong>Location:</strong> ${field.location || "Not Specified"}</p>
                         <p><strong>Extent:</strong> ${field.extend || "Not Specified"}</p>
                         
@@ -161,6 +158,7 @@ $(document).ready(function () {
     // Fetch all fields on page load
     loadFields();
 });
+
 // Event listener for delete and update buttons with event delegation
 fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
     console.log("Delete btn clicked")
