@@ -140,7 +140,7 @@ $(document).ready(function () {
                     <div class="card-body">
                         <img src="data:image/jpeg;base64,${field.fieldImg1}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
                         <img src="data:image/jpeg;base64,${field.fieldImg2}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
-                        <p><strong>Field ID:</strong> ${field.fieldId || "Not Specified"}</p> <!-- Add Field ID here -->
+                        <p><strong>Field ID:</strong> ${field.fieldId || "Not Specified"}</p> 
                         <p><strong>Field Name:</strong> ${field.fieldName || "Not Specified"}</p>
                         <p><strong>Location:</strong> ${field.location || "Not Specified"}</p>
                         <p><strong>Extent:</strong> ${field.extend || "Not Specified"}</p>
@@ -150,7 +150,7 @@ $(document).ready(function () {
                     </div>
                 </div>
             `;
-            container.append(card); // Append card to container
+            container.append(card);
         });
     }
 
@@ -192,60 +192,68 @@ fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
         }
     });
 });
+$(document).ready(function () {
+    const updateFieldModal = $("#updateFieldModal");
 
-// Handle Update button
-fieldCardsContainer.on("click", ".FieldCardUpdateBtn", function () {
-    console.log("update btn clicked");
-    const card = $(this).closest(".card");
-    openUpdateModal(card);
-});
+    // Open update modal
+    $("#fieldCardsContainer").on("click", ".FieldCardUpdateBtn", function () {
+        console.log("Update button clicked");
+        const card = $(this).closest(".card");
 
+        // Store the target card globally for later reference
+        document.updateTargetCard = card;
 
-// Function to open the update modal and populate it with the current card data
-function openUpdateModal(card) {
-    document.updateTargetCard = card;
+        // Populate modal fields with card data
+        $("#updateName").val(card.find("p:contains('Field Name:')").text().replace("Field Name: ", "").trim());
+        $("#updateLocation").val(card.find("p:contains('Location:')").text().replace("Location: ", "").trim());
+        $("#updateExtent").val(card.find("p:contains('Extent:')").text().replace("Extent: ", "").trim());
 
-    // Populate modal fields with current card data
-    $("#updateCode").val(card.find(".field-code").text());
-    $("#updateName").val(card.find(".field-name").text());
-    $("#updateLocation").val(card.find(".field-location").text());
-    $("#updateExtent").val(card.find(".field-extent").text());
+        // Show the modal
+        updateFieldModal.show();
+    });
 
-    // Show the modal
-    updateFieldModal.show();
-}
+    // Close update modal
+    $("#closeUpdateModalBtn, .modal-overlay").on("click", function () {
+        closeUpdateModal();
+    });
 
-// Close update modal
-closeUpdateModalBtn.on("click", function () {
-    updateFieldModal.hide();
-});
+    // Save updated data and send AJAX request
+    $("#saveUpdatedField").on("click", function (e) {
+        e.preventDefault();
+        const card = document.updateTargetCard;
 
-// Function to save updated data to the card
-$("#saveUpdatedField").on('click', function () {
-    const card = document.updateTargetCard;
+        // Get updated values from the modal
+        const updatedField = {
+            name: $("#updateName").val(),
+            location: $("#updateLocation").val(),
+            extent: $("#updateExtent").val(),
+        };
 
-    // Update card content with new values from the modal
-    card.find(".field-code").text($("#updateCode").val());
-    card.find(".field-name").text($("#updateName").val());
-    card.find(".field-location").text($("#updateLocation").val());
-    card.find(".field-extent").text($("#updateExtent").val());
+        const fieldId = card.find(".FieldCardUpdateBtn").data("id"); // Get the ID of the field
 
-    // Handle image updates
-    const img1 = $("#updateFieldImg1")[0].files[0];
-    const img2 = $("#updateFieldImg2")[0].files[0];
+        // Send AJAX request to update the field in the backend
+        $.ajax({
+            url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`,
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(updatedField),
+            success: function (response) {
+                // Update card content with new values
+                card.find("p:contains('Field Name:')").text(`Field Name: ${updatedField.name}`);
+                card.find("p:contains('Location:')").text(`Location: ${updatedField.location}`);
+                card.find("p:contains('Extent:')").text(`Extent: ${updatedField.extent}`);
 
-    if (img1) {
-        const img1Preview = `<img src="${URL.createObjectURL(img1)}" class="card-img field-img1" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 1">`;
-        card.find(".field-img1").replaceWith(img1Preview);
+                Swal.fire("Update Successful!", "Field details have been updated.", "success");
+                closeUpdateModal();
+            },
+            error: function (xhr, status, error) {
+                Swal.fire("Error", "An error occurred while updating the field. Please try again.", "error");
+            },
+        });
+    });
+
+    // Function to close the update modal
+    function closeUpdateModal() {
+        updateFieldModal.hide();
     }
-    if (img2) {
-        const img2Preview = `<img src="${URL.createObjectURL(img2)}" class="card-img field-img2" style="width: 100%; height: auto; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Field Image 2">`;
-        card.find(".field-img2").replaceWith(img2Preview);
-    }
-
-    // Show success message using SweetAlert
-    Swal.fire("Update Successful!", "Field details have been updated.", "success");
-
-    // Close the modal
-    closeUpdateModal();
 });
