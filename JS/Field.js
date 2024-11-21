@@ -140,13 +140,12 @@ $(document).ready(function () {
                     <div class="card-body">
                         <img src="data:image/jpeg;base64,${field.fieldImg1}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
                         <img src="data:image/jpeg;base64,${field.fieldImg2}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
-                        
                         <p><strong>Field ID:</strong> ${field.fieldId || "Not Specified"}</p> <!-- Add Field ID here -->
                         <p><strong>Field Name:</strong> ${field.fieldName || "Not Specified"}</p>
                         <p><strong>Location:</strong> ${field.location || "Not Specified"}</p>
                         <p><strong>Extent:</strong> ${field.extend || "Not Specified"}</p>
                         
-                        <button class="btn btn-danger FieldCardDeleteBtn" data-id="${field.id}">Delete</button>
+                        <button class="btn btn-danger FieldCardDeleteBtn" data-id="${field.fieldId}">Delete</button>
                         <button class="btn btn-primary FieldCardUpdateBtn" data-id="${field.id}">Update</button>
                     </div>
                 </div>
@@ -161,8 +160,10 @@ $(document).ready(function () {
 
 // Event listener for delete and update buttons with event delegation
 fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
-    console.log("Delete btn clicked")
+    console.log("Delete btn clicked");
     const card = $(this).closest(".card");
+    const fieldId = $(this).data("id");  // Get the field ID from the data-id attribute
+
     Swal.fire({
         title: 'Are you sure?',
         text: "Do you want to delete this card?",
@@ -174,11 +175,24 @@ fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
         cancelButtonText: 'No'
     }).then((result) => {
         if (result.isConfirmed) {
-            card.remove();
-            Swal.fire('Deleted!', 'The card has been deleted.', 'success');
+            // Send AJAX DELETE request
+            $.ajax({
+                url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`, // Endpoint for deleting the field
+                method: 'DELETE',
+                success: function (response) {
+                    // If deletion is successful, remove the card from the frontend
+                    card.remove();
+                    Swal.fire('Deleted!', 'The card has been deleted.', 'success');
+                },
+                error: function (xhr, status, error) {
+                    // If there is an error in deletion, show error message
+                    Swal.fire('Error', 'An error occurred while deleting the field. Please try again.', 'error');
+                }
+            });
         }
     });
 });
+
 // Handle Update button
 fieldCardsContainer.on("click", ".FieldCardUpdateBtn", function () {
     console.log("update btn clicked");
