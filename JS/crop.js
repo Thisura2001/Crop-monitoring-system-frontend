@@ -20,14 +20,6 @@ closeCropForm.on('click', function () {
 function closeCropFormModal() {
     cropFormCard.hide();
 }
-// Preview image function
-function previewImage(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const imgPreview = URL.createObjectURL(file);
-        $('#cropImagePreview').attr('src', imgPreview);
-    }
-}
 
 // Handle crop form submission use ajax here
 // Load Field IDs into the Dropdown
@@ -136,6 +128,60 @@ $("#cropSaveBtn").on("click", function (e) {
             });
         },
     });
+});
+// Function to load all crops
+$(document).ready(function () {
+    // Function to load all crops
+    function loadCrops() {
+        $.ajax({
+            url: "http://localhost:9090/greenShadow/api/v1/crop", // Replace with your API endpoint
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                renderCrops(response); // Render the crops if the response is successful
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching crops:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred while fetching crop data. Please try again.",
+                });
+            },
+        });
+    }
+
+    // Function to render the crops as cards
+    function renderCrops(crops) {
+        const container = $("#corpCardsContainer");
+        container.empty(); // Clear any existing cards
+
+        crops.forEach(function (crop) {
+            // Generate card HTML dynamically
+            const card = `
+                <div class="card mt-3" style="width: 300px;">
+                    <div class="card-header">
+                        <h5>Crop Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="data:image/jpeg;base64,${crop.cropImg}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Crop Image">
+                        <p><strong>Crop Common Name:</strong> ${crop.commonName || "Not Specified"}</p>
+                        <p><strong>Scientific Name:</strong> ${crop.scientificName || "Not Specified"}</p>
+                        <p><strong>Category:</strong> ${crop.category || "Not Specified"}</p>
+                        <p><strong>Season:</strong> ${crop.season || "Not Specified"}</p>
+                        <p><strong>Field ID:</strong> ${crop.field || "Not Specified"}</p>
+                        
+                        <button class="btn btn-danger CropCardDeleteBtn" data-id="${crop.cropId}">Delete</button>
+                        <button class="btn btn-primary CropCardUpdateBtn" data-id="${crop.cropId}">Update</button>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+    // Call the loadCrops function to fetch and display crops on page load
+    loadCrops();
 });
 
 

@@ -222,36 +222,37 @@ $(document).ready(function () {
         closeUpdateModal();
     });
 
-    // Save updated data and send AJAX request using FormData
+// Handle the update field functionality
     $("#saveUpdatedField").on("click", function (e) {
-
         e.preventDefault();
 
-        const fieldId = $(this).data("id");
+        const fieldId = $(this).data("id");  // Get field ID from the button data attribute
         const fieldName = $("#fieldName").val();
         const fieldLocation = $("#fieldLocation").val();
         const fieldExtend = $("#fieldExtend").val();
-        const fieldImg1 = $("#fieldImg1")[0].files[0]; // Get selected image file
-        const fieldImg2 = $("#fieldImg2")[0].files[0]; // Get selected image file
+        const fieldImg1 = $("#fieldImg1")[0].files[0];  // Get selected image file (if any)
+        const fieldImg2 = $("#fieldImg2")[0].files[0];  // Get selected image file (if any)
 
         // Prepare FormData object for image upload
         const formData = new FormData();
         formData.append("fieldName", fieldName);
         formData.append("location", fieldLocation);
         formData.append("extend", fieldExtend);
+
+        // Append files if they are selected
         if (fieldImg1) formData.append("fieldImg1", fieldImg1);
         if (fieldImg2) formData.append("fieldImg2", fieldImg2);
 
         // Send the update request
         $.ajax({
-            url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`, // Endpoint for updating field
+            url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`,  // Endpoint for updating the field
             method: 'PUT',
             data: formData,
             processData: false,  // Important for sending FormData
             contentType: false,  // Let the browser set the correct content type
             success: function (response) {
-                // Update the card with the new values
-                const card = $(`.card[data-id="${fieldId}"]`);
+                // Update the field card with the new values
+                const card = $(`.card[data-id="${fieldId}"]`);  // Find the field card by ID
                 card.find(".card-body p:nth-child(3)").text(`Location: ${fieldLocation}`);
                 card.find(".card-body p:nth-child(4)").text(`Extent: ${fieldExtend}`);
 
@@ -263,14 +264,16 @@ $(document).ready(function () {
                     card.find(".card-img:last").attr("src", URL.createObjectURL(fieldImg2));
                 }
 
+                // Show success alert
                 Swal.fire('Success', 'Field updated successfully!', 'success');
-                $("#updateFieldModal").modal("hide");
+                $("#updateFieldModal").modal("hide");  // Close the modal
             },
             error: function () {
                 Swal.fire('Error', 'An error occurred while updating the field.', 'error');
             }
         });
     });
+
 
 
     // Function to close the update modal
