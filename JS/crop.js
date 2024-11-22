@@ -186,23 +186,36 @@ $(document).ready(function () {
 
 
 // Event listener for Delete  use ajax here
-corpCardsContainer.on('click', '.cropCardDeleteBtn', function () {
-    const cropCard = $(this).closest('.card'); // Find the closest card to the button
+corpCardsContainer.on('click', '.CropCardDeleteBtn', function () {
+    console.log("Delete btn clicked");
+    const card = $(this).closest(".card");
+    const cropId = $(this).data("id");  // Get the field ID from the data-id attribute
 
-    // Show confirmation dialog
     Swal.fire({
         title: 'Are you sure?',
-        text: "Do you want to delete this crop card?",
+        text: "Do you want to delete this card?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel'
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
     }).then((result) => {
         if (result.isConfirmed) {
-            cropCard.remove(); // Remove the crop card from DOM
-            Swal.fire('Deleted!', 'Your crop card has been deleted.', 'success');
+            // Send AJAX DELETE request
+            $.ajax({
+                url: `http://localhost:9090/greenShadow/api/v1/crop/${cropId}`, // Endpoint for deleting the field
+                method: 'DELETE',
+                success: function (response) {
+                    // If deletion is successful, remove the card from the frontend
+                    card.remove();
+                    Swal.fire('Deleted!', 'The card has been deleted.', 'success');
+                },
+                error: function (xhr, status, error) {
+                    // If there is an error in deletion, show error message
+                    Swal.fire('Error', 'An error occurred while deleting the crop. Please try again.', 'error');
+                }
+            });
         }
     });
 });
