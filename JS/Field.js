@@ -204,9 +204,14 @@ $(document).ready(function () {
         document.updateTargetCard = card;
 
         // Populate modal fields with card data
-        $("#updateName").val(card.find("p:contains('Field Name:')").text().replace("Field Name: ", "").trim());
-        $("#updateLocation").val(card.find("p:contains('Location:')").text().replace("Location: ", "").trim());
-        $("#updateExtent").val(card.find("p:contains('Extent:')").text().replace("Extent: ", "").trim());
+        const fieldName = card.find("p:contains('Field Name:')").text().replace("Field Name: ", "").trim();
+        const location = card.find("p:contains('Location:')").text().replace("Location: ", "").trim();
+        const extent = card.find("p:contains('Extent:')").text().replace("Extent: ", "").trim();
+
+        // Populate the fields in the modal
+        $("#updateName").val(fieldName);
+        $("#updateLocation").val(location);
+        $("#updateExtent").val(extent);
 
         // Show the modal
         updateFieldModal.show();
@@ -217,40 +222,56 @@ $(document).ready(function () {
         closeUpdateModal();
     });
 
-    // Save updated data and send AJAX request
+    // Save updated data and send AJAX request using FormData
     $("#saveUpdatedField").on("click", function (e) {
+
         e.preventDefault();
-        const card = document.updateTargetCard;
 
-        // Get updated values from the modal
-        const updatedField = {
-            name: $("#updateName").val(),
-            location: $("#updateLocation").val(),
-            extent: $("#updateExtent").val(),
-        };
+        const fieldId = $(this).data("id");
+        const fieldName = $("#fieldName").val();
+        const fieldLocation = $("#fieldLocation").val();
+        const fieldExtend = $("#fieldExtend").val();
+        const fieldImg1 = $("#fieldImg1")[0].files[0]; // Get selected image file
+        const fieldImg2 = $("#fieldImg2")[0].files[0]; // Get selected image file
 
-        const fieldId = card.find(".FieldCardUpdateBtn").data("id"); // Get the ID of the field
+        // Prepare FormData object for image upload
+        const formData = new FormData();
+        formData.append("fieldName", fieldName);
+        formData.append("location", fieldLocation);
+        formData.append("extend", fieldExtend);
+        if (fieldImg1) formData.append("fieldImg1", fieldImg1);
+        if (fieldImg2) formData.append("fieldImg2", fieldImg2);
 
-        // Send AJAX request to update the field in the backend
+        // Send the update request
         $.ajax({
-            url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`,
-            method: "PUT",
-            contentType: "application/json",
-            data: JSON.stringify(updatedField),
+            url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`, // Endpoint for updating field
+            method: 'PUT',
+            data: formData,
+            processData: false,  // Important for sending FormData
+            contentType: false,  // Let the browser set the correct content type
             success: function (response) {
-                // Update card content with new values
-                card.find("p:contains('Field Name:')").text(`Field Name: ${updatedField.name}`);
-                card.find("p:contains('Location:')").text(`Location: ${updatedField.location}`);
-                card.find("p:contains('Extent:')").text(`Extent: ${updatedField.extent}`);
+                // Update the card with the new values
+                const card = $(`.card[data-id="${fieldId}"]`);
+                card.find(".card-body p:nth-child(3)").text(`Location: ${fieldLocation}`);
+                card.find(".card-body p:nth-child(4)").text(`Extent: ${fieldExtend}`);
 
-                Swal.fire("Update Successful!", "Field details have been updated.", "success");
-                closeUpdateModal();
+                // If images are updated, update image previews
+                if (fieldImg1) {
+                    card.find(".card-img:first").attr("src", URL.createObjectURL(fieldImg1));
+                }
+                if (fieldImg2) {
+                    card.find(".card-img:last").attr("src", URL.createObjectURL(fieldImg2));
+                }
+
+                Swal.fire('Success', 'Field updated successfully!', 'success');
+                $("#updateFieldModal").modal("hide");
             },
-            error: function (xhr, status, error) {
-                Swal.fire("Error", "An error occurred while updating the field. Please try again.", "error");
-            },
+            error: function () {
+                Swal.fire('Error', 'An error occurred while updating the field.', 'error');
+            }
         });
     });
+
 
     // Function to close the update modal
     function closeUpdateModal() {

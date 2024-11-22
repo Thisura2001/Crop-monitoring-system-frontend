@@ -35,7 +35,6 @@ $('#cropSaveBtn').on('click', function (e) {
 
     // Get form data
     const header = $('#cropFormTitle').text();
-    const cropCode = $('#cropCode').val();
     const cropCommonName = $('#cropCommonName').val();
     const cropScientificName = $('#cropScientificName').val();
     const cropCategory = $('#cropCategory').val();
@@ -56,7 +55,6 @@ $('#cropSaveBtn').on('click', function (e) {
             </div>
             <div class="card-body">
                 ${cropImagePreview}
-                <p><strong>Code:</strong> <span class="crop-code">${cropCode}</span></p>
                 <p><strong>Scientific Name:</strong> <span class="crop-scientific-name">${cropScientificName}</span></p>
                 <p><strong>Common Name:</strong> <span class="crop-common-name">${cropCommonName}</span></p>
                 <p><strong>Category:</strong> <span class="crop-category">${cropCategory}</span></p>
@@ -106,7 +104,6 @@ function openUpdateCropModal(cropCard) {
     document.updateTargetCropCard = cropCard[0]; // Store the DOM element
 
     // Populate modal fields
-    $('#updateCropCode').val(cropCard.find('.crop-code').text());
     $('#updateCropCommonName').val(cropCard.find('.crop-common-name').text());
     $('#updateCropScientificName').val(cropCard.find('.crop-scientific-name').text());
     $('#updateCropCategory').val(cropCard.find('.crop-category').text());
@@ -126,7 +123,6 @@ $('#saveUpdatedCrop').on('click', function () {
     const cropCard = $(document.updateTargetCropCard); // Use jQuery to wrap the DOM element
 
     // Update card content with new values
-    cropCard.find('.crop-code').text($('#updateCropCode').val());
     cropCard.find('.crop-common-name').text($('#updateCropCommonName').val());
     cropCard.find('.crop-scientific-name').text($('#updateCropScientificName').val());
     cropCard.find('.crop-category').text($('#updateCropCategory').val());
