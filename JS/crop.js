@@ -223,99 +223,136 @@ corpCardsContainer.on('click', '.CropCardDeleteBtn', function () {
 // Event listener for Update
 // Open update modal with current card data
 $(document).ready(function () {
-    const updateCropModal = $("#updateCropModal");
-
-    // Open update modal
-    $("#corpCardsContainer").on("click", ".CropCardUpdateBtn", function () {
-        const card = $(this).closest(".card");
-
-        // Store the target card globally for later reference
-        document.updateTargetCropCard = card;
-
-        // Populate modal fields with card data
-        const commonName = card.find("p:contains('Common Name:')").text().replace("Common Name: ", "").trim();
-        const scientificName = card.find("p:contains('Scientific Name:')").text().replace("Scientific Name: ", "").trim();
-        const category = card.find("p:contains('Category:')").text().replace("Category: ", "").trim();
-        const season = card.find("p:contains('Season:')").text().replace("Season: ", "").trim();
-        const fieldId = card.find("p:contains('Field ID:')").text().replace("Field ID: ", "").trim();
-
-        // Populate modal inputs
-        $("#updateCropCommonName").val(commonName);
-        $("#updateCropScientificName").val(scientificName);
-        $("#updateCropCategory").val(category);
-        $("#updateCropSeason").val(season);
-        $("#updateFieldId").val(fieldId);
-
-        // Show the modal
-        updateCropModal.show();
+    // Open the crop form
+    $("#addCropBtn").on("click", function () {
+        $("#cropFormCard").show();
     });
 
-    // Close update modal
-    $("#closeUpdateCropModalBtn").on("click", function () {
-        updateCropModal.hide();
+    // Close the crop form
+    $("#closeCropForm").on("click", function () {
+        $("#cropFormCard").hide();
+        $("#cropForm")[0].reset();
     });
 
-    $(".modal-overlay").on("click", function () {
-        updateCropModal.hide();
-    });
+    // Close the update modal
+    function closeUpdateCropModal() {
+        $("#updateCropModal").hide();
+    }
+    $("#closeUpdateCropModalBtn").on("click", closeUpdateCropModal);
 
-    // Save updated crop data
-    $("#saveUpdatedCrop").on("click", function (e) {
+    // Save crop data
+    $("#cropForm").on("submit", function (e) {
         e.preventDefault();
 
-        const cropCard = $(document.updateTargetCropCard);
-        const cropId = cropCard.data("id"); // Get crop ID from the card data attribute
-        const commonName = $("#updateCropCommonName").val();
-        const scientificName = $("#updateCropScientificName").val();
-        const category = $("#updateCropCategory").val();
-        const season = $("#updateCropSeason").val();
-        const fieldId = $("#updateFieldId").val();
-        const cropImg = $("#updateCropImg1")[0].files[0]; // Get the new image if any
+        const commonName = $("#cropCommonName").val();
+        const scientificName = $("#cropScientificName").val();
+        const category = $("#cropCategory").val();
+        const season = $("#cropSeason").val();
+        const fieldId = $("#fieldIdInCrop").val();
+        const cropImgInput = $("#cropImageFile")[0];
+        const cropImg = cropImgInput.files.length > 0 ? cropImgInput.files[0] : null;
 
-        // Validate required fields
         if (!commonName || !scientificName || !category || !season || !fieldId) {
             Swal.fire("Validation Error", "Please fill in all fields!", "error");
             return;
         }
 
-        // Prepare FormData for AJAX request
         const formData = new FormData();
         formData.append("commonName", commonName);
         formData.append("scientificName", scientificName);
         formData.append("category", category);
         formData.append("season", season);
         formData.append("field", fieldId);
-
         if (cropImg) {
             formData.append("cropImg", cropImg);
         }
 
-        // AJAX PUT request to update crop
+        // AJAX request to save crop data
         $.ajax({
-            url: `http://localhost:9090/greenShadow/api/v1/crop/${cropId}`,
-            method: "PUT",
+            url: "http://localhost:9090/greenShadow/api/v1/crop",
+            method: "POST",
             data: formData,
             processData: false,
             contentType: false,
-            success: function () {
-                // Update card content with new values
-                cropCard.find("p:contains('Common Name:')").text(`Common Name: ${commonName}`);
-                cropCard.find("p:contains('Scientific Name:')").text(`Scientific Name: ${scientificName}`);
-                cropCard.find("p:contains('Category:')").text(`Category: ${category}`);
-                cropCard.find("p:contains('Season:')").text(`Season: ${season}`);
-                cropCard.find("p:contains('Field ID:')").text(`Field ID: ${fieldId}`);
-
-                // Update the card image preview if a new image is uploaded
-                if (cropImg) {
-                    cropCard.find(".crop-img").attr("src", URL.createObjectURL(cropImg));
-                }
-
-                Swal.fire("Success", "Crop updated successfully!", "success");
-                updateCropModal.hide(); // Close modal
+            success: function (response) {
+                const newCard = `
+                <div class="card" data-id="${response.id}">
+                    <img class="crop-img" src="${response.image}" alt="Crop Image">
+                    <p>Common Name: ${response.commonName}</p>
+                    <p>Scientific Name: ${response.scientificName}</p>
+                    <p>Category: ${response.category}</p>
+                    <p>Season: ${response.season}</p>
+                    <p>Field ID: ${response.fieldId}</p>
+                    <button class="btn btn-warning CropCardUpdateBtn">Update</button>
+                </div>`;
+                $("#corpCardsContainer").append(newCard);
+                Swal.fire("Success", "Crop added successfully!", "success");
+                $("#cropFormCard").hide();
+                $("#cropForm")[0].reset();
             },
             error: function () {
-                Swal.fire("Error", "Failed to update the crop. Please try again.", "error");
+                Swal.fire("Error", "Failed to save crop. Please try again.", "error");
             }
         });
     });
+
+    // Handle update button click
+    $("#corpCardsContainer").on("click", ".CropCardUpdateBtn", function () {
+        const card = $(this).closest(".card");
+        const cropId = card.data("id");
+
+        // Populate update modal
+        $("#updateCropCommonName").val(card.find("p:contains('Common Name:')").text().replace("Common Name: ", "").trim());
+        $("#updateCropScientificName").val(card.find("p:contains('Scientific Name:')").text().replace("Scientific Name: ", "").trim());
+        $("#updateCropCategory").val(card.find("p:contains('Category:')").text().replace("Category: ", "").trim());
+        $("#updateCropSeason").val(card.find("p:contains('Season:')").text().replace("Season: ", "").trim());
+        $("#updateFieldId").val(card.find("p:contains('Field ID:')").text().replace("Field ID: ", "").trim());
+
+        $("#saveUpdatedCrop").off("click").on("click", function () {
+            const commonName = $("#updateCropCommonName").val();
+            const scientificName = $("#updateCropScientificName").val();
+            const category = $("#updateCropCategory").val();
+            const season = $("#updateCropSeason").val();
+            const fieldId = $("#updateFieldId").val();
+            const cropImgInput = $("#updateCropImg1")[0];
+            const cropImg = cropImgInput.files.length > 0 ? cropImgInput.files[0] : null;
+
+            const formData = new FormData();
+            formData.append("commonName", commonName);
+            formData.append("scientificName", scientificName);
+            formData.append("category", category);
+            formData.append("season", season);
+            formData.append("field", fieldId);
+            if (cropImg) {
+                formData.append("cropImg", cropImg);
+            }
+
+            // AJAX request to update crop data
+            $.ajax({
+                url: `http://localhost:9090/greenShadow/api/v1/crop/${cropId}`,
+                method: "PUT",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    card.find("p:contains('Common Name:')").text(`Common Name: ${commonName}`);
+                    card.find("p:contains('Scientific Name:')").text(`Scientific Name: ${scientificName}`);
+                    card.find("p:contains('Category:')").text(`Category: ${category}`);
+                    card.find("p:contains('Season:')").text(`Season: ${season}`);
+                    card.find("p:contains('Field ID:')").text(`Field ID: ${fieldId}`);
+                    if (cropImg) {
+                        card.find(".crop-img").attr("src", URL.createObjectURL(cropImg));
+                    }
+                    Swal.fire("Success", "Crop updated successfully!", "success");
+                    closeUpdateCropModal();
+                },
+                error: function () {
+                    Swal.fire("Error", "Failed to update crop. Please try again.", "error");
+                }
+            });
+        });
+
+        $("#updateCropModal").show();
+    });
 });
+
