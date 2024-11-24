@@ -221,48 +221,101 @@ corpCardsContainer.on('click', '.CropCardDeleteBtn', function () {
 });
 
 // Event listener for Update
-corpCardsContainer.on('click', '.cropCardUpdateBtn', function () {
-    const cropCard = $(this).closest('.card'); // Find the closest card to the button
-    openUpdateCropModal(cropCard); // Open the modal for editing
-});
-
-
 // Open update modal with current card data
-function openUpdateCropModal(cropCard) {
-    document.updateTargetCropCard = cropCard[0]; // Store the DOM element
+$(document).ready(function () {
+    const updateCropModal = $("#updateCropModal");
 
-    // Populate modal fields
-    $('#updateCropCommonName').val(cropCard.find('.crop-common-name').text());
-    $('#updateCropScientificName').val(cropCard.find('.crop-scientific-name').text());
-    $('#updateCropCategory').val(cropCard.find('.crop-category').text());
-    $('#updateCropSeason').val(cropCard.find('.crop-season').text());
-    $('#updateFieldId').val(cropCard.find('.crop-field-id').text());
+    // Open update modal
+    $("#corpCardsContainer").on("click", ".CropCardUpdateBtn", function () {
+        const card = $(this).closest(".card");
 
-    updateCropModal.show();
-}
+        // Store the target card globally for later reference
+        document.updateTargetCropCard = card;
 
-// Close update modal
-closeUpdateCropModalBtn.on('click', function () {
-    updateCropModal.hide();
-});
+        // Populate modal fields with card data
+        const commonName = card.find("p:contains('Common Name:')").text().replace("Common Name: ", "").trim();
+        const scientificName = card.find("p:contains('Scientific Name:')").text().replace("Scientific Name: ", "").trim();
+        const category = card.find("p:contains('Category:')").text().replace("Category: ", "").trim();
+        const season = card.find("p:contains('Season:')").text().replace("Season: ", "").trim();
+        const fieldId = card.find("p:contains('Field ID:')").text().replace("Field ID: ", "").trim();
 
-// Save updated crop data = use ajax here
-$('#saveUpdatedCrop').on('click', function () {
-    const cropCard = $(document.updateTargetCropCard); // Use jQuery to wrap the DOM element
+        // Populate modal inputs
+        $("#updateCropCommonName").val(commonName);
+        $("#updateCropScientificName").val(scientificName);
+        $("#updateCropCategory").val(category);
+        $("#updateCropSeason").val(season);
+        $("#updateFieldId").val(fieldId);
 
-    // Update card content with new values
-    cropCard.find('.crop-common-name').text($('#updateCropCommonName').val());
-    cropCard.find('.crop-scientific-name').text($('#updateCropScientificName').val());
-    cropCard.find('.crop-category').text($('#updateCropCategory').val());
-    cropCard.find('.crop-season').text($('#updateCropSeason').val());
-    cropCard.find('.crop-field-id').text($('#updateFieldId').val());
+        // Show the modal
+        updateCropModal.show();
+    });
 
-    // Update image preview if a new one is selected
-    const updatedImg = $('#updateCropImg1')[0].files[0];
-    if (updatedImg) {
-        cropCard.find('.crop-img').attr('src', URL.createObjectURL(updatedImg));
-    }
+    // Close update modal
+    $("#closeUpdateCropModalBtn").on("click", function () {
+        updateCropModal.hide();
+    });
 
-    Swal.fire("Updated!", "Crop details have been updated.", "success");
-    updateCropModal.hide();
+    $(".modal-overlay").on("click", function () {
+        updateCropModal.hide();
+    });
+
+    // Save updated crop data
+    $("#saveUpdatedCrop").on("click", function (e) {
+        e.preventDefault();
+
+        const cropCard = $(document.updateTargetCropCard);
+        const cropId = cropCard.data("id"); // Get crop ID from the card data attribute
+        const commonName = $("#updateCropCommonName").val();
+        const scientificName = $("#updateCropScientificName").val();
+        const category = $("#updateCropCategory").val();
+        const season = $("#updateCropSeason").val();
+        const fieldId = $("#updateFieldId").val();
+        const cropImg = $("#updateCropImg1")[0].files[0]; // Get the new image if any
+
+        // Validate required fields
+        if (!commonName || !scientificName || !category || !season || !fieldId) {
+            Swal.fire("Validation Error", "Please fill in all fields!", "error");
+            return;
+        }
+
+        // Prepare FormData for AJAX request
+        const formData = new FormData();
+        formData.append("commonName", commonName);
+        formData.append("scientificName", scientificName);
+        formData.append("category", category);
+        formData.append("season", season);
+        formData.append("field", fieldId);
+
+        if (cropImg) {
+            formData.append("cropImg", cropImg);
+        }
+
+        // AJAX PUT request to update crop
+        $.ajax({
+            url: `http://localhost:9090/greenShadow/api/v1/crop/${cropId}`,
+            method: "PUT",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                // Update card content with new values
+                cropCard.find("p:contains('Common Name:')").text(`Common Name: ${commonName}`);
+                cropCard.find("p:contains('Scientific Name:')").text(`Scientific Name: ${scientificName}`);
+                cropCard.find("p:contains('Category:')").text(`Category: ${category}`);
+                cropCard.find("p:contains('Season:')").text(`Season: ${season}`);
+                cropCard.find("p:contains('Field ID:')").text(`Field ID: ${fieldId}`);
+
+                // Update the card image preview if a new image is uploaded
+                if (cropImg) {
+                    cropCard.find(".crop-img").attr("src", URL.createObjectURL(cropImg));
+                }
+
+                Swal.fire("Success", "Crop updated successfully!", "success");
+                updateCropModal.hide(); // Close modal
+            },
+            error: function () {
+                Swal.fire("Error", "Failed to update the crop. Please try again.", "error");
+            }
+        });
+    });
 });
