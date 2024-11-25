@@ -19,6 +19,28 @@ function closeVehicleForm() {
 closeVehicleFormBtn.addEventListener('click', closeVehicleForm);
 
 ///////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    loadStaffId();
+});
+function loadStaffId() {
+   $.ajax(
+       {
+           url: "http://localhost:9090/greenShadow/api/v1/staff",
+           method: "GET",
+           success: function (staff) {
+               const staffIdDropdown = $("#VehicleStaffId");
+               staffIdDropdown.empty();
+               staffIdDropdown.append('<option selected disabled value="">Select Staff...</option>');
+               staff.forEach(staff => {
+                   staffIdDropdown.append(`<option value="${staff.id}">${staff.id}</option>`);
+               });
+       },
+       error: function () {
+           Swal.fire('Error', 'Failed to load staff IDs. Please try again.', 'error');
+       }
+       }
+   );
+}
 $(document).ready(function() {
     let editingRow = null;
 
