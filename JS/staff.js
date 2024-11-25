@@ -62,61 +62,51 @@ $(document).ready(function() {
     $("#btnStaffSave").on("click", function(event) {
         event.preventDefault();
 
-        const staffData = {
-            firstName: $("#StaffFirstName").val(),
-            designation: $("#designation").val(),
-            fields: [$("#staffField").val()],
-            gender: $("#gender").val(),
-            joined_date: $("#joinedDate").val(),
-            dob: $("#dob").val(),
-            contact_no: $("#contactNo").val(),
-            email: $("#StaffEmail").val(),
-            role: $("#StaffRole").val(),
-            address: $("#addressLine3").val()
-        };
+        const firstName = $("#StaffFirstName").val();
+        const designation = $("#designation").val();
+        const field = $("#staffField").val();
+        const gender = $("#gender").val();
+        const joinedDate = $("#joinedDate").val();
+        const dob = $("#dob").val();
+        const contactNo = $("#contactNo").val();
+        const email = $("#StaffEmail").val();
+        const role = $("#role").val();
+        const address = $("#addressLine3").val();
 
-        const staffJason = JSON.stringify(staffData);
+        const staffData = {
+            firstName: firstName,
+            designation: designation,
+            field: field,
+            gender: gender,
+            joined_date: joinedDate,
+            dob: dob,
+            contact_no: contactNo,
+            email: email,
+            role: role,
+            address: address
+        };
+        console.log(staffData);
+        const staffJson = JSON.stringify(staffData);
 
         $.ajax({
             url: "http://localhost:9090/greenShadow/api/v1/staff",
             type: "POST",
+            data: staffJson,
             contentType: "application/json",
-            data: staffJason,
             success: function(response) {
-                const newRow = `
-            <tr>
-                <td>${staffData.staff_id}</td>
-                <td>${staffData.firstName}</td>
-                <td>${staffData.designation}</td>
-                <td>${staffData.fields.join(", ")}</td>
-                <td>${staffData.gender}</td>
-                <td>${staffData.joined_date}</td>
-                <td>${staffData.dob}</td>
-                <td>${staffData.contact_no}</td>
-                <td>${staffData.email}</td>
-                <td>${staffData.role}</td>
-                <td>${staffData.address}</td>
-                <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
-                <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
-            </tr>
-        `;
-                $("#staffTbody").append(newRow);
-                $("#staffFormCard").hide();
+                Swal.fire({
+                    title: "Saved!",
+                    text: "The staff details have been saved.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
                 $("#staffForm")[0].reset();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Staff Added',
-                    text: 'The staff member has been added successfully!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                $("#staffFormCard").hide();
+                loadStaffData();
             },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'There was an issue adding the staff member. Please try again.',
-                });
+            error: function() {
+                Swal.fire('Error', 'Failed to save staff details. Please try again.', 'error');
             }
         });
     });
