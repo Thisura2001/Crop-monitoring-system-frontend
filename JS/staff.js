@@ -17,6 +17,29 @@ function closeStaffForm() {
 closeStaffFormBtn.addEventListener('click', closeStaffForm);
 
 /////////////////////////////////////////////////
+$(document).ready(function () {
+    loadFieldIds();
+});
+
+function loadFieldIds() {
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
+        method: "GET",
+        success: function (fields) {
+            const fieldDropdown = $("#staffField");
+            fieldDropdown.empty(); // Clear existing options
+            fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
+
+            // Add options dynamically
+            fields.forEach(field => {
+                fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
+            });
+        },
+        error: function () {
+            Swal.fire('Error', 'Failed to load field IDs. Please try again.', 'error');
+        }
+    });
+}
 $(document).ready(function() {
     let editingRow = null;
 
@@ -40,7 +63,6 @@ $(document).ready(function() {
         event.preventDefault();
 
         const staffData = {
-            staff_id: $("#staffId").val(),
             firstName: $("#StaffFirstName").val(),
             designation: $("#designation").val(),
             fields: [$("#staffField").val()],
