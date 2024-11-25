@@ -41,6 +41,25 @@ function loadStaffId() {
        }
    );
 }
+// function LoadVehicleData(vehicle) {
+//     $("#tbodyVehicle").empty();
+//     vehicle.forEach(function (data) {
+//         $("#tbodyVehicle").append(`
+//             <tr>
+//                 <td>${data.licensePlate}</td>
+//                 <td>${data.category}</td>
+//                 <td>${data.fuelType}</td>
+//                 <td>${data.status}</td>
+//                 <td>${data.VehicleStaffId}</td>
+//                 <td>
+//                     <button class="btn btn-primary" onclick="editVehicle(${data.id})">Edit</button>
+//                     <button class="btn btn-danger" onclick="deleteVehicle(${data.id})">Delete</button>
+//                 </td>
+//             </tr>
+//         `);
+//     })
+// }
+
 $(document).ready(function() {
     let editingRow = null;
 
@@ -64,32 +83,49 @@ $(document).ready(function() {
         event.preventDefault();
 
         // Get form values
-        const vehicleCode = $("#vehicleCode").val();
         const licensePlate = $("#licensePlate").val();
         const category = $("#category").val();
         const fuelType = $("#fuelType").val();
         const status = $("#status").val();
         const staffId = $("#VehicleStaffId").val();
-        const newRow = `
-            <tr>
-                <td>${vehicleCode}</td>
-                <td>${licensePlate}</td>
-                <td>${category}</td>
-                <td>${fuelType}</td>
-                <td>${status}</td>
-                <td>${staffId}</td>
-                <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
-                <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
-            </tr>
-        `;
 
-        // Append the new row to the table
-        $("#tblVehicle tbody").append(newRow);
+        // Prepare the vehicle data object
+        const vehicleData = {
+            licensePlateNumber: licensePlate,
+            vehicleCategory: category,
+            fuelType: fuelType,
+            status: status,
+            staff: staffId
+        };
 
-        // Clear the form fields and hide the form card
-        $("#vehicleForm")[0].reset();
-        $("#vehicleFormCard").hide();
+        // Send the data to the backend using AJAX
+        $.ajax({
+            url: "http://localhost:9090/greenShadow/api/v1/vehicle",  // Replace with your backend URL
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(vehicleData),  // Convert the object to a JSON string
+            success: function(response) {
+                console.log(response)
+                // Optionally, show a success message or alert
+                Swal.fire({
+                    title: "Saved!",
+                    text: "The vehicle has been saved successfully.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                // Clear the form fields and hide the form card
+                $("#vehicleForm")[0].reset();
+                $("#vehicleFormCard").hide();
+            },
+            error: function(xhr, status, error) {
+                // Handle any error that occurs during the AJAX request
+                Swal.fire('Error', 'Failed to save the vehicle. Please try again.', 'error');
+                console.error('Error:', xhr.responseText);  // Log the error for further inspection
+            }
+        });
     });
+
 
     $("#btnVehicleUpdate").on("click", function(event) {
         event.preventDefault();
