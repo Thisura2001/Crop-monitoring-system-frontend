@@ -61,7 +61,7 @@ function appendStaff(staff) {
     $("#staffTbody").empty();
     staff.forEach(function (data) {
         let row = "<tr>";
-        row += "<td>" + data.staffId + "</td>";
+        row += "<td>" + data.id + "</td>";
         row += "<td>" + data.firstName + "</td>";
         row += "<td>" + data.designation + "</td>";
         row += "<td>" + data.gender + "</td>";
@@ -142,7 +142,6 @@ $(document).ready(function() {
                 });
                 $("#staffForm")[0].reset();
                 $("#staffFormCard").hide();
-                loadStaffData();
             },
             error: function() {
                 Swal.fire('Error', 'Failed to save staff details. Please try again.', 'error');
@@ -151,7 +150,32 @@ $(document).ready(function() {
     });
 
 
+    $(document).on("click", ".delete-row", function() {
+        const rowToDelete = $(this).closest("tr");
 
+        // Show confirmation dialog
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Delete the row if confirmed
+                rowToDelete.remove();
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "The staff record has been deleted.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        });
+    });
     // Handle Update button click to edit existing row
     $("#btnStaffUpdate").on("click", function(event) {
         event.preventDefault();
@@ -186,33 +210,6 @@ $(document).ready(function() {
         editingRow = null;
         $("#staffFormCard").hide();
         $("#staffForm")[0].reset();
-    });
-
-    $(document).on("click", ".delete-row", function() {
-        const rowToDelete = $(this).closest("tr");
-
-        // Show confirmation dialog
-        Swal.fire({
-            title: "Are you sure?",
-            text: "This action cannot be undone.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Delete the row if confirmed
-                rowToDelete.remove();
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "The staff record has been deleted.",
-                    icon: "success",
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-            }
-        });
     });
 
     // Handle row update (Edit) button click
