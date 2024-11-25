@@ -152,6 +152,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".delete-row", function() {
         const rowToDelete = $(this).closest("tr");
+        const staffId = rowToDelete.find("td").eq(0).text();
 
         // Show confirmation dialog
         Swal.fire({
@@ -164,78 +165,117 @@ $(document).ready(function() {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                // Delete the row if confirmed
-                rowToDelete.remove();
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "The staff record has been deleted.",
-                    icon: "success",
-                    timer: 1500,
-                    showConfirmButton: false
+                $.ajax({
+                    url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,
+                    type: "DELETE",
+                    success: function(response) {
+                        // Remove the row from the table
+                        rowToDelete.remove();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "The staff record has been deleted.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Failed to delete staff details. Please try again.', 'error');
+                    }
                 });
             }
         });
     });
-    // Handle Update button click to edit existing row
-    $("#btnStaffUpdate").on("click", function(event) {
-        event.preventDefault();
 
-        // Get updated values from the form
-        const updatedValues = {
-            staffId: $("#staffId").val(),
-            firstName: $("#StaffFirstName").val(),
-            designation: $("#designation").val(),
-            field: $("#staffField").val(),
-            gender: $("#gender").val(),
-            joinedDate: $("#joinedDate").val(),
-            dob: $("#dob").val(),
-            contactNo: $("#contactNo").val(),
-            email: $("#StaffEmail").val(),
-            role: $("#StaffRole").val(),
-            city: $("#addressLine3").val()
-        };
 
-        $(editingRow).find("td").each(function(index) {
-            $(this).text(Object.values(updatedValues)[index]);
-        });
+    let editingStaffId = null; // Global variable to hold the current staffId being edited
 
-        Swal.fire({
-            title: "Updated!",
-            text: "The staff details have been updated.",
-            icon: "success",
-            timer: 1500,
-            showConfirmButton: false
-        });
+    $(document).on("click", ".update-row", function () {
+        const row = $(this).closest("tr"); // Get the current row
 
-        editingRow = null;
-        $("#staffFormCard").hide();
-        $("#staffForm")[0].reset();
-    });
+        // Retrieve the staffId and other data from the row
+        editingStaffId = row.find("td:eq(0)").text(); // Assuming the staffId is in the first column
+        const firstName = row.find("td:eq(1)").text();
+        const designation = row.find("td:eq(2)").text();
+        const gender = row.find("td:eq(3)").text();
+        const joinedDate = row.find("td:eq(4)").text();
+        const dob = row.find("td:eq(5)").text();
+        const contactNo = row.find("td:eq(6)").text();
+        const email = row.find("td:eq(7)").text();
+        const address = row.find("td:eq(8)").text();
+        const role = row.find("td:eq(9)").text();
 
-    // Handle row update (Edit) button click
-    $(document).on("click", ".update-row", function() {
-        editingRow = $(this).closest("tr");
+        // Populate the form fields with the retrieved data
+        $("#StaffFirstName").val(firstName);
+        $("#designation").val(designation);
+        $("#gender").val(gender);
+        $("#joinedDate").val(joinedDate);
+        $("#dob").val(dob);
+        $("#contactNo").val(contactNo);
+        $("#StaffEmail").val(email);
+        $("#addressLine3").val(address);
+        $("#role").val(role);
 
-        // Fill form with the selected row's data
-        const rowData = $(editingRow).find("td").map(function() {
-            return $(this).text();
-        }).get();
-
-        $("#staffId").val(rowData[0]);
-        $("#StaffFirstName").val(rowData[1]);
-        $("#designation").val(rowData[2]);
-        $("#staffField").val(rowData[3]);
-        $("#gender").val(rowData[4]);
-        $("#joinedDate").val(rowData[5]);
-        $("#dob").val(rowData[6]);
-        $("#contactNo").val(rowData[7]);
-        $("#StaffEmail").val(rowData[8]);
-        $("#StaffRole").val(rowData[9]);
-        $("#addressLine3").val(rowData[10]);
-
-        // Show the form card and toggle buttons
+        // Show the form and switch to update mode
         $("#staffFormCard").show();
         $("#btnStaffSave").hide();
         $("#btnStaffUpdate").show();
     });
+    $("#btnStaffUpdate").on("click", function(event) {
+        event.preventDefault();
+
+        const rowToUpdate = $(this).closest("tr");
+        const staffId = rowToUpdate.find("td").eq(0).text();
+
+        // Collect the updated data from the form
+        const firstName = $("#StaffFirstName").val();
+        const designation = $("#designation").val();
+        const field = $("#staffField").val();
+        const gender = $("#gender").val();
+        const joinedDate = $("#joinedDate").val();
+        const dob = $("#dob").val();
+        const contactNo = $("#contactNo").val();
+        const email = $("#StaffEmail").val();
+        const role = $("#role").val();
+        const address = $("#addressLine3").val();
+
+        const staffData = {
+            firstName: firstName,
+            designation: designation,
+            field: field,
+            gender: gender,
+            joined_date: joinedDate,
+            dob: dob,
+            contact_no: contactNo,
+            email: email,
+            role: role,
+            address: address
+        };
+
+        const staffJson = JSON.stringify(staffData);
+
+        // Send the PUT request to update the staff data
+        $.ajax({
+            url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,  // Use the staffId in the URL
+            type: "PUT",
+            data: staffJson,
+            contentType: "application/json",
+            success: function(response) {
+                LoadStaffData();  // Reload staff data to reflect the updates
+                Swal.fire({
+                    title: "Updated!",
+                    text: "The staff details have been updated.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                $("#staffForm")[0].reset();
+                $("#staffFormCard").hide();  // Hide the form card after updating
+            },
+            error: function() {
+                Swal.fire('Error', 'Failed to update staff details. Please try again.', 'error');
+            }
+        });
+    });
+
 });
