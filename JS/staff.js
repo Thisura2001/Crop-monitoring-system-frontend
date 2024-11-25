@@ -19,6 +19,7 @@ closeStaffFormBtn.addEventListener('click', closeStaffForm);
 /////////////////////////////////////////////////
 $(document).ready(function () {
     loadFieldIds();
+    LoadStaffData();
 });
 
 function loadFieldIds() {
@@ -40,6 +41,43 @@ function loadFieldIds() {
         }
     });
 }
+function LoadStaffData() {
+    $.ajax(
+        {
+            url: "http://localhost:9090/greenShadow/api/v1/staff",
+            method: "GET",
+            contentType: "application/json",
+            success: function (data) {
+                appendStaff(data);
+            },
+            error: function (error) {
+                console.log(error)
+                Swal.fire('Error', 'Failed to load staff data. Please try again.', 'error');
+            }
+        }
+    )
+}
+function appendStaff(staff) {
+    $("#staffTbody").empty();
+    staff.forEach(function (data) {
+        let row = "<tr>";
+        row += "<td>" + data.staffId + "</td>";
+        row += "<td>" + data.firstName + "</td>";
+        row += "<td>" + data.designation + "</td>";
+        row += "<td>" + data.gender + "</td>";
+        row += "<td>" + data.joined_date + "</td>";
+        row += "<td>" + data.dob + "</td>";
+        row += "<td>" + data.contact_no + "</td>";
+        row += "<td>" + data.email + "</td>";
+        row += "<td>" + data.address + "</td>";
+        row += "<td>" + data.role + "</td>";
+        row += "<td><button class='btn btn-danger btn-sm delete-row'><i class='fa-solid fa-trash'></i></button></td>";
+        row += "<td><button class='btn btn-warning btn-sm update-row'><i class='fa-solid fa-pen-to-square'></i></button></td>";
+        row += "</tr>";
+        $("#staffTbody").append(row);
+    });
+}
+
 $(document).ready(function() {
     let editingRow = null;
 
