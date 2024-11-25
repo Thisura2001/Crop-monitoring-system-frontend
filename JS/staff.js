@@ -132,6 +132,7 @@ $(document).ready(function() {
             data: staffJson,
             contentType: "application/json",
             success: function(response) {
+                LoadStaffData();
                 Swal.fire({
                     title: "Saved!",
                     text: "The staff details have been saved.",
