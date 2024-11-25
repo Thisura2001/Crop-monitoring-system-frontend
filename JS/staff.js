@@ -82,7 +82,7 @@ $(document).ready(function() {
     let editingRow = null;
 
     // Show the staff form card when "Add New Staff" button is clicked
-    $("#addStaffBtn").on("click", function() {
+    $("#addStaffBtn").on("click", function () {
         $("#staffFormCard").show();
         $("#btnStaffSave").show();
         $("#btnStaffUpdate").hide();
@@ -91,13 +91,13 @@ $(document).ready(function() {
     });
 
     // Close the staff form card
-    $("#closeStaffForm").on("click", function() {
+    $("#closeStaffForm").on("click", function () {
         $("#staffFormCard").hide();
         $("#staffForm")[0].reset();
         editingRow = null;
     });
 
-    $("#btnStaffSave").on("click", function(event) {
+    $("#btnStaffSave").on("click", function (event) {
         event.preventDefault();
 
         const firstName = $("#StaffFirstName").val();
@@ -131,7 +131,7 @@ $(document).ready(function() {
             type: "POST",
             data: staffJson,
             contentType: "application/json",
-            success: function(response) {
+            success: function (response) {
                 LoadStaffData();
                 Swal.fire({
                     title: "Saved!",
@@ -143,14 +143,14 @@ $(document).ready(function() {
                 $("#staffForm")[0].reset();
                 $("#staffFormCard").hide();
             },
-            error: function() {
+            error: function () {
                 Swal.fire('Error', 'Failed to save staff details. Please try again.', 'error');
             }
         });
     });
 
 
-    $(document).on("click", ".delete-row", function() {
+    $(document).on("click", ".delete-row", function () {
         const rowToDelete = $(this).closest("tr");
         const staffId = rowToDelete.find("td").eq(0).text();
 
@@ -168,8 +168,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,
                     type: "DELETE",
-                    success: function(response) {
-                        // Remove the row from the table
+                    success: function (response) {
                         rowToDelete.remove();
                         Swal.fire({
                             title: "Deleted!",
@@ -179,7 +178,7 @@ $(document).ready(function() {
                             showConfirmButton: false
                         });
                     },
-                    error: function() {
+                    error: function () {
                         Swal.fire('Error', 'Failed to delete staff details. Please try again.', 'error');
                     }
                 });
@@ -221,16 +220,16 @@ $(document).ready(function() {
         $("#btnStaffSave").hide();
         $("#btnStaffUpdate").show();
     });
-    $("#btnStaffUpdate").on("click", function(event) {
+
+    $("#btnStaffUpdate").on("click", function (event) {
         event.preventDefault();
 
-        const rowToUpdate = $(this).closest("tr");
-        const staffId = rowToUpdate.find("td").eq(0).text();
+        const staffId = editingStaffId;  // Use the correct staffId
 
         // Collect the updated data from the form
         const firstName = $("#StaffFirstName").val();
         const designation = $("#designation").val();
-        const field = $("#staffField").val();
+        const field = $("#staffField").val();  // Ensure this field is correctly populated
         const gender = $("#gender").val();
         const joinedDate = $("#joinedDate").val();
         const dob = $("#dob").val();
@@ -252,15 +251,13 @@ $(document).ready(function() {
             address: address
         };
 
-        const staffJson = JSON.stringify(staffData);
-
         // Send the PUT request to update the staff data
         $.ajax({
-            url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,  // Use the staffId in the URL
+            url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,  // Use the correct staffId in the URL
             type: "PUT",
-            data: staffJson,
+            data: JSON.stringify(staffData),
             contentType: "application/json",
-            success: function(response) {
+            success: function (response) {
                 LoadStaffData();  // Reload staff data to reflect the updates
                 Swal.fire({
                     title: "Updated!",
@@ -272,10 +269,10 @@ $(document).ready(function() {
                 $("#staffForm")[0].reset();
                 $("#staffFormCard").hide();  // Hide the form card after updating
             },
-            error: function() {
+            error: function (xhr, status, error) {
                 Swal.fire('Error', 'Failed to update staff details. Please try again.', 'error');
+                console.error('Error:', xhr.responseText);  // Log the error for further inspection
             }
         });
     });
-
 });
