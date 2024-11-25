@@ -229,7 +229,7 @@ $(document).ready(function() {
         // Collect the updated data from the form
         const firstName = $("#StaffFirstName").val();
         const designation = $("#designation").val();
-        const field = $("#staffField").val();  // Ensure this field is correctly populated
+        const field = $("#staffField").val();
         const gender = $("#gender").val();
         const joinedDate = $("#joinedDate").val();
         const dob = $("#dob").val();
@@ -253,12 +253,12 @@ $(document).ready(function() {
 
         // Send the PUT request to update the staff data
         $.ajax({
-            url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,  // Use the correct staffId in the URL
+            url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,
             type: "PUT",
             data: JSON.stringify(staffData),
             contentType: "application/json",
             success: function (response) {
-                LoadStaffData();  // Reload staff data to reflect the updates
+                LoadStaffData();
                 Swal.fire({
                     title: "Updated!",
                     text: "The staff details have been updated.",
@@ -267,11 +267,11 @@ $(document).ready(function() {
                     showConfirmButton: false
                 });
                 $("#staffForm")[0].reset();
-                $("#staffFormCard").hide();  // Hide the form card after updating
+                $("#staffFormCard").hide();
             },
             error: function (xhr, status, error) {
                 Swal.fire('Error', 'Failed to update staff details. Please try again.', 'error');
-                console.error('Error:', xhr.responseText);  // Log the error for further inspection
+                console.error('Error:', xhr.responseText);
             }
         });
     });
