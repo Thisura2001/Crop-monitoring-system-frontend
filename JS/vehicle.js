@@ -42,6 +42,20 @@ function loadStaffId() {
        }
    );
 }
+$(document).ready(function (){
+    $.ajax(
+        {
+            url: "http://localhost:9090/greenShadow/api/v1/vehicle",
+            method: "GET",
+            success: function (vehicles) {
+                LoadVehicleData(vehicles);
+            },
+            error: function () {
+                Swal.fire('Error', 'Failed to load vehicle data. Please try again.', 'error');
+            }
+        }
+    )
+})
 function LoadVehicleData(vehicles) {
     $("#tbodyVehicle").empty();
     vehicles.forEach(function (data) {
