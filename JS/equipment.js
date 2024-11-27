@@ -19,7 +19,48 @@ function closeEquipmentForm() {
 
 // Close button event
 closeEquipmentFormBtn.addEventListener('click', closeEquipmentForm);
+$(document).ready(function () {
+   loadStaff();
+   loadFields();
+});
+function loadFields() {
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
+        method: "GET",
+        success: function (fields) {
+            const fieldDropdown = $("#assignedField");
+            fieldDropdown.empty();
+            fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
 
+            // Add options dynamically
+            fields.forEach(field => {
+                fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
+            });
+        },
+        error: function () {
+            Swal.fire('Error', 'Failed to load field IDs. Please try again.', 'error');
+        }
+    });
+}
+function loadStaff() {
+    $.ajax(
+        {
+            url: "http://localhost:9090/greenShadow/api/v1/staff",
+            method: "GET",
+            success: function (staff) {
+                const staffIdDropdown = $("#assignedStaff");
+                staffIdDropdown.empty();
+                staffIdDropdown.append('<option selected disabled value="">Select Staff...</option>');
+                staff.forEach(staff => {
+                    staffIdDropdown.append(`<option value="${staff.id}">${staff.id}</option>`);
+                });
+            },
+            error: function () {
+                Swal.fire('Error', 'Failed to load staff IDs. Please try again.', 'error');
+            }
+        }
+    );
+}
 $(document).ready(function() {
     let editingRow = null;
 
@@ -44,34 +85,66 @@ $(document).ready(function() {
         event.preventDefault();
 
         // Get form values
-        const equipmentId = $("#equipmentId").val();
-        const equipmentName = $("#equipmentName").val();
-        const equipmentType = $("#equipmentType").val();
-        const equipmentStatus = $("#equipmentStatus").val();
-        const assignedStaff = $("#assignedStaff").val();
-        const assignedField = $("#assignedField").val();
+        const equipmentData = {
+            eqId: $("#equipmentId").val(),
+            name: $("#equipmentName").val(),
+            equipmentType: $("#equipmentType").val(),
+            status: $("#equipmentStatus").val(),
+            staff: $("#assignedStaff").val(),
+            field: $("#assignedField").val()
+        };
 
-        // Add a new row to the table
-        const newRow = `
-            <tr>
-                <td>${equipmentId}</td>
-                <td>${equipmentName}</td>
-                <td>${equipmentType}</td>
-                <td>${equipmentStatus}</td>
-                <td>${assignedStaff}</td>
-                <td>${assignedField}</td>
-                <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
-                <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
-            </tr>
-        `;
+        // Send the data to the backend using AJAX
+        $.ajax({
+            url: "http://localhost:9090/greenShadow/api/v1/equipment", // Replace with your API endpoint
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(equipmentData),
+            success: function(response) {
+                // On success, add the new row to the table
+                const newRow = `
+                <tr data-id="${response.equipmentId}">
+                    <td>${response.eqId}</td>
+                    <td>${response.name}</td>
+                    <td>${response.equipmentType}</td>
+                    <td>${response.status}</td>
+                    <td>${response.staff}</td>
+                    <td>${response.field}</td>
+                    <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
+                    <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                </tr>
+            `;
 
-        // Append the new row to the table
-        $("#equipmentTbody").append(newRow);
+                // Append the new row to the table
+                $("#equipmentTbody").append(newRow);
 
-        // Hide the form card and clear form fields
-        $("#equipmentFormCard").hide();
-        $("#equipmentForm")[0].reset();
+                // Show success alert
+                Swal.fire({
+                    title: "Saved!",
+                    text: "The equipment has been saved successfully.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                // Hide the form card and reset the form
+                $("#equipmentFormCard").hide();
+                $("#equipmentForm")[0].reset();
+            },
+            error: function(xhr, status, error) {
+                // Handle errors
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to save the equipment. Please try again.",
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                console.error("Error:", xhr.responseText); // Log the error for debugging
+            }
+        });
     });
+
 
     // Handle Update button click for editing existing equipment
     $("#btnEquipmentUpdate").on("click", function(event) {
