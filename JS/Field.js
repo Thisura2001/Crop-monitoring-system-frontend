@@ -146,7 +146,7 @@ $(document).ready(function () {
                         <p><strong>Extent:</strong> ${field.extend || "Not Specified"}</p>
                         
                         <button class="btn btn-danger FieldCardDeleteBtn" data-id="${field.fieldId}">Delete</button>
-                        <button class="btn btn-primary FieldCardUpdateBtn" data-id="${field.id}">Update</button>
+                        <button class="btn btn-primary FieldCardUpdateBtn" data-id="${field.fieldId}">Update</button>
                     </div>
                 </div>
             `;
@@ -192,6 +192,8 @@ fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
         }
     });
 });
+
+let editingFieldId = null;
 $(document).ready(function () {
     const updateFieldModal = $("#updateFieldModal");
 
@@ -200,6 +202,7 @@ $(document).ready(function () {
         console.log("Update button clicked");
         const card = $(this).closest(".card");
 
+        editingFieldId = $(this).data("id");
         // Store the target card globally for later reference
         document.updateTargetCard = card;
 
@@ -225,27 +228,34 @@ $(document).ready(function () {
 // Handle the update field functionality
     $("#saveUpdatedField").on("click", function (e) {
         e.preventDefault();
+        const fieldId = $(this).data("id");
 
-        const fieldId = $(this).data("id");  // Get field ID from the button data attribute
-        const fieldName = $("#fieldName").val();
-        const fieldLocation = $("#fieldLocation").val();
-        const fieldExtend = $("#fieldExtend").val();
-        const fieldImg1 = $("#fieldImg1")[0].files[0];  // Get selected image file (if any)
-        const fieldImg2 = $("#fieldImg2")[0].files[0];  // Get selected image file (if any)
+        const fieldName = $("#updateName").val();
+        console.log(fieldName);
+        const fieldLocation = $("#updateLocation").val();
+        const fieldExtend = $("#updateExtent").val();
+        let fieldImg1 = $("#updateFieldImg1")[0].files[0];
+        let fieldImg2 = $("#updateFieldImg2")[0].files[0];
 
-        // Prepare FormData object for image upload
+// Prepare FormData object for image upload
         const formData = new FormData();
         formData.append("fieldName", fieldName);
         formData.append("location", fieldLocation);
         formData.append("extend", fieldExtend);
 
-        // Append files if they are selected
-        if (fieldImg1) formData.append("fieldImg1", fieldImg1);
-        if (fieldImg2) formData.append("fieldImg2", fieldImg2);
+// Append files if they are selected
+        if (fieldImg1) {
+            formData.append("fieldImg1", fieldImg1);
+        }
+
+        if (fieldImg2) {
+            formData.append("fieldImg2", fieldImg2);
+        }
+
 
         // Send the update request
         $.ajax({
-            url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`,  // Endpoint for updating the field
+            url: `http://localhost:9090/greenShadow/api/v1/field/`+editingFieldId,  // Endpoint for updating the field
             method: 'PUT',
             data: formData,
             processData: false,  // Important for sending FormData

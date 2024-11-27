@@ -21,6 +21,7 @@ closeVehicleFormBtn.addEventListener('click', closeVehicleForm);
 ///////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     loadStaffId();
+    LoadVehicleData();
 });
 function loadStaffId() {
    $.ajax(
@@ -41,24 +42,23 @@ function loadStaffId() {
        }
    );
 }
-// function LoadVehicleData(vehicle) {
-//     $("#tbodyVehicle").empty();
-//     vehicle.forEach(function (data) {
-//         $("#tbodyVehicle").append(`
-//             <tr>
-//                 <td>${data.licensePlate}</td>
-//                 <td>${data.category}</td>
-//                 <td>${data.fuelType}</td>
-//                 <td>${data.status}</td>
-//                 <td>${data.VehicleStaffId}</td>
-//                 <td>
-//                     <button class="btn btn-primary" onclick="editVehicle(${data.id})">Edit</button>
-//                     <button class="btn btn-danger" onclick="deleteVehicle(${data.id})">Delete</button>
-//                 </td>
-//             </tr>
-//         `);
-//     })
-// }
+function LoadVehicleData(vehicles) {
+    $("#tbodyVehicle").empty();
+    vehicles.forEach(function (data) {
+        let row = "<tr>";
+        row += "<td>" + data.vehicle_code + "</td>";
+        row += "<td>" + data.licensePlateNumber + "</td>";
+        row += "<td>" + data.vehicleCategory + "</td>";
+        row += "<td>" + data.fuelType + "</td>";
+        row += "<td>" + data.status + "</td>";
+        row += "<td>" + data.staff + "</td>";
+        row += "<td><button class='btn btn-danger btn-sm delete-row'><i class='fa-solid fa-trash'></i></button></td>";
+        row += "<td><button class='btn btn-warning btn-sm update-row'><i class='fa-solid fa-pen-to-square'></i></button></td>";
+        row += "</tr>";
+        $("#tbodyVehicle").append(row);
+    });
+}
+
 
 $(document).ready(function() {
     let editingRow = null;
