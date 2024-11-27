@@ -181,6 +181,7 @@ $(document).ready(function() {
     // Handle delete button click for dynamically added rows
     $("#tblVehicle").on("click", ".delete-row", function() {
         const row = $(this).closest("tr");
+        const rowId = row.data("id"); // Assuming each row has a data-id attribute for its unique ID.
 
         // Show SweetAlert confirmation dialog
         Swal.fire({
@@ -193,17 +194,36 @@ $(document).ready(function() {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                row.remove();
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "The row has been deleted.",
-                    icon: "success",
-                    timer: 1500,
-                    showConfirmButton: false
+                // Send AJAX request to delete the row on the server
+                $.ajax({
+                    url: `http://localhost:9090/greenShadow/api/v1/vehicle/${rowId}`, // Replace with your API endpoint
+                    type: "DELETE",
+                    success: function(response) {
+                        // On success, remove the row and show a success message
+                        row.remove();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "The row has been deleted.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the row. Please try again.",
+                            icon: "error",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
                 });
             }
         });
     });
+
 
     // Handle update button click for dynamically added rows
     $("#tblVehicle").on("click", ".update-row", function() {
