@@ -165,6 +165,7 @@ $(document).ready(function () {
                     </div>
                     <div class="card-body">
                         <img src="data:image/jpeg;base64,${crop.cropImg}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Crop Image">
+                        <p><strong>Crop ID:</strong> ${crop.cropId || "Not Specified"}</p>
                         <p><strong>Crop Common Name:</strong> ${crop.commonName || "Not Specified"}</p>
                         <p><strong>Scientific Name:</strong> ${crop.scientificName || "Not Specified"}</p>
                         <p><strong>Category:</strong> ${crop.category || "Not Specified"}</p>
