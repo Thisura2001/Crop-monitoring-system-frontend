@@ -132,7 +132,6 @@ $(document).ready(function() {
                 // Clear the form fields and hide the form card
                 $("#vehicleForm")[0].reset();
                 $("#vehicleFormCard").hide();
-                LoadVehicleData();
             },
             error: function(xhr, status, error) {
                 // Handle any error that occurs during the AJAX request

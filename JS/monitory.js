@@ -15,7 +15,67 @@ closeLogForm.on('click', function () {
 function closeLogFormModal() {
     logFormCard.hide();
 }
-$('#logForm').on('submit', function (e) {
+$(document).ready(function () {
+    loadCrops();
+    loadFields();
+    loadStaff();
+});
+
+function loadCrops() {
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/crop",
+        method: "GET",
+        success: function (crops) {
+            const cropDropdown = $("#cropInLog"); // Correct ID
+            cropDropdown.empty();
+            cropDropdown.append('<option selected disabled value="">Select Crop...</option>');
+            crops.forEach(crop => {
+                cropDropdown.append(`<option value="${crop.cropId}">${crop.cropId}</option>`);
+            });
+        },
+        error: function () {
+            Swal.fire('Error', 'Failed to load crop IDs. Please try again.', 'error');
+        }
+    });
+}
+
+function loadFields() {
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/field",
+        method: "GET",
+        success: function (fields) {
+            const fieldDropdown = $("#fieldList"); // Correct ID
+            fieldDropdown.empty();
+            fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
+            fields.forEach(field => {
+                fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
+            });
+        },
+        error: function () {
+            Swal.fire('Error', 'Failed to load field IDs. Please try again.', 'error');
+        }
+    });
+}
+function loadStaff() {
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/staff",
+        method: "GET",
+        success: function (staff) {
+            const staffIdDropdown = $("#staffInLog"); // Correct ID
+            staffIdDropdown.empty();
+            staffIdDropdown.append('<option selected disabled value="">Select Staff...</option>');
+            staff.forEach(staff => {
+                staffIdDropdown.append(`<option value="${staff.id}">${staff.id}</option>`);
+            });
+        },
+        error: function () {
+            Swal.fire('Error', 'Failed to load staff IDs. Please try again.', 'error');
+        }
+    })
+}
+
+
+$('#saveLogBtn').on('click',function (e) {
     e.preventDefault();
 
     const header = $('#logFormTitle').text();
