@@ -61,6 +61,39 @@ function loadStaff() {
         }
     );
 }
+
+$(document).ready(function (){
+    loadEquipments();
+})
+    function loadEquipments() {
+        $.ajax({
+            url: "http://localhost:9090/greenShadow/api/v1/equipment",
+            method: "GET",
+            success: function (equipments) {
+                renderEquipments(equipments);
+            },
+            error: function () {
+                Swal.fire('Error', 'Failed to load equipment. Please try again.', 'error');
+            }
+        })
+    }
+
+    function renderEquipments(equipments) {
+        $("#equipmentTbody").empty();
+        equipments.forEach(function (data) {
+            const row = `<tr>
+                            <td>${data.eqId}</td>
+                            <td>${data.name}</td>
+                            <td>${data.equipmentType}</td>
+                            <td>${data.status}</td>
+                            <td>${data.field}</td>
+                            <td>${data.staff}</td>
+                            <td><button class='btn btn-danger btn-sm delete-row'><i class='fa-solid fa-trash'></i></button></td>
+                            <td><button class='btn btn-warning btn-sm update-row'><i class='fa-solid fa-pen-to-square'></i></button></td>
+                        </tr>`;
+            $("#equipmentTbody").append(row);
+        })
+    }
 $(document).ready(function() {
     let editingRow = null;
 
