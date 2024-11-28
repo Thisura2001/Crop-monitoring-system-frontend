@@ -114,10 +114,10 @@ $(document).ready(function() {
 
         // Send the data to the backend using AJAX
         $.ajax({
-            url: "http://localhost:9090/greenShadow/api/v1/vehicle",  // Replace with your backend URL
+            url: "http://localhost:9090/greenShadow/api/v1/vehicle",
             type: "POST",
             contentType: "application/json",
-            data: JSON.stringify(vehicleData),  // Convert the object to a JSON string
+            data: JSON.stringify(vehicleData),
             success: function(response) {
                 console.log(response)
                 // Optionally, show a success message or alert
@@ -135,53 +135,103 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 // Handle any error that occurs during the AJAX request
                 Swal.fire('Error', 'Failed to save the vehicle. Please try again.', 'error');
-                console.error('Error:', xhr.responseText);  // Log the error for further inspection
+                console.error('Error:', xhr.responseText);
             }
         });
     });
 
+    let editingVehicleRow = null;
+    // Handle update button click for dynamically added rows
+    $("#tblVehicle").on("click", ".update-row", function() {
+        editingVehicleRow = $(this).closest("tr");
+
+        const licensePlate = $(editingVehicleRow).find("td:eq(1)").text();
+        const category = $(editingVehicleRow).find("td:eq(2)").text();
+        const fuelType = $(editingVehicleRow).find("td:eq(3)").text();
+        const status = $(editingVehicleRow).find("td:eq(4)").text();
+        const staffId = $(editingVehicleRow).find("td:eq(5)").text();
+
+
+        $("#licensePlate").val(licensePlate);
+        $("#category").val(category);
+        $("#fuelType").val(fuelType);
+        $("#status").val(status);
+        $("#VehicleStaffId").val(staffId);
+
+        // Show the form card for updating
+        $("#vehicleFormCard").show();
+        $("#btnVehicleSave").hide();
+        $("#btnVehicleUpdate").show();
+    });
 
     $("#btnVehicleUpdate").on("click", function(event) {
         event.preventDefault();
 
-        if (editingRow) {
-            // Get form values
-            const vehicleCode = $("#vehicleCode").val();
-            const licensePlate = $("#licensePlate").val();
-            const category = $("#category").val();
-            const fuelType = $("#fuelType").val();
-            const status = $("#status").val();
-            const staffId = $("#VehicleStaffId").val();
+        // Get the Vehicle Code from the row being edited
+        const vehicleCode = $(editingVehicleRow).find("td:eq(0)").text();
 
-            // Update the existing row's data
-            $(editingRow).find("td:eq(0)").text(vehicleCode);
-            $(editingRow).find("td:eq(1)").text(licensePlate);
-            $(editingRow).find("td:eq(2)").text(category);
-            $(editingRow).find("td:eq(3)").text(fuelType);
-            $(editingRow).find("td:eq(4)").text(status);
-            $(editingRow).find("td:eq(5)").text(staffId);
+        // Get updated data from the form
+        const licensePlate = $("#licensePlate").val();
+        const category = $("#category").val();
+        const fuelType = $("#fuelType").val();
+        const status = $("#status").val();
+        const staffId = $("#VehicleStaffId").val();
 
-            // Show success message
-            Swal.fire({
-                title: "Updated!",
-                text: "The row has been updated.",
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false
-            });
+        // Prepare the data for the AJAX request
+        const data = {
+            licensePlateNumber: licensePlate,
+            vehicleCategory: category,
+            fuelType: fuelType,
+            status: status,
+            staff: staffId
+        };
 
-            editingRow = null;
+        // Send an AJAX request to the backend
+        $.ajax({
+            url: `http://localhost:9090/greenShadow/api/v1/vehicle/${vehicleCode}`, // Backend endpoint
+            type: "PUT", // Update method
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                // Update the row in the table with the new data
+                $(editingVehicleRow).find("td:eq(1)").text(licensePlate);
+                $(editingVehicleRow).find("td:eq(2)").text(category);
+                $(editingVehicleRow).find("td:eq(3)").text(fuelType);
+                $(editingVehicleRow).find("td:eq(4)").text(status);
+                $(editingVehicleRow).find("td:eq(5)").text(staffId);
 
-            // Clear the form fields and hide the form card
-            $("#vehicleForm")[0].reset();
-            $("#vehicleFormCard").hide();
-        }
+                // Display success message
+                Swal.fire({
+                    title: "Success!",
+                    text: "Vehicle updated successfully.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                // Hide the form card and reset the form
+                $("#vehicleFormCard").hide();
+                $("#vehicleForm")[0].reset();
+                editingVehicleRow = null;
+            },
+            error: function (xhr, status, error) {
+                // Display error message
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to update the vehicle. Please try again.",
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                console.error("Error:", xhr.responseText);
+            }
+        });
     });
 
     // Handle delete button click for dynamically added rows
     $("#tblVehicle").on("click", ".delete-row", function() {
         const row = $(this).closest("tr");
-        const rowId = row.data("id"); // Assuming each row has a data-id attribute for its unique ID.
+        const rowId = row.data("id");
 
         // Show SweetAlert confirmation dialog
         Swal.fire({
@@ -194,9 +244,9 @@ $(document).ready(function() {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                // Send AJAX request to delete the row on the server
+
                 $.ajax({
-                    url: `http://localhost:9090/greenShadow/api/v1/vehicle/${rowId}`, // Replace with your API endpoint
+                    url: `http://localhost:9090/greenShadow/api/v1/vehicle/${rowId}`,
                     type: "DELETE",
                     success: function(response) {
                         // On success, remove the row and show a success message
@@ -222,24 +272,5 @@ $(document).ready(function() {
                 });
             }
         });
-    });
-
-
-    // Handle update button click for dynamically added rows
-    $("#tblVehicle").on("click", ".update-row", function() {
-        // Show the form card for updating
-        vehicleFormCard.style.display = 'block';
-
-        // Get the row data and populate form fields
-        editingRow = $(this).closest("tr");
-        $("#vehicleCode").val(editingRow.find("td:eq(0)").text());
-        $("#licensePlate").val(editingRow.find("td:eq(1)").text());
-        $("#category").val(editingRow.find("td:eq(2)").text());
-        $("#fuelType").val(editingRow.find("td:eq(3)").text());
-        $("#status").val(editingRow.find("td:eq(4)").text());
-        $("#VehicleStaffId").val(editingRow.find("td:eq(5)").text());
-
-        $("#btnVehicleSave").hide();
-        $("#btnVehicleUpdate").show();
     });
 });

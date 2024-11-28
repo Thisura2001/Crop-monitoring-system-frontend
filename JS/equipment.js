@@ -86,7 +86,6 @@ $(document).ready(function() {
 
         // Get form values
         const equipmentData = {
-            eqId: $("#equipmentId").val(),
             name: $("#equipmentName").val(),
             equipmentType: $("#equipmentType").val(),
             status: $("#equipmentStatus").val(),
@@ -101,22 +100,7 @@ $(document).ready(function() {
             contentType: "application/json",
             data: JSON.stringify(equipmentData),
             success: function(response) {
-                // On success, add the new row to the table
-                const newRow = `
-                <tr data-id="${response.equipmentId}">
-                    <td>${response.eqId}</td>
-                    <td>${response.name}</td>
-                    <td>${response.equipmentType}</td>
-                    <td>${response.status}</td>
-                    <td>${response.staff}</td>
-                    <td>${response.field}</td>
-                    <td><button class="btn btn-danger btn-sm delete-row"><i class="fa-solid fa-trash"></i></button></td>
-                    <td><button class="btn btn-warning btn-sm update-row"><i class="fa-solid fa-pen-to-square"></i></button></td>
-                </tr>
-            `;
-
-                // Append the new row to the table
-                $("#equipmentTbody").append(newRow);
+                console.log(response);
 
                 // Show success alert
                 Swal.fire({
