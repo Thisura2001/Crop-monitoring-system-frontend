@@ -187,7 +187,8 @@ $("#saveLogBtn").on("click", function (e) {
 
 
 logCardsContainer.on('click', '.logCardDeleteBtn', function () {
-    const logCard = $(this).closest('.card');
+    const logCard = $(this).closest('.card'); // Select the parent card
+    const logId = $(this).data('id'); // Retrieve the log ID from the button's data-id attribute
 
     // Show confirmation dialog
     Swal.fire({
@@ -201,11 +202,26 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
         cancelButtonText: 'No, cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            logCard.remove();
-            Swal.fire('Deleted!', 'Your log has been deleted.', 'success');
+            // AJAX DELETE request to the backend API
+            $.ajax({
+                url: `http://localhost:9090/greenShadow/api/v1/log/${logId}`, // Adjust API endpoint
+                type: 'DELETE',
+                success: function () {
+                    // Remove the card on success
+                    logCard.remove();
+
+                    // Show success message
+                    Swal.fire('Deleted!', 'Your log has been deleted.', 'success');
+                },
+                error: function () {
+                    // Show error message if the request fails
+                    Swal.fire('Error', 'Failed to delete the log. Please try again.', 'error');
+                }
+            });
         }
     });
 });
+
 
 logCardsContainer.on('click', '.logCardUpdateBtn', function () {
     const logCard = $(this).closest('.card');
