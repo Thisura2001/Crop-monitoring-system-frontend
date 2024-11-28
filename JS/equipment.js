@@ -164,39 +164,88 @@ $(document).ready(function() {
 
 
     // Handle Update button click for editing existing equipment
+    let editingEquipmentRow = null; // Variable to store the row being edited
+
+// Edit row event
+    $("#equipmentTbody").on("click", ".update-row", function() {
+        // Show the form card for updating
+        $("#equipmentFormCard").show();
+
+        // Set the selected row to be edited
+        editingEquipmentRow = $(this).closest("tr");
+
+        // Populate form fields with the selected row's data
+        $("#equipmentId").val(editingEquipmentRow.find("td:eq(0)").text()); // Assuming equipment ID is in the first column
+        $("#equipmentName").val(editingEquipmentRow.find("td:eq(1)").text());
+        $("#equipmentType").val(editingEquipmentRow.find("td:eq(2)").text());
+        $("#equipmentStatus").val(editingEquipmentRow.find("td:eq(3)").text());
+        $("#assignedStaff").val(editingEquipmentRow.find("td:eq(4)").text());
+        $("#assignedField").val(editingEquipmentRow.find("td:eq(5)").text());
+
+        $("#btnEquipmentSave").hide();
+        $("#btnEquipmentUpdate").show();
+    });
+
+// Update button click event
     $("#btnEquipmentUpdate").on("click", function(event) {
         event.preventDefault();
 
-        if (editingRow) {
-            // Get updated values
-            const equipmentId = $("#equipmentId").val();
+
+            // Get updated values from the form
+            const equipmentId = $(editingEquipmentRow).find("td:eq(0)").text();
             const equipmentName = $("#equipmentName").val();
             const equipmentType = $("#equipmentType").val();
             const equipmentStatus = $("#equipmentStatus").val();
             const assignedStaff = $("#assignedStaff").val();
             const assignedField = $("#assignedField").val();
 
-            // Update the selected row's values
-            $(editingRow).find("td:eq(0)").text(equipmentId);
-            $(editingRow).find("td:eq(1)").text(equipmentName);
-            $(editingRow).find("td:eq(2)").text(equipmentType);
-            $(editingRow).find("td:eq(3)").text(equipmentStatus);
-            $(editingRow).find("td:eq(4)").text(assignedStaff);
-            $(editingRow).find("td:eq(5)").text(assignedField);
+            // Send the updated data to the backend via AJAX
+            $.ajax({
+                url: `http://localhost:9090/greenShadow/api/v1/equipment/${equipmentId}`, // Adjust URL as per your backend API
+                type: "PUT",
+                data: JSON.stringify({
+                    eqId: equipmentId,
+                    name: equipmentName,
+                    equipmentType: equipmentType,
+                    status: equipmentStatus,
+                    staff: assignedStaff,
+                    field: assignedField
+                }),
+                contentType: "application/json",
+                success: function(response) {
+                    // On success, update the row on the frontend
+                    $(editingEquipmentRow).find("td:eq(0)").text(equipmentId);
+                    $(editingEquipmentRow).find("td:eq(1)").text(equipmentName);
+                    $(editingEquipmentRow).find("td:eq(2)").text(equipmentType);
+                    $(editingEquipmentRow).find("td:eq(3)").text(equipmentStatus);
+                    $(editingEquipmentRow).find("td:eq(4)").text(assignedStaff);
+                    $(editingEquipmentRow).find("td:eq(5)").text(assignedField);
 
-            // Success message and reset form
-            Swal.fire({
-                title: "Updated!",
-                text: "The equipment details have been updated.",
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false
+                    // Success message and reset form
+                    Swal.fire({
+                        title: "Updated!",
+                        text: "The equipment details have been updated.",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    // Reset form and hide the form card
+                    editingRow = null; // Reset editingRow
+                    $("#equipmentFormCard").hide();
+                    $("#equipmentForm")[0].reset();
+                },
+                error: function(xhr, status, error) {
+                    // Error handling
+                    Swal.fire({
+                        title: "Error!",
+                        text: "There was an issue updating the equipment details.",
+                        icon: "error",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
             });
-
-            editingRow = null; // Reset editingRow
-            $("#equipmentFormCard").hide();
-            $("#equipmentForm")[0].reset();
-        }
     });
 
     // Delete row event
@@ -223,25 +272,5 @@ $(document).ready(function() {
                 });
             }
         });
-    });
-
-    // Edit row event
-    $("#equipmentTbody").on("click", ".update-row", function() {
-        // Show the form card for updating
-        $("#equipmentFormCard").show();
-
-        // Set the selected row to be edited
-        editingRow = $(this).closest("tr");
-
-        // Populate form fields with the selected row's data
-        $("#equipmentId").val(editingRow.find("td:eq(0)").text());
-        $("#equipmentName").val(editingRow.find("td:eq(1)").text());
-        $("#equipmentType").val(editingRow.find("td:eq(2)").text());
-        $("#equipmentStatus").val(editingRow.find("td:eq(3)").text());
-        $("#assignedStaff").val(editingRow.find("td:eq(4)").text());
-        $("#assignedField").val(editingRow.find("td:eq(5)").text());
-
-        $("#btnEquipmentSave").hide();
-        $("#btnEquipmentUpdate").show();
     });
 });
