@@ -143,7 +143,7 @@ $(document).ready(function() {
                     timer: 1500,
                     showConfirmButton: false
                 });
-
+                loadEquipments();
                 // Hide the form card and reset the form
                 $("#equipmentFormCard").hide();
                 $("#equipmentForm")[0].reset();
@@ -229,7 +229,7 @@ $(document).ready(function() {
                         timer: 1500,
                         showConfirmButton: false
                     });
-
+                    loadEquipments();
                     // Reset form and hide the form card
                     editingRow = null; // Reset editingRow
                     $("#equipmentFormCard").hide();

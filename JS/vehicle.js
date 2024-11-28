@@ -128,9 +128,11 @@ $(document).ready(function() {
                     timer: 1500,
                     showConfirmButton: false
                 });
+
                 // Clear the form fields and hide the form card
                 $("#vehicleForm")[0].reset();
                 $("#vehicleFormCard").hide();
+                LoadVehicleData();
             },
             error: function(xhr, status, error) {
                 // Handle any error that occurs during the AJAX request
@@ -200,6 +202,7 @@ $(document).ready(function() {
                 $(editingVehicleRow).find("td:eq(4)").text(status);
                 $(editingVehicleRow).find("td:eq(5)").text(staffId);
 
+
                 // Display success message
                 Swal.fire({
                     title: "Success!",
@@ -208,7 +211,7 @@ $(document).ready(function() {
                     timer: 1500,
                     showConfirmButton: false
                 });
-
+                LoadVehicleData();
                 // Hide the form card and reset the form
                 $("#vehicleFormCard").hide();
                 $("#vehicleForm")[0].reset();
