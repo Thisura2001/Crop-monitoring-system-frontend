@@ -15,106 +15,176 @@ closeLogForm.on('click', function () {
 function closeLogFormModal() {
     logFormCard.hide();
 }
-$(document).ready(function () {
-    loadCrops();
-    loadFields();
-    loadStaff();
-});
-
-function loadCrops() {
+// $(document).ready(function () {
+//     loadCrops();
+//     loadFields();
+//     loadStaff();
+// });
+//
+// function loadCrops() {
+//     $.ajax({
+//         url: "http://localhost:9090/greenShadow/api/v1/crop",
+//         method: "GET",
+//         success: function (crops) {
+//             const cropDropdown = $("#cropInLog"); // Correct ID
+//             cropDropdown.empty();
+//             cropDropdown.append('<option selected disabled value="">Select Crop...</option>');
+//             crops.forEach(crop => {
+//                 cropDropdown.append(`<option value="${crop.cropId}">${crop.cropId}</option>`);
+//             });
+//         },
+//         error: function () {
+//             Swal.fire('Error', 'Failed to load crop IDs. Please try again.', 'error');
+//         }
+//     });
+// }
+//
+// function loadFields() {
+//     $.ajax({
+//         url: "http://localhost:9090/greenShadow/api/v1/field",
+//         method: "GET",
+//         success: function (fields) {
+//             const fieldDropdown = $("#fieldList"); // Correct ID
+//             fieldDropdown.empty();
+//             fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
+//             fields.forEach(field => {
+//                 fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
+//             });
+//         },
+//         error: function () {
+//             Swal.fire('Error', 'Failed to load field IDs. Please try again.', 'error');
+//         }
+//     });
+// }
+// function loadStaff() {
+//     $.ajax({
+//         url: "http://localhost:9090/greenShadow/api/v1/staff",
+//         method: "GET",
+//         success: function (staff) {
+//             const staffIdDropdown = $("#staffInLog"); // Correct ID
+//             staffIdDropdown.empty();
+//             staffIdDropdown.append('<option selected disabled value="">Select Staff...</option>');
+//             staff.forEach(staff => {
+//                 staffIdDropdown.append(`<option value="${staff.id}">${staff.id}</option>`);
+//             });
+//         },
+//         error: function () {
+//             Swal.fire('Error', 'Failed to load staff IDs. Please try again.', 'error');
+//         }
+//     })
+// }
+function loadLogData() {
     $.ajax({
-        url: "http://localhost:9090/greenShadow/api/v1/crop",
+        url: "http://localhost:9090/greenShadow/api/v1/log",
         method: "GET",
-        success: function (crops) {
-            const cropDropdown = $("#cropInLog"); // Correct ID
-            cropDropdown.empty();
-            cropDropdown.append('<option selected disabled value="">Select Crop...</option>');
-            crops.forEach(crop => {
-                cropDropdown.append(`<option value="${crop.cropId}">${crop.cropId}</option>`);
-            });
+        success: function (logs) {
+            renderLogs(logs); // Pass the fetched logs to renderLogs
         },
         error: function () {
-            Swal.fire('Error', 'Failed to load crop IDs. Please try again.', 'error');
+            Swal.fire('Error', 'Failed to load log data. Please try again.', 'error');
         }
     });
 }
 
-function loadFields() {
-    $.ajax({
-        url: "http://localhost:9090/greenShadow/api/v1/field",
-        method: "GET",
-        success: function (fields) {
-            const fieldDropdown = $("#fieldList"); // Correct ID
-            fieldDropdown.empty();
-            fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
-            fields.forEach(field => {
-                fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
-            });
-        },
-        error: function () {
-            Swal.fire('Error', 'Failed to load field IDs. Please try again.', 'error');
-        }
+function renderLogs(logs) {
+    const logCardsContainer = $("#logCardsContainer");
+    logCardsContainer.empty(); // Clear any existing cards
+
+    logs.forEach(function (log) {
+        // Generate log card HTML dynamically
+        const logCard = `
+            <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
+                <div class="card-header">
+                    <h5>Log Details</h5>
+                </div>
+                <div class="card-body">
+                    <img src="data:image/jpeg;base64,${log.observed_image}" class="log-img" style="width: 100%; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Observed Image">
+                    <p><strong>Log ID:</strong> ${log.id || "Not Specified"}</p>
+                    <p><strong>Log Date:</strong> ${log.log_date || "Not Specified"}</p>
+                    <p><strong>Details:</strong> ${log.log_details || "Not Specified"}</p>
+
+                    <button class="btn btn-danger logCardDeleteBtn" data-id="${log.id}">Delete</button>
+                    <button class="btn btn-primary logCardUpdateBtn" data-id="${log.id}">Update</button>
+                </div>
+            </div>
+        `;
+        logCardsContainer.append(logCard);
     });
 }
-function loadStaff() {
-    $.ajax({
-        url: "http://localhost:9090/greenShadow/api/v1/staff",
-        method: "GET",
-        success: function (staff) {
-            const staffIdDropdown = $("#staffInLog"); // Correct ID
-            staffIdDropdown.empty();
-            staffIdDropdown.append('<option selected disabled value="">Select Staff...</option>');
-            staff.forEach(staff => {
-                staffIdDropdown.append(`<option value="${staff.id}">${staff.id}</option>`);
-            });
-        },
-        error: function () {
-            Swal.fire('Error', 'Failed to load staff IDs. Please try again.', 'error');
-        }
-    })
-}
+
+// Call loadLogData to fetch and display logs on page load
+loadLogData();
 
 
-$('#saveLogBtn').on('click',function (e) {
+$("#saveLogBtn").on("click", function (e) {
     e.preventDefault();
 
-    const header = $('#logFormTitle').text();
-    const logCode = $('#logCode').val();
-    const logDate = $('#logDate').val();
-    const logDetails = $('#logDetails').val();
-    const observedImageFile = $('#observedImage')[0].files[0];
-    const fieldId = $('#fieldList').val();
-    const cropId = $('#cropList').val();
-    const staffId = $('#staffList').val();
-    let observedImagePreview = "";
+    const logDate = $("#logDate").val();
+    const logDetails = $("#logDetails").val();
+    const observedImageFile = $("#observedImage")[0].files[0];
+    // const fieldId = $("#fieldList").val();
+    // const cropId = $("#cropInLog").val();
+    // const staffId = $("#staffInLog").val();
 
-    if (observedImageFile) {
-        observedImagePreview = `<img src="${URL.createObjectURL(observedImageFile)}" class="log-img" style="width: 100%; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Observed Image">`;
-    }
 
-    // Create log card
-    const logCard = $(`
-        <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
-            <div class="card-header">
-                <h5>Log Details</h5>
-            </div>
-            <div class="card-body">
-                ${observedImagePreview}
-                 <p><strong>Log ID:</strong> <span class="log-code">${logCode}</span></p>
-                <p><strong>Log Date:</strong> <span class="log-date">${logDate}</span></p>
-                <p><strong>Details:</strong> <span class="log-details">${logDetails}</span></p>
-                <p><strong>Field ID:</strong> <span class="log-field-id">${fieldId}</span></p>
-                <p><strong>Crop ID:</strong> <span class="log-crop-id">${cropId}</span></p>
-                <p><strong>Staff ID:</strong> <span class="log-staff-id">${staffId}</span></p>
-                <button class="btn btn-success logCardUpdateBtn">Update</button>
-                <button class="btn btn-danger logCardDeleteBtn">Delete</button>
-            </div>
-        </div>
-    `);
-    logCardsContainer.append(logCard);
-    $('#logForm')[0].reset();
-    closeLogFormModal();
+    // Prepare FormData for submission
+    const formData = new FormData();
+    formData.append("log_date", logDate);
+    formData.append("log_details", logDetails);
+    // formData.append("fields", fieldId);
+    // formData.append("crops", cropId);
+    // formData.append("staff", staffId);
+    formData.append("observed_image", observedImageFile);
+
+    // AJAX POST request to save log
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/log", // Adjust endpoint
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            Swal.fire({
+                icon: "success",
+                title: "Log Saved",
+                text: "Log has been saved successfully!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
+            // Dynamically create log card using server response
+            const newLogCard = `
+                <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
+                    <div class="card-header">
+                        <h5>Log Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="${response.observed_image}" class="log-img" style="width: 100%; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Observed Image">
+                        <p><strong>Log ID:</strong> ${response.id}</p>
+                        <p><strong>Log Date:</strong> ${response.log_date}</p>
+                        <p><strong>Details:</strong> ${response.log_details}</p>
+                        <button class="btn btn-danger logCardDeleteBtn">Delete</button>
+                        <button class="btn btn-primary logCardUpdateBtn">Update</button>
+                    </div>
+                </div>
+            `;
+
+            $("#logCardsContainer").append(newLogCard);
+
+            // Reset form and hide the modal
+            $("#logForm")[0].reset();
+            closeLogFormModal();
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "An error occurred while saving the log. Please try again.",
+            });
+        },
+    });
 });
+
 
 logCardsContainer.on('click', '.logCardDeleteBtn', function () {
     const logCard = $(this).closest('.card');
