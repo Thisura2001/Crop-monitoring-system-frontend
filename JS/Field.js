@@ -228,22 +228,28 @@ $(document).ready(function () {
 // Handle the update field functionality
     $("#saveUpdatedField").on("click", function (e) {
         e.preventDefault();
-        const fieldId = $(this).data("id");
 
         const fieldName = $("#updateName").val();
-        console.log(fieldName);
         const fieldLocation = $("#updateLocation").val();
         const fieldExtend = $("#updateExtent").val();
-        let fieldImg1 = $("#updateFieldImg1")[0].files[0];
-        let fieldImg2 = $("#updateFieldImg2")[0].files[0];
+        const fieldImg1 = $("#updateFieldImg1")[0].files[0];
+        const fieldImg2 = $("#updateFieldImg2")[0].files[0];
 
-// Prepare FormData object for image upload
+        if (!fieldName || !fieldLocation || !fieldExtend) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Please fill in all required fields!',
+            });
+            return;
+        }
+
+        // Prepare FormData object for image upload
         const formData = new FormData();
         formData.append("fieldName", fieldName);
         formData.append("location", fieldLocation);
         formData.append("extend", fieldExtend);
 
-// Append files if they are selected
         if (fieldImg1) {
             formData.append("fieldImg1", fieldImg1);
         }
@@ -252,21 +258,23 @@ $(document).ready(function () {
             formData.append("fieldImg2", fieldImg2);
         }
 
-
         // Send the update request
         $.ajax({
-            url: `http://localhost:9090/greenShadow/api/v1/field/`+editingFieldId,  // Endpoint for updating the field
+            url: `http://localhost:9090/greenShadow/api/v1/field/` + editingFieldId, // Endpoint for updating the field
             method: 'PUT',
             data: formData,
-            processData: false,  // Important for sending FormData
-            contentType: false,  // Let the browser set the correct content type
-            success: function (response) {
-                // Update the field card with the new values
-                const card = $(`.card[data-id="${fieldId}"]`);  // Find the field card by ID
-                card.find(".card-body p:nth-child(3)").text(`Location: ${fieldLocation}`);
-                card.find(".card-body p:nth-child(4)").text(`Extent: ${fieldExtend}`);
+            processData: false, // Important for sending FormData
+            contentType: false, // Let the browser set the correct content type
+            success: function () {
+                // Find the field card by editingFieldId
+                const card = document.updateTargetCard;
 
-                // If images are updated, update image previews
+                // Update card details
+                card.find("p:contains('Field Name:')").text(`Field Name: ${fieldName}`);
+                card.find("p:contains('Location:')").text(`Location: ${fieldLocation}`);
+                card.find("p:contains('Extent:')").text(`Extent: ${fieldExtend}`);
+
+                // Update images if they were changed
                 if (fieldImg1) {
                     card.find(".card-img:first").attr("src", URL.createObjectURL(fieldImg1));
                 }
@@ -275,14 +283,27 @@ $(document).ready(function () {
                 }
 
                 // Show success alert
-                Swal.fire('Success', 'Field updated successfully!', 'success');
-                $("#updateFieldModal").modal("hide");  // Close the modal
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Field Updated',
+                    text: 'The field has been updated successfully!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+
+                // Hide the update modal
+                $("#updateFieldModal").hide();
             },
             error: function () {
-                Swal.fire('Error', 'An error occurred while updating the field.', 'error');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while updating the field.',
+                });
             }
         });
     });
+
 
 
 
