@@ -42,7 +42,6 @@ function loadStaffId() {
        }
    );
 }
-$(document).ready(function (){
     $.ajax(
         {
             url: "http://localhost:9090/greenShadow/api/v1/vehicle",
@@ -55,7 +54,6 @@ $(document).ready(function (){
             }
         }
     )
-})
 function LoadVehicleData(vehicles) {
     console.log(vehicles)
     $("#tbodyVehicle").empty();
@@ -138,6 +136,9 @@ $(document).ready(function() {
                 // Clear the form fields and hide the form card
                 $("#vehicleForm")[0].reset();
                 $("#vehicleFormCard").hide();
+
+                // Reload the vehicle table
+                LoadVehicleData();
             },
             error: function(xhr, status, error) {
                 // Handle any error that occurs during the AJAX request
@@ -272,9 +273,9 @@ $(document).ready(function() {
                         if (xhr.status === 500) {
                             // Handle 404 error
                             Swal.fire({
-                                title: "Error!",
+                                title: "Warning!",
                                 text: "cannot be deleted because it is used.",
-                                icon: "error",
+                                icon: "warning",
                                 timer: 1500,
                                 showConfirmButton: false
                             });
