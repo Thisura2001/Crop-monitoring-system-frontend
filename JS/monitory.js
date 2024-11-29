@@ -167,20 +167,19 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
         }
     });
 });
-
 let editLogCard = null;
 logCardsContainer.on('click', '.logCardUpdateBtn', function () {
     const logCard = $(this).closest('.card');
     openUpdateLogModal(logCard);
-    editLogCard = $(this).data('id');
+    editLogCard = $(this).data('id'); // Store the log ID for the update
 });
 
 function openUpdateLogModal(logCard) {
     document.updateTargetLogCard = logCard[0];
 
-    // Populate modal fields
-    $('#updateLogDate').val(logCard.find('log_date').text());
-    $('#updateLogDetails').val(logCard.find('log-details').text());
+    // Populate modal fields with the data from the selected card
+    $('#updateLogDate').val(logCard.find('.log-date').text()); // Fixed: Added proper class selector
+    $('#updateLogDetails').val(logCard.find('.log-details').text()); // Fixed: Added proper class selector
     updateLogModal.show();
 }
 
@@ -188,52 +187,47 @@ closeUpdateLogModalBtn.on('click', function () {
     updateLogModal.hide();
 });
 
-$('#saveUpdatedLog').on('click', function () {
-    const logCard = $(document.updateTargetLogCard);
+$("#saveUpdatedLog").off("click").on("click", function () {
+    // Get values from modal fields
+    const logDate = $("#updateLogDate").val();
+    const logDetails = $("#updateLogDetails").val();
+    const logImgInput = $("#updateObservedImage")[0];
+    const logImg = logImgInput.files.length > 0 ? logImgInput.files[0] : null;
 
-    const logData = {
-        log_date: $('#updateLogDate').val(),
-        log_details: $('#updateLogDetails').val()
-    };
-
-    const updatedImg = $('#updateObservedImage')[0].files[0];
-
-    if (updatedImg) {
-        // Use FormData to send file data
-        const formData = new FormData();
-        formData.append('logData', JSON.stringify(logData));
-        formData.append('updatedImg', updatedImg);
-
-        // Send data using AJAX
-        $.ajax({
-            url: 'http://localhost:9090/greenShadow/api/v1/log/'+editLogCard, // Replace with your API endpoint
-            type: 'POST',
-            data: formData,
-            processData: false,  // Important for sending FormData
-            contentType: false,  // Important for sending FormData
-            success: function (response) {
-                if (response.success) {
-                    // Update log card UI with new values
-                    logCard.find('.log-code').text(logData.id);
-                    logCard.find('.log-date').text(logData.log_date);
-                    logCard.find('.log-details').text(logData.log_details);
-
-                    if (updatedImg) {
-                        logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
-                    }
-
-                    // Show success message
-                    Swal.fire("Updated!", "Log details have been updated.", "success");
-
-                    // Hide modal
-                    updateLogModal.hide();
-                } else {
-                    Swal.fire("Error!", "There was a problem updating the log.", "error");
-                }
-            },
-            error: function () {
-                Swal.fire("Error!", "There was a problem processing your request.", "error");
-            }
-        });
+    const formData = new FormData();
+    formData.append("log_date", logDate);
+    formData.append("log_details", logDetails);
+    if (logImg) {
+        formData.append("logImg", logImg);
     }
+
+    // AJAX request to update log data
+    $.ajax({
+        url: `http://localhost:9090/greenShadow/api/v1/log/` + editLogCard,
+        method: "PUT",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            const logCard = $(document.updateTargetLogCard);
+
+            // Update log card dynamically
+            logCard.find("p:contains('Date:')").text(`Date: ${logDate}`);
+            logCard.find("p:contains('Details:')").text(`Details: ${logDetails}`);
+            if (logImg) {
+                logCard.find(".log-img").attr("src", URL.createObjectURL(logImg));
+            }
+
+            Swal.fire("Success", "Log updated successfully!", "success");
+            closeUpdateLogModal(); // Close modal after success
+        },
+        error: function () {
+            Swal.fire("Error", "Failed to update log. Please try again.", "error");
+        }
+    });
 });
+
+// Function to close the update log modal
+function closeUpdateLogModal() {
+    $("#updateLogModal").hide();
+}

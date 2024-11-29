@@ -150,7 +150,7 @@ $(document).ready(function() {
     });
 
 
-    $(document).on("click", ".delete-row", function () {
+    $('#tblStaff').on("click", ".delete-row", function () {
         const rowToDelete = $(this).closest("tr");
         const staffId = rowToDelete.find("td").eq(0).text();
 

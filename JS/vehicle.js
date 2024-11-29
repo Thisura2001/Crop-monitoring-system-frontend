@@ -57,6 +57,7 @@ $(document).ready(function (){
     )
 })
 function LoadVehicleData(vehicles) {
+    console.log(vehicles)
     $("#tbodyVehicle").empty();
     vehicles.forEach(function (data) {
         let row = "<tr>";
@@ -65,7 +66,7 @@ function LoadVehicleData(vehicles) {
         row += "<td>" + data.vehicleCategory + "</td>";
         row += "<td>" + data.fuelType + "</td>";
         row += "<td>" + data.status + "</td>";
-        row += "<td>" + data.staff + "</td>";
+        row += "<td>" + data.staff || "N/A" + "</td>";
         row += "<td><button class='btn btn-danger btn-sm delete-row'><i class='fa-solid fa-trash'></i></button></td>";
         row += "<td><button class='btn btn-warning btn-sm update-row'><i class='fa-solid fa-pen-to-square'></i></button></td>";
         row += "</tr>";
@@ -101,7 +102,12 @@ $(document).ready(function() {
         const category = $("#category").val();
         const fuelType = $("#fuelType").val();
         const status = $("#status").val();
-        const staffId = $("#VehicleStaffId").val();
+        let staffId = $("#VehicleStaffId").val();
+
+
+        if (staffId === ""){
+            staffId = null;
+        }
 
         // Prepare the vehicle data object
         const vehicleData = {
@@ -233,7 +239,7 @@ $(document).ready(function() {
     // Handle delete button click for dynamically added rows
     $("#tblVehicle").on("click", ".delete-row", function() {
         const row = $(this).closest("tr");
-        const rowId = row.data("id");
+        const rowId = row.find("td").eq(0).text();
 
         // Show SweetAlert confirmation dialog
         Swal.fire({
@@ -246,6 +252,7 @@ $(document).ready(function() {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
+                console.log("Row ID:", rowId);
 
                 $.ajax({
                     url: `http://localhost:9090/greenShadow/api/v1/vehicle/${rowId}`,
@@ -262,6 +269,16 @@ $(document).ready(function() {
                         });
                     },
                     error: function(xhr, status, error) {
+                        if (xhr.status === 500) {
+                            // Handle 404 error
+                            Swal.fire({
+                                title: "Error!",
+                                text: "cannot be deleted because it is used.",
+                                icon: "error",
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                        } else {
                         // Handle errors
                         Swal.fire({
                             title: "Error!",
@@ -270,6 +287,7 @@ $(document).ready(function() {
                             timer: 1500,
                             showConfirmButton: false
                         });
+                    }
                     }
                 });
             }
