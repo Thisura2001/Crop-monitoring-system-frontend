@@ -175,13 +175,8 @@ function openUpdateLogModal(logCard) {
     document.updateTargetLogCard = logCard[0];
 
     // Populate modal fields
-    $('#updateLogCode').val(logCard.find('.log-code').text().replace('Log: ', ''));
-    $('#updateLogDate').val(logCard.find('.log-date').text());
+    $('#updateLogDate').val(logCard.find('log_date').text());
     $('#updateLogDetails').val(logCard.find('.log-details').text());
-    $('#updateFieldList').val(logCard.find('.log-field-id').text());
-    $('#updateCropList').val(logCard.find('.log-crop-id').text());
-    $('#updateStaffList').val(logCard.find('.log-staff-id').text());
-
     updateLogModal.show();
 }
 
