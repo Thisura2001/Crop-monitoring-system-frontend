@@ -119,6 +119,7 @@ $("#saveLogBtn").on("click", function (e) {
             // Reset form and hide the form modal
             $("#logForm")[0].reset();
             closeLogFormModal();
+            loadLogData();
         },
         error: function (xhr, status, error) {
             // Handle errors gracefully
