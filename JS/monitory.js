@@ -64,18 +64,21 @@ $("#saveLogBtn").on("click", function (e) {
     const logDate = $("#logDate").val();
     const logDetails = $("#logDetails").val();
     const observedImageFile = $("#observedImage")[0].files[0];
-    // const fieldId = $("#fieldList").val();
-    // const cropId = $("#cropInLog").val();
-    // const staffId = $("#staffInLog").val();
 
+    // Validate required fields
+    if (!logDate || !logDetails || !observedImageFile) {
+        Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Please fill in all fields and upload an image!",
+        });
+        return;
+    }
 
     // Prepare FormData for submission
     const formData = new FormData();
     formData.append("log_date", logDate);
     formData.append("log_details", logDetails);
-    // formData.append("fields", fieldId);
-    // formData.append("crops", cropId);
-    // formData.append("staff", staffId);
     formData.append("observed_image", observedImageFile);
 
     // AJAX POST request to save log
@@ -86,42 +89,43 @@ $("#saveLogBtn").on("click", function (e) {
         processData: false,
         contentType: false,
         success: function (response) {
+            // Show success alert
             Swal.fire({
                 icon: "success",
                 title: "Log Saved",
-                text: "Log has been saved successfully!",
+                text: "Log data has been saved successfully!",
                 showConfirmButton: false,
                 timer: 1500,
             });
 
-            // Dynamically create log card using server response
-            const newLogCard = `
+            // Add the new log card dynamically
+            const newCard = `
                 <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
                     <div class="card-header">
                         <h5>Log Details</h5>
                     </div>
                     <div class="card-body">
-                        <img src="${response.observed_image}" class="log-img" style="width: 100%; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Observed Image">
-                        <p><strong>Log ID:</strong> ${response.id}</p>
-                        <p><strong>Log Date:</strong> ${response.log_date}</p>
-                        <p><strong>Details:</strong> ${response.log_details}</p>
+                        <img src="${URL.createObjectURL(observedImageFile)}" class="log-img" style="width: 100%; max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Observed Image">
+                        <p><strong>Log ID:</strong> Pending...</p>
+                        <p><strong>Log Date:</strong> ${logDate}</p>
+                        <p><strong>Details:</strong> ${logDetails}</p>
                         <button class="btn btn-danger logCardDeleteBtn">Delete</button>
                         <button class="btn btn-primary logCardUpdateBtn">Update</button>
                     </div>
                 </div>
             `;
+            $("#logCardsContainer").append(newCard);
 
-            $("#logCardsContainer").append(newLogCard);
-
-            // Reset form and hide the modal
+            // Reset form and hide the form modal
             $("#logForm")[0].reset();
             closeLogFormModal();
         },
         error: function (xhr, status, error) {
+            // Handle errors gracefully
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "An error occurred while saving the log. Please try again.",
+                text: "An error occurred while saving the log data. Please try again.",
             });
         },
     });
@@ -176,7 +180,7 @@ function openUpdateLogModal(logCard) {
 
     // Populate modal fields
     $('#updateLogDate').val(logCard.find('log_date').text());
-    $('#updateLogDetails').val(logCard.find('.log-details').text());
+    $('#updateLogDetails').val(logCard.find('log-details').text());
     updateLogModal.show();
 }
 
