@@ -46,6 +46,7 @@ function loadFieldIds() {
 // Call the loadFieldIds function on page load
 $(document).ready(function () {
     loadFieldIds();
+    loadCrops();
 });
 
 // Save Crop Data
@@ -118,6 +119,7 @@ $("#cropSaveBtn").on("click", function (e) {
             // Reset form and hide the form card
             $("#cropForm")[0].reset();
             $("#cropFormCard").hide();
+            loadCrops();
         },
         error: function (xhr, status, error) {
             // Handle errors gracefully
@@ -129,36 +131,33 @@ $("#cropSaveBtn").on("click", function (e) {
         },
     });
 });
-// Function to load all crops
-$(document).ready(function () {
-    // Function to load all crops
-    function loadCrops() {
-        $.ajax({
-            url: "http://localhost:9090/greenShadow/api/v1/crop", // Replace with your API endpoint
-            method: "GET",
-            dataType: "json",
-            success: function (response) {
-                renderCrops(response); // Render the crops if the response is successful
-            },
-            error: function (xhr, status, error) {
-                console.error("Error fetching crops:", error);
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "An error occurred while fetching crop data. Please try again.",
-                });
-            },
-        });
-    }
+function loadCrops() {
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/crop", // Replace with your API endpoint
+        method: "GET",
+        dataType: "json",
+        success: function (response) {
+            renderCrops(response); // Render the crops if the response is successful
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching crops:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "An error occurred while fetching crop data. Please try again.",
+            });
+        },
+    });
+}
 
-    // Function to render the crops as cards
-    function renderCrops(crops) {
-        const container = $("#corpCardsContainer");
-        container.empty(); // Clear any existing cards
+// Function to render the crops as cards
+function renderCrops(crops) {
+    const container = $("#corpCardsContainer");
+    container.empty(); // Clear any existing cards
 
-        crops.forEach(function (crop) {
-            // Generate card HTML dynamically
-            const card = `
+    crops.forEach(function (crop) {
+        // Generate card HTML dynamically
+        const card = `
                 <div class="card mt-3" style="width: 300px;">
                     <div class="card-header">
                         <h5>Crop Details</h5>
@@ -177,13 +176,12 @@ $(document).ready(function () {
                     </div>
                 </div>
             `;
-            container.append(card);
-        });
-    }
+        container.append(card);
+    });
+}
 
-    // Call the loadCrops function to fetch and display crops on page load
-    loadCrops();
-});
+// Call the loadCrops function to fetch and display crops on page load
+loadCrops();
 
 
 // Event listener for Delete  use ajax here
@@ -290,6 +288,7 @@ $(document).ready(function () {
                 Swal.fire("Success", "Crop added successfully!", "success");
                 $("#cropFormCard").hide();
                 $("#cropForm")[0].reset();
+                loadCrops();
             },
             error: function () {
                 Swal.fire("Error", "Failed to save crop. Please try again.", "error");
