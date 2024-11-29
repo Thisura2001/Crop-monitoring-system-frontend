@@ -15,64 +15,6 @@ closeLogForm.on('click', function () {
 function closeLogFormModal() {
     logFormCard.hide();
 }
-// $(document).ready(function () {
-//     loadCrops();
-//     loadFields();
-//     loadStaff();
-// });
-//
-// function loadCrops() {
-//     $.ajax({
-//         url: "http://localhost:9090/greenShadow/api/v1/crop",
-//         method: "GET",
-//         success: function (crops) {
-//             const cropDropdown = $("#cropInLog"); // Correct ID
-//             cropDropdown.empty();
-//             cropDropdown.append('<option selected disabled value="">Select Crop...</option>');
-//             crops.forEach(crop => {
-//                 cropDropdown.append(`<option value="${crop.cropId}">${crop.cropId}</option>`);
-//             });
-//         },
-//         error: function () {
-//             Swal.fire('Error', 'Failed to load crop IDs. Please try again.', 'error');
-//         }
-//     });
-// }
-//
-// function loadFields() {
-//     $.ajax({
-//         url: "http://localhost:9090/greenShadow/api/v1/field",
-//         method: "GET",
-//         success: function (fields) {
-//             const fieldDropdown = $("#fieldList"); // Correct ID
-//             fieldDropdown.empty();
-//             fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
-//             fields.forEach(field => {
-//                 fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
-//             });
-//         },
-//         error: function () {
-//             Swal.fire('Error', 'Failed to load field IDs. Please try again.', 'error');
-//         }
-//     });
-// }
-// function loadStaff() {
-//     $.ajax({
-//         url: "http://localhost:9090/greenShadow/api/v1/staff",
-//         method: "GET",
-//         success: function (staff) {
-//             const staffIdDropdown = $("#staffInLog"); // Correct ID
-//             staffIdDropdown.empty();
-//             staffIdDropdown.append('<option selected disabled value="">Select Staff...</option>');
-//             staff.forEach(staff => {
-//                 staffIdDropdown.append(`<option value="${staff.id}">${staff.id}</option>`);
-//             });
-//         },
-//         error: function () {
-//             Swal.fire('Error', 'Failed to load staff IDs. Please try again.', 'error');
-//         }
-//     })
-// }
 function loadLogData() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/log",
@@ -222,10 +164,11 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
     });
 });
 
-
+let editLogCard = null;
 logCardsContainer.on('click', '.logCardUpdateBtn', function () {
     const logCard = $(this).closest('.card');
     openUpdateLogModal(logCard);
+    editLogCard = $(this).data('id');
 });
 
 function openUpdateLogModal(logCard) {
@@ -249,18 +192,49 @@ closeUpdateLogModalBtn.on('click', function () {
 $('#saveUpdatedLog').on('click', function () {
     const logCard = $(document.updateTargetLogCard);
 
-    logCard.find('.log-code').text($('#updateLogCode').val());
-    logCard.find('.log-date').text($('#updateLogDate').val());
-    logCard.find('.log-details').text($('#updateLogDetails').val());
-    logCard.find('.log-field-id').text($('#updateFieldList').val());
-    logCard.find('.log-crop-id').text($('#updateCropList').val());
-    logCard.find('.log-staff-id').text($('#updateStaffList').val());
+    const logData = {
+        log_date: $('#updateLogDate').val(),
+        log_details: $('#updateLogDetails').val()
+    };
+
     const updatedImg = $('#updateObservedImage')[0].files[0];
 
     if (updatedImg) {
-        logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
-    }
+        // Use FormData to send file data
+        const formData = new FormData();
+        formData.append('logData', JSON.stringify(logData));
+        formData.append('updatedImg', updatedImg);
 
-    Swal.fire("Updated!", "Log details have been updated.", "success");
-    updateLogModal.hide();
+        // Send data using AJAX
+        $.ajax({
+            url: 'http://localhost:9090/greenShadow/api/v1/log/'+editLogCard, // Replace with your API endpoint
+            type: 'POST',
+            data: formData,
+            processData: false,  // Important for sending FormData
+            contentType: false,  // Important for sending FormData
+            success: function (response) {
+                if (response.success) {
+                    // Update log card UI with new values
+                    logCard.find('.log-code').text(logData.id);
+                    logCard.find('.log-date').text(logData.log_date);
+                    logCard.find('.log-details').text(logData.log_details);
+
+                    if (updatedImg) {
+                        logCard.find('.log-img').attr('src', URL.createObjectURL(updatedImg));
+                    }
+
+                    // Show success message
+                    Swal.fire("Updated!", "Log details have been updated.", "success");
+
+                    // Hide modal
+                    updateLogModal.hide();
+                } else {
+                    Swal.fire("Error!", "There was a problem updating the log.", "error");
+                }
+            },
+            error: function () {
+                Swal.fire("Error!", "There was a problem processing your request.", "error");
+            }
+        });
+    }
 });

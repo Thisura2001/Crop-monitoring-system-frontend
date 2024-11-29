@@ -296,12 +296,13 @@ $(document).ready(function () {
             }
         });
     });
-
+    let editCropId = null;
     // Handle update button click
     $("#corpCardsContainer").on("click", ".CropCardUpdateBtn", function () {
         const card = $(this).closest(".card");
         const cropId = card.data("id");
 
+        editCropId = $(this).data("id");
         // Populate update modal
         $("#updateCropCommonName").val(card.find("p:contains('Common Name:')").text().replace("Common Name: ", "").trim());
         $("#updateCropScientificName").val(card.find("p:contains('Scientific Name:')").text().replace("Scientific Name: ", "").trim());
@@ -330,7 +331,7 @@ $(document).ready(function () {
 
             // AJAX request to update crop data
             $.ajax({
-                url: `http://localhost:9090/greenShadow/api/v1/crop/${cropId}`,
+                url: `http://localhost:9090/greenShadow/api/v1/crop/`+ editCropId,
                 method: "PUT",
                 data: formData,
                 processData: false,
