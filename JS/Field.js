@@ -92,6 +92,9 @@ $("#fieldSaveBtn").on("click", function (e) {
 
             // Reset the form
             $("#FieldForm")[0].reset();
+
+            loadFields()
+
         },
         error: function (xhr, status, error) {
             // Display error message
@@ -104,35 +107,32 @@ $("#fieldSaveBtn").on("click", function (e) {
     });
 });
 
-$(document).ready(function () {
-    // Function to load all fields
-    function loadFields() {
-        $.ajax({
-            url: "http://localhost:9090/greenShadow/api/v1/field", // Replace with your API endpoint
-            method: "GET",
-            dataType: "json",
-            success: function (response) {
-                renderFields(response); // Render the fields if the response is successful
-            },
-            error: function (xhr, status, error) {
-                console.error("Error fetching fields:", error);
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "An error occurred while fetching field data. Please try again.",
-                });
-            },
-        });
-    }
+function loadFields() {
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/field", // Replace with your API endpoint
+        method: "GET",
+        dataType: "json",
+        success: function (response) {
+            renderFields(response); // Render the fields if the response is successful
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching fields:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "An error occurred while fetching field data. Please try again.",
+            });
+        },
+    });
+}
 
-    // Function to render the fields as cards
-    function renderFields(fields) {
-        const container = $("#fieldCardsContainer");
-        container.empty(); // Clear any existing cards
+function renderFields(fields) {
+    const container = $("#fieldCardsContainer");
+    container.empty(); // Clear any existing cards
 
-        fields.forEach(function (field) {
-            // Generate card HTML dynamically
-            const card = `
+    fields.forEach(function (field) {
+        // Generate card HTML dynamically
+        const card = `
                 <div class="card mt-3" style="width: 300px;">
                     <div class="card-header">
                         <h5>Field Details</h5>
@@ -150,10 +150,12 @@ $(document).ready(function () {
                     </div>
                 </div>
             `;
-            container.append(card);
-        });
-    }
+        container.append(card);
+    });
+}
 
+$(document).ready(function () {
+    // Function to load all fields
     // Fetch all fields on page load
     loadFields();
 });
