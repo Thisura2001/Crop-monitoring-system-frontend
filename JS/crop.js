@@ -28,6 +28,7 @@ function loadFieldIds() {
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
         method: "GET",
         success: function (fields) {
+            loadFieldIds();
             const fieldDropdown = $("#fieldIdInCrop");
             fieldDropdown.empty(); // Clear existing options
             fieldDropdown.append('<option selected disabled value="">Select Field...</option>');

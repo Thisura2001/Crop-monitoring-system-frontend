@@ -29,6 +29,7 @@ function loadStaffId() {
            url: "http://localhost:9090/greenShadow/api/v1/staff",
            method: "GET",
            success: function (staff) {
+               loadStaffId();
                const staffIdDropdown = $("#VehicleStaffId");
                staffIdDropdown.empty();
                staffIdDropdown.append('<option selected disabled value="">Select Staff...</option>');
