@@ -118,44 +118,102 @@
     font-size: 2.5rem;
     font-weight: bold;
 }
-/* styles.css */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* Enhanced styles for the weather container */
+.weather-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1.5s ease-out;
+    font-family: 'Arial', sans-serif;
 }
 
-.weather-container {
-    text-align: center;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.weather-container h1 {
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    animation: popUp 1s ease-out;
+    font-weight: bolder;
+    color: #ffffff;
 }
 
 .weather-report p {
     margin: 10px 0;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    animation: slideIn 1.2s ease-in-out;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    color: #fff;
-    background: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.weather-report span {
+    font-weight: bold;
+    color: #ffdd57;
 }
 
-button:hover {
-    background: #45a049;
+.weather-report strong {
+    font-size: 1.1em;
+    color: #ffdd57;
+}
+
+.weather-container::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 15px;
+    z-index: -1;
+    opacity: 0.7;
+    filter: blur(10px);
+    animation: glow 3s infinite alternate;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popUp {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-20%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes glow {
+    from {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.1);
+    }
 }
 
 /* Responsive Styling */
