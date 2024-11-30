@@ -50,3 +50,4 @@ function toggleNav() {
     navBar.classList.toggle('active'); // Toggle visibility
 }
 
+

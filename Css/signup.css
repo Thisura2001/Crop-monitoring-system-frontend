@@ -47,7 +47,6 @@
     height: 100%;
 }
 
-
 /* Heading styles */
 .signup-container h1 {
     font-size: 32px;
@@ -99,23 +98,92 @@
 
 /* Sign Up button */
 .signup-container button {
- font-weight: bolder;
+    font-weight: bolder;
 }
 
 /* Responsive Styling */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .signup-wrapper {
-        flex-direction: column;
         width: 100%;
+        flex-direction: column;
         border-radius: 0;
+        height: auto;
     }
 
     .signup-container,
-    .side-image {
+    .side-imageSignUp {
         width: 100%;
     }
 
     .signup-container {
         padding: 20px;
+    }
+
+    .signup-container h1 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .signup-wrapper {
+        flex-direction: column;
+        width: 100%;
+        border-radius: 0;
+        height: auto;
+    }
+
+    .signup-container,
+    .side-imageSignUp {
+        width: 100%;
+    }
+
+    .signup-container {
+        padding: 20px;
+    }
+
+    .signup-container h1 {
+        font-size: 24px;
+    }
+
+    .signup-container input {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .signup-container label {
+        font-size: 12px;
+    }
+
+    .signup-container button {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-wrapper {
+        padding: 10px;
+    }
+
+    .signup-container {
+        padding: 15px;
+    }
+
+    .signup-container h1 {
+        font-size: 20px;
+    }
+
+    .signup-container input {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .signup-container label {
+        font-size: 12px;
+    }
+
+    .signup-container button {
+        font-size: 14px;
+        padding: 10px;
     }
 }
