@@ -28,7 +28,6 @@ function loadFields() {
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
         method: "GET",
         success: function (fields) {
-            loadFields();
             const fieldDropdown = $("#assignedField");
             fieldDropdown.empty();
             fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
