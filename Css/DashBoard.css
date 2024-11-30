@@ -29,38 +29,7 @@
     font-size: 2rem;
     letter-spacing: 1px;
 }
-.staticCard  {
-    background-color: #5d9b49;
-    color: #000;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.staticCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-.staticCard h2 {
-    color: #333;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: bolder;
-}
-
-.staticCard p {
-    font-size: 2rem;
-    color: #4CAF50;
-    font-weight: bold;
-}
-
-/* General Dashboard Cards Styling */
+/* General Dashboard Cards Container */
 .dashboard-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -69,55 +38,62 @@
     margin: 0 auto;
 }
 
-.card {
-    background: #f4f4f4;
+/* Base Card Style */
+.staticCard {
+    background-color: #f4f4f4; /* Neutral background */
+    color: #000; /* Default text color */
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     padding: 30px;
-    color: #fff;
-    height: 200px; /* Taller cards */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 200px; /* Consistent card height */
 }
 
-.card:hover {
+.staticCard:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Individual Card Colors */
-.card-fields {
-    background: linear-gradient(135deg, #ae89e8, #814dd3); /* Green gradient */
+/* Individual Card Styles by ID */
+#staticCard-fields {
+    background: linear-gradient(135deg, #ae89e8, #814dd3); /* Purple gradient */
+    color: #fff; /* White text */
 }
 
-.card-crops {
+#staticCard-crops {
     background: linear-gradient(135deg, #ff9800, #ffb74d); /* Orange gradient */
+    color: #fff;
 }
 
-.card-staff {
+#staticCard-staff {
     background: linear-gradient(135deg, #2196f3, #64b5f6); /* Blue gradient */
+    color: #fff;
 }
 
-.card-vehicles {
+#staticCard-vehicles {
     background: linear-gradient(135deg, #f44336, #e57373); /* Red gradient */
+    color: #fff;
 }
 
-/* Typography */
-.card h3 {
+/* Typography for Cards */
+.staticCard h3 {
     margin: 0;
     font-size: 1.5rem;
     text-transform: uppercase;
 }
 
-.card p {
+.staticCard p {
     margin: 10px 0 0;
     font-size: 2.5rem;
     font-weight: bold;
+    color: #111515; /* Highlighted numbers */
 }
+
 /* Enhanced styles for the weather container */
 .weather-container {
     max-width: 800px;
@@ -134,16 +110,15 @@
 }
 
 .weather-container h1 {
-    font-size: 2.8em;
+    font-size: 2.5em;
     margin-bottom: 15px;
     animation: popUp 1s ease-out;
     font-weight: bolder;
-    color: #ffffff;
 }
 
 .weather-report p {
     margin: 10px 0;
-    font-size: 1.4em;
+    font-size: 1.3em;
     animation: slideIn 1.2s ease-in-out;
 }
 
