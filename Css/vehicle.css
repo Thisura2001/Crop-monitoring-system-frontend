@@ -70,9 +70,14 @@
 /* Table styling */
 #tblVehicle {
     margin-top: 50px;
-    width: 70%;
+    width: 90%;
     margin-left: auto;
-    margin-right: 100px;
+    margin-right: 10px;
+}
+
+#tblVehicle th {
+    background-color: #41a7a3;
+    color: white;
 }
 
 .table th, .table td {
