@@ -10,6 +10,7 @@
     grid-template-columns: repeat(1, 1fr);
     gap: 1rem;
 }
+
 .currentTimeWrapper {
     display: flex;
     justify-content: center;
@@ -29,6 +30,7 @@
     font-size: 2rem;
     letter-spacing: 1px;
 }
+
 /* General Dashboard Cards Container */
 .dashboard-cards {
     display: grid;
@@ -193,50 +195,98 @@
 
 /* Responsive Styling */
 @media (max-width: 768px) {
+    /* Adjust dashboard main container */
+    #dashboard {
+        padding-left: 20px; /* Reduce padding for mobile */
+        padding-right: 20px;
+    }
+
+    /* Grid layout for dashboard cards */
     .dashboard-cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column layout */
         gap: 15px;
     }
-    .card {
-        height: auto; /* Adjust height for smaller screens */
-    }
-}
 
-/* Responsive Grid Layout */
-@media (min-width: 768px) {
+    .staticCard {
+        height: auto; /* Make cards height responsive */
+    }
+
+    /* Weather container style */
+    .weather-container {
+        max-width: 100%; /* Full width on smaller screens */
+        padding: 10px;
+        font-size: 1.2em; /* Adjust font size */
+    }
+
+    .currentTimeWrapper {
+        padding: 10px 20px; /* Reduce padding for smaller screens */
+        font-size: 18px;
+    }
+
     .dashboard-stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr; /* Single column for stats */
     }
-}
 
-@media (min-width: 1024px) {
-    .dashboard-stats {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-.charts {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1rem;
-}
-
-@media (min-width: 1024px) {
+    /* Charts grid */
     .charts {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr; /* Single column for charts */
     }
 }
 
-.chart-container {
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+/* Tablet (min-width: 768px to 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Dashboard cards grid */
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr); /* Two columns */
+    }
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr); /* Two columns */
+    }
+
+    /* Cards will automatically adjust */
+    .staticCard {
+        height: 220px; /* Adjust for better viewing */
+    }
+
+    .charts {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for charts */
+    }
+
+    /* Weather container */
+    .weather-container {
+        padding: 15px;
+        font-size: 1.4em;
+    }
+
+    .currentTimeWrapper {
+        padding: 15px 30px;
+        font-size: 20px;
+    }
 }
 
-.chart-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+/* Desktop (min-width: 1024px) */
+@media (min-width: 1024px) {
+    /* Grid for dashboard stats and cards */
+    .dashboard-cards {
+        grid-template-columns: repeat(4, 1fr); /* Four columns */
+    }
+
+    .dashboard-stats {
+        grid-template-columns: repeat(3, 1fr); /* Three columns */
+    }
+
+    .charts {
+        grid-template-columns: repeat(3, 1fr); /* Three columns for charts */
+    }
+
+    .weather-container {
+        padding: 20px;
+        font-size: 1.6em;
+    }
+
+    .currentTimeWrapper {
+        padding: 20px 40px;
+        font-size: 24px;
+    }
 }
