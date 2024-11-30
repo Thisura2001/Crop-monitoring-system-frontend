@@ -16,3 +16,33 @@ function updateCurrentTime() {
 
 // Initialize the clock
 updateCurrentTime();
+document.addEventListener("DOMContentLoaded", fetchWeather);
+
+async function fetchWeather() {
+    // Mock data for demonstration purposes
+    const mockWeather = {
+        location: "Agalawatta",
+        temperature: 28,
+        humidity: 65,
+    };
+
+    // Display the weather data
+    document.getElementById('locations').textContent = mockWeather.location;
+    document.getElementById('temperature').textContent = mockWeather.temperature;
+    document.getElementById('humidity').textContent = mockWeather.humidity;
+
+    // Recommend crops based on the temperature and humidity
+    const recommendation = getCropRecommendation(mockWeather.temperature, mockWeather.humidity);
+    document.getElementById('crop-recommendation').textContent = recommendation;
+}
+
+function getCropRecommendation(temperature, humidity) {
+    if (temperature > 25 && humidity > 60) {
+        return "Rice, Sugarcane";
+    } else if (temperature < 20 && humidity < 50) {
+        return "Wheat, Barley";
+    } else {
+        return "Maize, Soybeans";
+    }
+}
+
