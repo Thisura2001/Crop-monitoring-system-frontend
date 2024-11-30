@@ -1,4 +1,3 @@
-
 #signin {
     display: flex;
     align-items: center;
@@ -10,21 +9,22 @@
 
 .signin-wrapper {
     display: flex;
-    width: 900px;
+    flex-direction: column; /* Adjust for smaller screens */
+    width: 100%;
+    max-width: 900px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     border-radius: 15px;
     overflow: hidden;
-    left: 0;
-    right: 0;
-    top: 100px;
-    bottom: 0;
-    margin: auto;
+    margin-top: auto;
     position: relative;
+    top: 100px;
+    left: 300px;
 }
 
 /* Image styling */
 .side-image {
-    width: 50%;
+    width: 100%;
+    max-width: 450px; /* Limit width for smaller screens */
     height: auto;
     object-fit: cover;
 }
@@ -32,9 +32,8 @@
 /* Sign-in container styling */
 .signin-container {
     background-color: #463975;
-    padding: 3em;
+    padding: 2em;
     color: #ffffff;
-    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,10 +43,9 @@
 
 h2 {
     margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 24px; /* Adjust font size for smaller screens */
 }
 
-/* Form styling */
 form {
     display: flex;
     flex-direction: column;
@@ -112,4 +110,79 @@ button:hover {
 
 .signup-link a:hover {
     text-decoration: underline;
+}
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+    .signin-wrapper {
+        flex-direction: row; /* Side-by-side layout for larger screens */
+    }
+
+    .side-image {
+        width: 50%;
+    }
+
+    .signin-container {
+        width: 50%;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    .signin-wrapper {
+        flex-direction: column; /* Stack items vertically */
+        margin: 20px auto; /* Add some spacing */
+        left: auto; /* Reset left position */
+        top: auto; /* Reset top position */
+        max-width: 90%; /* Constrain width to screen size */
+    }
+
+    .side-image {
+        display: none; /* Hide the image for smaller screens */
+    }
+
+    .signin-container {
+        padding: 1.5em;
+        width: 100%; /* Full width for content */
+    }
+
+    h2 {
+        font-size: 22px; /* Adjust font size */
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .signin-container {
+        padding: 1em;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .input-group input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    .signup-link {
+        font-size: 14px;
+    }
 }

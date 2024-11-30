@@ -45,4 +45,8 @@ function getCropRecommendation(temperature, humidity) {
         return "Maize, Soybeans";
     }
 }
+function toggleNav() {
+    const navBar = document.getElementById('navBar');
+    navBar.classList.toggle('active'); // Toggle visibility
+}
 

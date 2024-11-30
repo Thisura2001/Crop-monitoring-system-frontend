@@ -89,8 +89,12 @@
 
 /* Show Hamburger Menu on Small Screens */
 @media (max-width: 576px) {
-    .hamburger-menu {
-        display: block;
+    .nav {
+        display: none; /* Hidden by default */
+    }
+
+    .nav.active {
+        display: flex; /* Shown when active */
     }
 }
 
