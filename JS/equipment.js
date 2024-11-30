@@ -248,9 +248,9 @@ $(document).ready(function() {
             });
     });
 
-    // Delete row event
-    $("#equipmentTbody").on("click", ".delete-row", function() {
+    $("#equipmentTbody").on("click", ".delete-row", function () {
         const row = $(this).closest("tr");
+        const equipmentId = row.find("td").eq(0).text();
 
         Swal.fire({
             title: "Are you sure?",
@@ -259,16 +259,31 @@ $(document).ready(function() {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                row.remove();
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "The equipment entry has been deleted.",
-                    icon: "success",
-                    timer: 1500,
-                    showConfirmButton: false
+                // Make an AJAX request to delete the entry
+                $.ajax({
+                    url: `http://localhost:9090/greenShadow/api/v1/equipment/${equipmentId}`,
+                    type: "DELETE",
+                    success: function (response) {
+                        row.remove();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "The equipment entry has been deleted.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false,
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the equipment entry. Please try again.",
+                            icon: "error",
+                        });
+                    },
                 });
             }
         });
