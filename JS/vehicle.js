@@ -138,7 +138,7 @@ $(document).ready(function() {
                 $("#vehicleFormCard").hide();
 
                 // Reload the vehicle table
-                LoadVehicleData();
+                // LoadVehicleData();
             },
             error: function(xhr, status, error) {
                 // Handle any error that occurs during the AJAX request

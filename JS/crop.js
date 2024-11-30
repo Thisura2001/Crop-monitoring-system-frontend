@@ -20,9 +20,6 @@ closeCropForm.on('click', function () {
 function closeCropFormModal() {
     cropFormCard.hide();
 }
-
-// Handle crop form submission use ajax here
-// Load Field IDs into the Dropdown
 function loadFieldIds() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
@@ -34,6 +31,7 @@ function loadFieldIds() {
 
             // Add options dynamically
             fields.forEach(field => {
+
                 fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
             });
         },
