@@ -267,7 +267,7 @@ $(document).ready(function () {
         // AJAX request to save crop data
         $.ajax({
             url: "http://localhost:9090/greenShadow/api/v1/crop",
-            method: "POST",
+            method: "PUT",
             data: formData,
             processData: false,
             contentType: false,

@@ -170,6 +170,7 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
     });
 });
 let editLogCard = null;
+
 logCardsContainer.on('click', '.logCardUpdateBtn', function () {
     const logCard = $(this).closest('.card');
     openUpdateLogModal(logCard);
@@ -180,8 +181,17 @@ function openUpdateLogModal(logCard) {
     document.updateTargetLogCard = logCard[0];
 
     // Populate modal fields with the data from the selected card
-    $('#updateLogDate').val(logCard.find('.log-date').text()); // Fixed: Added proper class selector
-    $('#updateLogDetails').val(logCard.find('.log-details').text()); // Fixed: Added proper class selector
+    $('#updateLogDate').val(logCard.find('.log-date').text().trim()); // Fixed: Added proper class selector
+    $('#updateLogDetails').val(logCard.find('.log-details').text().trim()); // Fixed: Added proper class selector
+
+    // Check if the card has an image and show the preview
+    const logImgSrc = logCard.find('.log-img').attr('src');
+    if (logImgSrc) {
+        $('#updateObservedImagePreview').attr('src', logImgSrc).show();
+    } else {
+        $('#updateObservedImagePreview').hide();
+    }
+
     updateLogModal.show();
 }
 
@@ -214,10 +224,11 @@ $("#saveUpdatedLog").off("click").on("click", function () {
             const logCard = $(document.updateTargetLogCard);
 
             // Update log card dynamically
-            logCard.find("p:contains('Date:')").text(`Date: ${logDate}`);
-            logCard.find("p:contains('Details:')").text(`Details: ${logDetails}`);
+            logCard.find(".log-date").text(logDate);  // Update the date in the card
+            logCard.find(".log-details").text(logDetails);  // Update details in the card
+
             if (logImg) {
-                logCard.find(".log-img").attr("src", URL.createObjectURL(logImg));
+                logCard.find(".log-img").attr("src", URL.createObjectURL(logImg));  // Update the image preview in the card
             }
 
             Swal.fire("Success", "Log updated successfully!", "success");

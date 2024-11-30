@@ -21,7 +21,7 @@ closeVehicleFormBtn.addEventListener('click', closeVehicleForm);
 ///////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     loadStaffId();
-    LoadVehicleData();
+    loadVehicleData();
 });
 function loadStaffId() {
    $.ajax(
@@ -42,33 +42,34 @@ function loadStaffId() {
        }
    );
 }
+function loadVehicleData() {
     $.ajax(
         {
             url: "http://localhost:9090/greenShadow/api/v1/vehicle",
             method: "GET",
             success: function (vehicles) {
-                LoadVehicleData(vehicles);
+                renderVehicles(vehicles);
             },
             error: function () {
                 Swal.fire('Error', 'Failed to load vehicle data. Please try again.', 'error');
             }
-        }
-    )
-function LoadVehicleData(vehicles) {
-    console.log(vehicles)
+        })
+}
+function renderVehicles(vehicles) {
     $("#tbodyVehicle").empty();
-    vehicles.forEach(function (data) {
-        let row = "<tr>";
-        row += "<td>" + data.vehicle_code + "</td>";
-        row += "<td>" + data.licensePlateNumber + "</td>";
-        row += "<td>" + data.vehicleCategory + "</td>";
-        row += "<td>" + data.fuelType + "</td>";
-        row += "<td>" + data.status + "</td>";
-        row += "<td>" + data.staff || "N/A" + "</td>";
-        row += "<td><button class='btn btn-danger btn-sm delete-row'><i class='fa-solid fa-trash'></i></button></td>";
-        row += "<td><button class='btn btn-warning btn-sm update-row'><i class='fa-solid fa-pen-to-square'></i></button></td>";
-        row += "</tr>";
-        $("#tbodyVehicle").append(row);
+    vehicles.forEach((vehicle) => {
+        $("#tbodyVehicle").append(`
+            <tr>
+                <td>${vehicle.vehicle_code}</td>
+                <td>${vehicle.licensePlateNumber}</td>
+                <td>${vehicle.vehicleCategory}</td>
+                <td>${vehicle.fuelType}</td>
+                <td>${vehicle.status}</td>
+                <td>${vehicle.staff}</td>
+                 <td><button class='btn btn-danger btn-sm delete-row'><i class='fa-solid fa-trash'></i></button></td>
+                 <td><button class='btn btn-warning btn-sm update-row'><i class='fa-solid fa-pen-to-square'></i></button></td>
+            </tr>
+        `);
     });
 }
 
@@ -137,8 +138,7 @@ $(document).ready(function() {
                 $("#vehicleForm")[0].reset();
                 $("#vehicleFormCard").hide();
 
-                // Reload the vehicle table
-                // LoadVehicleData();
+                loadVehicleData();
             },
             error: function(xhr, status, error) {
                 // Handle any error that occurs during the AJAX request
