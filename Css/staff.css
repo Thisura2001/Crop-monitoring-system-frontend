@@ -12,7 +12,12 @@
     margin-right: 20px;
     margin-top: 40px;
 }
-
+#tblStaff th {
+    background-color: #41a7a3; /* Blue background for header */
+    color: #fff; /* White text */
+    font-weight: bold;
+    text-transform: uppercase;
+}
 /* Staff Form Card */
 #staffFormCard {
     width: 100%;
@@ -71,6 +76,7 @@
     width: 100%;
     margin-top: 20px;
     margin-left: 120px;
+
 }
 
 #tblStaff thead {
