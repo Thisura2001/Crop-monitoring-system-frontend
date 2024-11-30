@@ -112,6 +112,16 @@ $(document).ready(function() {
         const role = $("#role").val();
         const address = $("#addressLine3").val();
 
+        if (firstName === "" || designation === "" || field === "" || gender === "" || joinedDate === "" || dob === "" || contactNo === "" || email === "" || role === "" || address === "") {
+            Swal.fire({
+                title: "Error!",
+                text: "Please fill in all required fields.",
+                icon: "error",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        }
         const staffData = {
             firstName: firstName,
             designation: designation,

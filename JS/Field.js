@@ -41,7 +41,7 @@ $("#fieldSaveBtn").on("click", function (e) {
         Swal.fire({
             icon: 'error',
             title: 'Validation Error',
-            text: 'Please fill in all fields and select both images!',
+            text: 'Please fill in all fields!',
         });
         return;
     }

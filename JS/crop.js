@@ -63,7 +63,7 @@ $("#cropSaveBtn").on("click", function (e) {
         Swal.fire({
             icon: "error",
             title: "Validation Error",
-            text: "Please fill in all fields and upload an image!",
+            text: "Please fill in all fields !",
         });
         return;
     }

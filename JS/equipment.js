@@ -117,6 +117,18 @@ $(document).ready(function() {
     $("#btnEquipmentSave").on("click", function(event) {
         event.preventDefault();
 
+        // Validate form fields
+        if ($("#equipmentName").val() === "" || $("#equipmentType").val() === "" || $("#equipmentStatus").val() === "" || $("#assignedField").val() === "" || $("#assignedStaff").val() === "") {
+            Swal.fire({
+                title: "Error!",
+                text: "Please fill in all required fields.",
+                icon: "error",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        }
+
         // Get form values
         const equipmentData = {
             name: $("#equipmentName").val(),

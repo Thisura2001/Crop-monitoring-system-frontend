@@ -81,6 +81,7 @@ $("#saveLogBtn").on("click", function (e) {
     formData.append("log_details", logDetails);
     formData.append("observed_image", observedImageFile);
 
+
     // AJAX POST request to save log
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/log", // Adjust endpoint
