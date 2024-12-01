@@ -19,6 +19,9 @@ function loadLogData() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/log",
         method: "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         success: function (logs) {
             renderLogs(logs); // Pass the fetched logs to renderLogs
         },
@@ -86,6 +89,9 @@ $("#saveLogBtn").on("click", function (e) {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/log", // Adjust endpoint
         type: "POST",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         data: formData,
         processData: false,
         contentType: false,
@@ -154,6 +160,9 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
             $.ajax({
                 url: `http://localhost:9090/greenShadow/api/v1/log/${logId}`, // Adjust API endpoint
                 type: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
                 success: function () {
                     // Remove the card on success
                     logCard.remove();
@@ -217,6 +226,9 @@ $("#saveUpdatedLog").off("click").on("click", function () {
     $.ajax({
         url: `http://localhost:9090/greenShadow/api/v1/log/` + editLogCard,
         method: "PUT",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         data: formData,
         processData: false,
         contentType: false,

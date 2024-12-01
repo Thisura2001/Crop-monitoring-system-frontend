@@ -27,6 +27,9 @@ function loadFields() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
         method: "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         success: function (fields) {
             const fieldDropdown = $("#assignedField");
             fieldDropdown.empty();
@@ -47,6 +50,9 @@ function loadStaff() {
         {
             url: "http://localhost:9090/greenShadow/api/v1/staff",
             method: "GET",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             success: function (staff) {
                 const staffIdDropdown = $("#assignedStaff");
                 staffIdDropdown.empty();
@@ -69,6 +75,9 @@ $(document).ready(function (){
         $.ajax({
             url: "http://localhost:9090/greenShadow/api/v1/equipment",
             method: "GET",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             success: function (equipments) {
                 renderEquipments(equipments);
             },
@@ -142,6 +151,9 @@ $(document).ready(function() {
         $.ajax({
             url: "http://localhost:9090/greenShadow/api/v1/equipment", // Replace with your API endpoint
             type: "POST",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             contentType: "application/json",
             data: JSON.stringify(equipmentData),
             success: function(response) {
@@ -215,6 +227,9 @@ $(document).ready(function() {
             $.ajax({
                 url: `http://localhost:9090/greenShadow/api/v1/equipment/${equipmentId}`, // Adjust URL as per your backend API
                 type: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
                 data: JSON.stringify({
                     eqId: equipmentId,
                     name: equipmentName,
@@ -278,6 +293,9 @@ $(document).ready(function() {
                 $.ajax({
                     url: `http://localhost:9090/greenShadow/api/v1/equipment/${equipmentId}`,
                     type: "DELETE",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    },
                     success: function (response) {
                         row.remove();
                         Swal.fire({

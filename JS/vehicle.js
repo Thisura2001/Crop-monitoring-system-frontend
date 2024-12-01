@@ -28,6 +28,9 @@ function loadStaffId() {
        {
            url: "http://localhost:9090/greenShadow/api/v1/staff",
            method: "GET",
+           headers: {
+               "Authorization": "Bearer " + localStorage.getItem("token")
+           },
            success: function (staff) {
                const staffIdDropdown = $("#VehicleStaffId");
                staffIdDropdown.empty();
@@ -47,6 +50,9 @@ function loadVehicleData() {
         {
             url: "http://localhost:9090/greenShadow/api/v1/vehicle",
             method: "GET",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             success: function (vehicles) {
                 renderVehicles(vehicles);
             },
@@ -121,6 +127,9 @@ $(document).ready(function() {
         $.ajax({
             url: "http://localhost:9090/greenShadow/api/v1/vehicle",
             type: "POST",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             contentType: "application/json",
             data: JSON.stringify(vehicleData),
             success: function(response) {
@@ -198,6 +207,9 @@ $(document).ready(function() {
         $.ajax({
             url: `http://localhost:9090/greenShadow/api/v1/vehicle/${vehicleCode}`, // Backend endpoint
             type: "PUT", // Update method
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (response) {
@@ -258,6 +270,9 @@ $(document).ready(function() {
                 $.ajax({
                     url: `http://localhost:9090/greenShadow/api/v1/vehicle/${rowId}`,
                     type: "DELETE",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    },
                     success: function(response) {
                         // On success, remove the row and show a success message
                         row.remove();

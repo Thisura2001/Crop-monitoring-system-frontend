@@ -24,6 +24,9 @@ function loadFieldIds() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
         method: "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         success: function (fields) {
             const fieldDropdown = $("#fieldIdInCrop");
             fieldDropdown.empty(); // Clear existing options
@@ -81,6 +84,9 @@ $("#cropSaveBtn").on("click", function (e) {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/crop", // Adjust endpoint
         type: "POST",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         data: formData,
         processData: false,
         contentType: false,
@@ -133,6 +139,9 @@ function loadCrops() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/crop", // Replace with your API endpoint
         method: "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         dataType: "json",
         success: function (response) {
             renderCrops(response); // Render the crops if the response is successful
@@ -203,6 +212,9 @@ corpCardsContainer.on('click', '.CropCardDeleteBtn', function () {
             $.ajax({
                 url: `http://localhost:9090/greenShadow/api/v1/crop/${cropId}`, // Endpoint for deleting the field
                 method: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
                 success: function (response) {
                     // If deletion is successful, remove the card from the frontend
                     card.remove();
@@ -237,67 +249,11 @@ $(document).ready(function () {
     }
     $("#closeUpdateCropModalBtn").on("click", closeUpdateCropModal);
 
-    // Save crop data
-    $("#cropForm").on("submit", function (e) {
-        e.preventDefault();
-
-        const commonName = $("#cropCommonName").val();
-        const scientificName = $("#cropScientificName").val();
-        const category = $("#cropCategory").val();
-        const season = $("#cropSeason").val();
-        const fieldId = $("#fieldIdInCrop").val();
-        const cropImgInput = $("#cropImageFile")[0];
-        const cropImg = cropImgInput.files.length > 0 ? cropImgInput.files[0] : null;
-
-        if (!commonName || !scientificName || !category || !season || !fieldId) {
-            Swal.fire("Validation Error", "Please fill in all fields!", "error");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("commonName", commonName);
-        formData.append("scientificName", scientificName);
-        formData.append("category", category);
-        formData.append("season", season);
-        formData.append("field", fieldId);
-        if (cropImg) {
-            formData.append("cropImg", cropImg);
-        }
-
-        // AJAX request to save crop data
-        $.ajax({
-            url: "http://localhost:9090/greenShadow/api/v1/crop",
-            method: "PUT",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                const newCard = `
-                <div class="card" data-id="${response.id}">
-                    <img class="crop-img" src="${response.image}" alt="Crop Image">
-                    <p>Common Name: ${response.commonName}</p>
-                    <p>Scientific Name: ${response.scientificName}</p>
-                    <p>Category: ${response.category}</p>
-                    <p>Season: ${response.season}</p>
-                    <p>Field ID: ${response.fieldId}</p>
-                    <button class="btn btn-warning CropCardUpdateBtn">Update</button>
-                </div>`;
-                $("#corpCardsContainer").append(newCard);
-                Swal.fire("Success", "Crop added successfully!", "success");
-                $("#cropFormCard").hide();
-                $("#cropForm")[0].reset();
-                loadCrops();
-            },
-            error: function () {
-                Swal.fire("Error", "Failed to save crop. Please try again.", "error");
-            }
-        });
-    });
     let editCropId = null;
     // Handle update button click
     $("#corpCardsContainer").on("click", ".CropCardUpdateBtn", function () {
         const card = $(this).closest(".card");
-        const cropId = card.data("id");
+        editCropId = card.data("id");
 
         editCropId = $(this).data("id");
         // Populate update modal
@@ -330,6 +286,9 @@ $(document).ready(function () {
             $.ajax({
                 url: `http://localhost:9090/greenShadow/api/v1/crop/`+ editCropId,
                 method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
                 data: formData,
                 processData: false,
                 contentType: false,

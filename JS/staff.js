@@ -26,6 +26,9 @@ function loadFieldIds() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
         method: "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         success: function (fields) {
             loadFieldIds();
             const fieldDropdown = $("#staffField");
@@ -47,6 +50,9 @@ function LoadStaffData() {
         {
             url: "http://localhost:9090/greenShadow/api/v1/staff",
             method: "GET",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             contentType: "application/json",
             success: function (data) {
                 appendStaff(data);
@@ -140,6 +146,9 @@ $(document).ready(function() {
         $.ajax({
             url: "http://localhost:9090/greenShadow/api/v1/staff",
             type: "POST",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             data: staffJson,
             contentType: "application/json",
             success: function (response) {
@@ -179,6 +188,9 @@ $(document).ready(function() {
                 $.ajax({
                     url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,
                     type: "DELETE",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    },
                     success: function (response) {
                         rowToDelete.remove();
                         Swal.fire({
@@ -266,6 +278,9 @@ $(document).ready(function() {
         $.ajax({
             url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,
             type: "PUT",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             data: JSON.stringify(staffData),
             contentType: "application/json",
             success: function (response) {

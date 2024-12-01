@@ -56,8 +56,11 @@ $("#fieldSaveBtn").on("click", function (e) {
 
     // AJAX request
     $.ajax({
-        url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust the endpoint if necessary
+        url: "http://localhost:9090/greenShadow/api/v1/field",
         type: "POST",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         data: formData,
         processData: false,
         contentType: false,
@@ -111,6 +114,9 @@ function loadFields() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/field", // Replace with your API endpoint
         method: "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         dataType: "json",
         success: function (response) {
             renderFields(response); // Render the fields if the response is successful
@@ -181,6 +187,9 @@ fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
             $.ajax({
                 url: `http://localhost:9090/greenShadow/api/v1/field/${fieldId}`, // Endpoint for deleting the field
                 method: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
                 success: function (response) {
                     // If deletion is successful, remove the card from the frontend
                     card.remove();
@@ -264,6 +273,9 @@ $(document).ready(function () {
         $.ajax({
             url: `http://localhost:9090/greenShadow/api/v1/field/` + editingFieldId, // Endpoint for updating the field
             method: 'PUT',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             data: formData,
             processData: false, // Important for sending FormData
             contentType: false, // Let the browser set the correct content type
