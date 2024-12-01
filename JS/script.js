@@ -45,3 +45,9 @@ function resetInterval() {
 
 showText(currentIndex);
 startAutoSwipe();
+// JavaScript to toggle navbar visibility
+document.getElementById('hamburgerMenu').addEventListener('click', function () {
+    const navBar = document.getElementById('navBar');
+    navBar.classList.toggle('active');
+});
+
