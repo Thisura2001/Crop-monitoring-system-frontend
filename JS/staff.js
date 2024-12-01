@@ -224,8 +224,8 @@ $(document).ready(function() {
         const dob = row.find("td:eq(5)").text();
         const contactNo = row.find("td:eq(6)").text();
         const email = row.find("td:eq(7)").text();
-        const address = row.find("td:eq(8)").text();
-        const role = row.find("td:eq(9)").text();
+        const role = row.find("td:eq(8)").text();
+        const address = row.find("td:eq(9)").text();
 
         // Populate the form fields with the retrieved data
         $("#StaffFirstName").val(firstName);
