@@ -104,15 +104,14 @@
 
                 <label for="password1">Password</label>
                 <input type="password" id="password1" placeholder="Enter password" required>
-                <div class="btn-group">
-                    <button type="button" id="roleDropdown" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                        Select Your Role
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-lg-end">
-                        <li><button class="dropdown-item" type="button" onclick="selectRole('MANAGER')">MANAGER</button></li>
-                        <li><button class="dropdown-item" type="button" onclick="selectRole('ADMINISTRATIVE')">ADMINISTRATIVE</button></li>
-                        <li><button class="dropdown-item" type="button" onclick="selectRole('SCIENTIST')">SCIENTIST</button></li>
-                    </ul>
+                <div class="col-md-6">
+                    <label for="roleDropdown" class="form-label">Role</label>
+                    <select class="form-select" id="roleDropdown" required>
+                        <option selected disabled value="">Choose Your Role.</option>
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="MANAGER">MANAGER</option>
+                        <option value="SCIENTIST">SCIENTIST</option>
+                    </select>
                 </div>
 
                 <button type="submit" id="btnSignUp">Sign Up</button>

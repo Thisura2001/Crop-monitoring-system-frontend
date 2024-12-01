@@ -13,6 +13,9 @@
     background: linear-gradient(45deg, #4d5dd8, #5868cc, #2133a8);
     padding: 20px;
 }
+#roleDropdown{
+    width: fit-content;
+}
 
 .signup-wrapper {
     display: flex;
@@ -45,6 +48,16 @@
     justify-content: center;
     text-align: center;
     height: 100%;
+}
+#roleDropdown {
+    width: 200%; /* Match the width of input fields */
+    padding: 10px; /* Add padding similar to input fields */
+    font-size: 12px; /* Match the font size */
+    border: 1px solid #ddd; /* Match the border style */
+    border-radius: 8px; /* Match the border radius */
+    outline: none;
+    margin-bottom: 15px; /* Add consistent spacing */
+    transition: border-color 0.3s; /* Optional: Add transition effect */
 }
 
 /* Heading styles */
@@ -158,6 +171,10 @@
         font-size: 14px;
         padding: 12px;
     }
+    #roleDropdown{
+        width: 100%;
+
+    }
 }
 
 @media (max-width: 480px) {
@@ -185,5 +202,9 @@
     .signup-container button {
         font-size: 14px;
         padding: 10px;
+    }
+    #roleDropdown{
+        width: 100%;
+
     }
 }
