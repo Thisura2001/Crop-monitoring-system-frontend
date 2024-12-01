@@ -70,8 +70,8 @@ function appendStaff(staff) {
         row += "<td>" + data.dob + "</td>";
         row += "<td>" + data.contact_no + "</td>";
         row += "<td>" + data.email + "</td>";
-        row += "<td>" + data.address + "</td>";
         row += "<td>" + data.role + "</td>";
+        row += "<td>" + data.address + "</td>";
         row += "<td><button class='btn btn-danger btn-sm delete-row'><i class='fa-solid fa-trash'></i></button></td>";
         row += "<td><button class='btn btn-warning btn-sm update-row'><i class='fa-solid fa-pen-to-square'></i></button></td>";
         row += "</tr>";
