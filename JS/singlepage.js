@@ -24,19 +24,19 @@ $("#btnSignin").on('click', function() {
     $("#field").css( "display", "none");
     $("#navBar").css( "display", "none");
 });
-$("#btnlogin").on('click', function() {
-    $('#welcomePage').css("display", "none");
-    $('#signin').css("display", "none");
-    $("#signup").css("display", "none");
-    $("#dashboard").css("display", "block");
-    $("#staff").css( "display", "none");
-    $("#corp").css( "display", "none");
-    $("#equipment").css( "display", "none");
-    $("#monitory").css( "display", "none");
-    $("#vehicle").css( "display", "none");
-    $("#field").css( "display", "none");
-    $("#navBar").css( "display", "block");
-});
+// $("#btnlogin").on('click', function() {
+//     $('#welcomePage').css("display", "none");
+//     $('#signin').css("display", "none");
+//     $("#signup").css("display", "none");
+//     $("#dashboard").css("display", "block");
+//     $("#staff").css( "display", "none");
+//     $("#corp").css( "display", "none");
+//     $("#equipment").css( "display", "none");
+//     $("#monitory").css( "display", "none");
+//     $("#vehicle").css( "display", "none");
+//     $("#field").css( "display", "none");
+//     $("#navBar").css( "display", "block");
+// });
 $("#text").on('click', function() {
     $('#welcomePage').css("display", "none");
     $('#signin').css("display", "none");
