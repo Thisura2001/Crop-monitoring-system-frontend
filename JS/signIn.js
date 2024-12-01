@@ -42,7 +42,17 @@ $("#btnlogin").on('click', function (event) {
                     title: 'Welcome!',
                     text: 'You have successfully signed in.'
                 }).then(()=>{
-                    window.location.href = "#dashboard";
+                        $('#welcomePage').css("display", "none");
+                        $('#signin').css("display", "none");
+                        $("#signup").css("display", "none");
+                        $("#dashboard").css("display", "block");
+                        $("#staff").css( "display", "none");
+                        $("#corp").css( "display", "none");
+                        $("#equipment").css( "display", "none");
+                        $("#monitory").css( "display", "none");
+                        $("#vehicle").css( "display", "none");
+                        $("#field").css( "display", "none");
+                        $("#navBar").css( "display", "block");
                 })
             } else {
                 Swal.fire({
