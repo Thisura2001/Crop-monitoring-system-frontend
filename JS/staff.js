@@ -16,21 +16,21 @@ function closeStaffForm() {
 // Close button event for staff form
 closeStaffFormBtn.addEventListener('click', closeStaffForm);
 
+initializeStaff()
 /////////////////////////////////////////////////
-$(document).ready(function () {
+export function initializeStaff() {
     loadFieldIds();
     LoadStaffData();
-});
+}
 
 function loadFieldIds() {
     $.ajax({
-        url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
+        url: "http://localhost:9090/greenShadow/api/v1/field",
         method: "GET",
         headers: {
             "Authorization": "Bearer " + localStorage.getItem("token")
         },
         success: function (fields) {
-            loadFieldIds();
             const fieldDropdown = $("#staffField");
             fieldDropdown.empty(); // Clear existing options
             fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
@@ -45,7 +45,7 @@ function loadFieldIds() {
         }
     });
 }
-function LoadStaffData() {
+export function LoadStaffData() {
     $.ajax(
         {
             url: "http://localhost:9090/greenShadow/api/v1/staff",
@@ -55,6 +55,7 @@ function LoadStaffData() {
             },
             contentType: "application/json",
             success: function (data) {
+                console.log(data)
                 appendStaff(data);
             },
             error: function (error) {
@@ -64,7 +65,7 @@ function LoadStaffData() {
         }
     )
 }
-function appendStaff(staff) {
+export function appendStaff(staff) {
     $("#staffTbody").empty();
     staff.forEach(function (data) {
         let row = "<tr>";
@@ -131,7 +132,6 @@ $(document).ready(function() {
         const staffData = {
             firstName: firstName,
             designation: designation,
-            field: field,
             gender: gender,
             joined_date: joinedDate,
             dob: dob,
@@ -152,6 +152,7 @@ $(document).ready(function() {
             data: staffJson,
             contentType: "application/json",
             success: function (response) {
+                saveFieldToStaff(response.staffId, field);
                 LoadStaffData();
                 Swal.fire({
                     title: "Saved!",
@@ -163,11 +164,38 @@ $(document).ready(function() {
                 $("#staffForm")[0].reset();
                 $("#staffFormCard").hide();
             },
-            error: function () {
+            error: function (response) {
+                if (response.status === 409) {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Email already exists.",
+                        icon: "error",
+                        timer: 1500,
+                        showConfirmButton: false
+                    })
+                }
                 Swal.fire('Error', 'Failed to save staff details. Please try again.', 'error');
             }
         });
     });
+
+
+    function saveFieldToStaff(staffId, fieldId) {
+        $.ajax({
+            url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}/assign/${fieldId}`,
+            type: "POST",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: function (response) {
+                console.log(response);
+                alert("Field assigned to staff successfully!");
+            },
+            error: function () {
+                Swal.fire('Error', 'Failed to save field to staff. Please try again.', 'error');
+            }
+        });
+    }
 
 
     $('#tblStaff').on("click", ".delete-row", function () {

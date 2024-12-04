@@ -1,4 +1,6 @@
 // Elements
+import {initializeStaff} from "./staff.js";
+
 const addFieldBtn = $('#addFieldBtn');
 const fieldFormCard = $('#fieldFormCard');
 const closeFieldForm = $('#closeFieldForm');
@@ -65,6 +67,7 @@ $("#fieldSaveBtn").on("click", function (e) {
         processData: false,
         contentType: false,
         success: function (response) {
+
             // Display success message
             Swal.fire({
                 icon: 'success',
@@ -74,29 +77,13 @@ $("#fieldSaveBtn").on("click", function (e) {
                 timer: 1500,
             });
 
-            // Optionally display the added field in the frontend
-            const newCard = `
-                <div class="card mt-3" style="width: 300px;">
-                    <div class="card-header">
-                        <h5>Field Details</h5>
-                    </div>
-                    <div class="card-body">
-                        <img src="${URL.createObjectURL(fieldImg1)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 1">
-                        <img src="${URL.createObjectURL(fieldImg2)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Image 2">
-                        <p><strong>Field Name:</strong> ${fieldName}</p>
-                        <p><strong>Location:</strong> ${location}</p>
-                        <p><strong>Extent Size:</strong> ${extent}</p>
-                        <button class="btn btn-danger FieldCardDeleteBtn">Delete</button>
-                        <button class="btn btn-primary fieldCardUpdateBtn">Update</button>
-                    </div>
-                </div>
-            `;
-            $("#fieldCardsContainer").append(newCard);
 
             // Reset the form
             $("#FieldForm")[0].reset();
 
             loadFields()
+
+            initializeStaff()
 
         },
         error: function (xhr, status, error) {
