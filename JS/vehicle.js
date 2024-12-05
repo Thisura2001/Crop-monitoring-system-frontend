@@ -140,8 +140,18 @@ $(document).ready(function() {
                 $("#vehicleFormCard").hide();
             },
             error: function(xhr, status, error) {
-                Swal.fire('Error', 'Failed to save the vehicle. Please try again.', 'error');
-                console.error('Error:', xhr.responseText);
+                if (xhr.status === 403) {
+                    Swal.fire('warning', 'You do not have permission to save this vehicle. Please contact your administrator.', 'warning');
+                }else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Failed to save the vehicle. Please try again.",
+                        icon: "error",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    console.error("Error:", xhr.responseText);
+                }
             }
         });
     });
@@ -215,14 +225,18 @@ $(document).ready(function() {
                 editingVehicleRow = null;
             },
             error: function (xhr, status, error) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Failed to update the vehicle. Please try again.",
-                    icon: "error",
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-                console.error("Error:", xhr.responseText);
+                if (xhr.status === 403) {
+                    Swal.fire('warning', 'You do not have permission to save this vehicle. Please contact your administrator.', 'warning');
+                }else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Failed to update the vehicle. Please try again.",
+                        icon: "error",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    console.error("Error:", xhr.responseText);
+                }
             }
         });
     });
