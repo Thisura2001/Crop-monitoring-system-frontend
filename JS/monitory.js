@@ -110,7 +110,6 @@ $("#saveLogBtn").on("click", function (e) {
                         <p><strong>Log Date:</strong> ${logDate}</p>
                         <p><strong>Details:</strong> ${logDetails}</p>
                         <button class="btn btn-danger logCardDeleteBtn">Delete</button>
-                        <button class="btn btn-primary logCardUpdateBtn">Update</button>
                     </div>
                 </div>
             `;
@@ -163,76 +162,3 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
         }
     });
 });
-let editLogCard = null;
-
-logCardsContainer.on('click', '.logCardUpdateBtn', function () {
-    const logCard = $(this).closest('.card');
-    openUpdateLogModal(logCard);
-    editLogCard = $(this).data('id');
-});
-
-function openUpdateLogModal(logCard) {
-    document.updateTargetLogCard = logCard[0];
-
-    $('#updateLogDate').val(logCard.find('.log-date').text().trim());
-    $('#updateLogDetails').val(logCard.find('.log-details').text().trim());
-
-    const logImgSrc = logCard.find('.log-img').attr('src');
-    if (logImgSrc) {
-        $('#updateObservedImagePreview').attr('src', logImgSrc).show();
-    } else {
-        $('#updateObservedImagePreview').hide();
-    }
-
-    updateLogModal.show();
-}
-
-closeUpdateLogModalBtn.on('click', function () {
-    updateLogModal.hide();
-});
-
-$("#saveUpdatedLog").off("click").on("click", function () {
-    // Get values from modal fields
-    const logDate = $("#updateLogDate").val();
-    const logDetails = $("#updateLogDetails").val();
-    const logImgInput = $("#updateObservedImage")[0];
-    const logImg = logImgInput.files.length > 0 ? logImgInput.files[0] : null;
-
-    const formData = new FormData();
-    formData.append("log_date", logDate);
-    formData.append("log_details", logDetails);
-    if (logImg) {
-        formData.append("logImg", logImg);
-    }
-a
-    $.ajax({
-        url: `http://localhost:9090/greenShadow/api/v1/log/` + editLogCard,
-        method: "PUT",
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function () {
-            const logCard = $(document.updateTargetLogCard);
-
-            // Update log card dynamically
-            logCard.find(".log-date").text(logDate);
-            logCard.find(".log-details").text(logDetails);
-
-            if (logImg) {
-                logCard.find(".log-img").attr("src", URL.createObjectURL(logImg));
-            }
-
-            Swal.fire("Success", "Log updated successfully!", "success");
-            closeUpdateLogModal();
-        },
-        error: function () {
-            Swal.fire("Error", "Failed to update log. Please try again.", "error");
-        }
-    });
-});
-function closeUpdateLogModal() {
-    $("#updateLogModal").hide();
-}
