@@ -119,11 +119,18 @@ $("#saveLogBtn").on("click", function (e) {
             loadLogData();
         },
         error: function (xhr, status, error) {
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "An error occurred while saving the log data. Please try again.",
-            });
+            if (xhr.status === 403) {
+                Swal.fire('warning', 'You do not have permission to save this log. Please contact your Scientist.', 'warning');
+            } else {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to save the log. Please try again.",
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                console.error("Error:", xhr.responseText);
+            }
         },
     });
 });
@@ -154,8 +161,17 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
                     logCard.remove();
                     Swal.fire('Deleted!', 'Your log has been deleted.', 'success');
                 },
-                error: function () {
-                    Swal.fire('Error', 'Failed to delete the log. Please try again.', 'error');
+                error: function (response) {
+                    if (response.status === 403) {
+                        Swal.fire('warning', 'You do not have permission to delete this log. Please contact your Scientist.', 'warning');
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete. Please try again.",
+                            icon: "error",
+                            timer: 1500,
+                        });
+                    }
                 }
             });
         }
