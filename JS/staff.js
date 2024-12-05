@@ -171,6 +171,16 @@ $(document).ready(function() {
                         icon: "warning",
                         timer: 1500,
                     })
+                }else if(response.status === 403){
+                    Swal.fire('warning', 'You do not have permission to save this vehicle. Please contact your administrator.', 'warning');
+
+                }else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Failed to save. Please try again.",
+                        icon: "error",
+                        timer: 1500,
+                    });
                 }
             }
         });
@@ -225,8 +235,17 @@ $(document).ready(function() {
                             showConfirmButton: false
                         });
                     },
-                    error: function () {
-                        Swal.fire('Error', 'Failed to delete staff details. Please try again.', 'error');
+                    error: function (response) {
+                        if (response.status === 403){
+                            Swal.fire('warning', 'You do not have permission to save this vehicle. Please contact your administrator.', 'warning');
+                        }else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "Failed to delete. Please try again.",
+                                icon: "error",
+                                timer: 1500,
+                            });
+                        }
                     }
                 });
             }
@@ -315,8 +334,16 @@ $(document).ready(function() {
                 $("#staffFormCard").hide();
             },
             error: function (xhr, status, error) {
-                Swal.fire('Error', 'Failed to update staff details. Please try again.', 'error');
-                console.error('Error:', xhr.responseText);
+              if (xhr.status === 403){
+                  Swal.fire('warning', 'You do not have permission to save this staff. Please contact your administrator.', 'warning');
+              }else {
+                  Swal.fire({
+                      title: "Error!",
+                      text: "Failed to update. Please try again.",
+                      icon: "error",
+                      timer: 1500,
+                  });
+              }
             }
         });
     });
