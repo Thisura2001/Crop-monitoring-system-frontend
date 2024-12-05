@@ -1,6 +1,7 @@
 // Elements
 import {initializeStaff} from "./staff.js";
 import {initializeCrop} from "./crop.js";
+import {initializeEquipment} from "./equipment.js";
 
 const addFieldBtn = $('#addFieldBtn');
 const fieldFormCard = $('#fieldFormCard');
@@ -86,6 +87,7 @@ $("#fieldSaveBtn").on("click", function (e) {
 
             initializeCrop()
             initializeStaff()
+            initializeEquipment()
 
         },
         error: function (xhr, status, error) {

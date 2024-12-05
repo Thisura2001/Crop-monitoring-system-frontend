@@ -1,4 +1,6 @@
 import {initializeVehicle} from "./vehicle.js";
+import {initializeEquipment} from "./equipment.js";
+
 const addStaffBtn = document.getElementById('addStaffBtn');
 const staffFormCard = document.getElementById('staffFormCard');
 const closeStaffFormBtn = document.getElementById('closeStaffForm');
@@ -159,6 +161,7 @@ $(document).ready(function() {
                 $("#staffFormCard").hide();
 
                 initializeVehicle()
+                initializeEquipment()
             },
             error: function (response) {
                 if (response.status === 409) {

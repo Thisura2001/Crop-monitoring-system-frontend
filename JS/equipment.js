@@ -16,10 +16,11 @@ function closeEquipmentForm() {
 }
 
 closeEquipmentFormBtn.addEventListener('click', closeEquipmentForm);
-$(document).ready(function () {
+initializeEquipment()
+export function initializeEquipment () {
    loadStaff();
    loadFields();
-});
+}
 function loadFields() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/field", // Adjust endpoint to fetch field IDs
