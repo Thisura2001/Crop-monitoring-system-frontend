@@ -248,10 +248,15 @@
                         <label for="StaffFirstName" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="StaffFirstName" placeholder="Enter first name" required>
                     </div>
-                    <!-- Designation -->
                     <div class="col-md-6">
                         <label for="designation" class="form-label">Designation</label>
-                        <input type="text" class="form-control" id="designation" placeholder="Enter designation" required>
+                        <select class="form-select" id="designation" required>
+                            <option selected disabled value="">Choose Designation.</option>
+                            <option value="MANAGER">MANAGER</option>
+                            <option value="ADMINISTRATIVE">ADMIN</option>
+                            <option value="SCIENTIST">SCIENTIST</option>
+                            <option value="FIELD_WORKER">FIELD_WORKER</option>
+                        </select>
                     </div>
                     <!-- Field -->
                     <div class="col-md-6">
@@ -263,7 +268,11 @@
                     <!-- Gender -->
                     <div class="col-md-6">
                         <label for="gender" class="form-label">Gender</label>
-                        <input type="text" class="form-control" id="gender" placeholder="Enter Gender" required>
+                        <select class="form-select" id="gender" required>
+                            <option selected disabled value="">Choose Gender...</option>
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                        </select>
                     </div>
                     <!-- Joined Date -->
                     <div class="col-md-6">
@@ -285,10 +294,14 @@
                         <label for="StaffEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" id="StaffEmail" placeholder="Enter email address" required>
                     </div>
-                    <!-- Role -->
                     <div class="col-md-6">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" placeholder="Enter role" required>
+                        <label for="role" class="form-label">Staff Role</label>
+                        <select class="form-select" id="role" required>
+                            <option selected disabled value="">Choose Role...</option>
+                            <option value="MANAGER">MANAGER</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="SCIENTIST">SCIENTIST</option>
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <label for="addressLine3" class="form-label">City</label>
