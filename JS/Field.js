@@ -1,5 +1,6 @@
 // Elements
 import {initializeStaff} from "./staff.js";
+import {initializeCrop} from "./crop.js";
 
 const addFieldBtn = $('#addFieldBtn');
 const fieldFormCard = $('#fieldFormCard');
@@ -83,6 +84,7 @@ $("#fieldSaveBtn").on("click", function (e) {
 
             loadFields()
 
+            initializeCrop()
             initializeStaff()
 
         },
