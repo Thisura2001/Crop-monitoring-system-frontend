@@ -23,7 +23,7 @@ function loadLogData() {
             "Authorization": "Bearer " + localStorage.getItem("token")
         },
         success: function (logs) {
-            renderLogs(logs); // Pass the fetched logs to renderLogs
+            renderLogs(logs);
         },
         error: function () {
             Swal.fire('Error', 'Failed to load log data. Please try again.', 'error');
@@ -33,10 +33,9 @@ function loadLogData() {
 
 function renderLogs(logs) {
     const logCardsContainer = $("#logCardsContainer");
-    logCardsContainer.empty(); // Clear any existing cards
+    logCardsContainer.empty();
 
     logs.forEach(function (log) {
-        // Generate log card HTML dynamically
         const logCard = `
             <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
                 <div class="card-header">
@@ -57,7 +56,6 @@ function renderLogs(logs) {
     });
 }
 
-// Call loadLogData to fetch and display logs on page load
 loadLogData();
 
 
@@ -78,14 +76,11 @@ $("#saveLogBtn").on("click", function (e) {
         return;
     }
 
-    // Prepare FormData for submission
     const formData = new FormData();
     formData.append("log_date", logDate);
     formData.append("log_details", logDetails);
     formData.append("observed_image", observedImageFile);
 
-
-    // AJAX POST request to save log
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/log", // Adjust endpoint
         type: "POST",
@@ -104,8 +99,6 @@ $("#saveLogBtn").on("click", function (e) {
                 showConfirmButton: false,
                 timer: 1500,
             });
-
-            // Add the new log card dynamically
             const newCard = `
                 <div class="card mt-3" style="width: 300px; max-height: 500px; overflow-y: auto;">
                     <div class="card-header">
@@ -123,13 +116,11 @@ $("#saveLogBtn").on("click", function (e) {
             `;
             $("#logCardsContainer").append(newCard);
 
-            // Reset form and hide the form modal
             $("#logForm")[0].reset();
             closeLogFormModal();
             loadLogData();
         },
         error: function (xhr, status, error) {
-            // Handle errors gracefully
             Swal.fire({
                 icon: "error",
                 title: "Error",
@@ -141,10 +132,9 @@ $("#saveLogBtn").on("click", function (e) {
 
 
 logCardsContainer.on('click', '.logCardDeleteBtn', function () {
-    const logCard = $(this).closest('.card'); // Select the parent card
-    const logId = $(this).data('id'); // Retrieve the log ID from the button's data-id attribute
+    const logCard = $(this).closest('.card');
+    const logId = $(this).data('id');
 
-    // Show confirmation dialog
     Swal.fire({
         title: 'Are you sure?',
         text: "Do you want to delete this log?",
@@ -156,22 +146,17 @@ logCardsContainer.on('click', '.logCardDeleteBtn', function () {
         cancelButtonText: 'No, cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            // AJAX DELETE request to the backend API
             $.ajax({
-                url: `http://localhost:9090/greenShadow/api/v1/log/${logId}`, // Adjust API endpoint
+                url: `http://localhost:9090/greenShadow/api/v1/log/${logId}`,
                 type: 'DELETE',
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("token")
                 },
                 success: function () {
-                    // Remove the card on success
                     logCard.remove();
-
-                    // Show success message
                     Swal.fire('Deleted!', 'Your log has been deleted.', 'success');
                 },
                 error: function () {
-                    // Show error message if the request fails
                     Swal.fire('Error', 'Failed to delete the log. Please try again.', 'error');
                 }
             });
@@ -183,17 +168,15 @@ let editLogCard = null;
 logCardsContainer.on('click', '.logCardUpdateBtn', function () {
     const logCard = $(this).closest('.card');
     openUpdateLogModal(logCard);
-    editLogCard = $(this).data('id'); // Store the log ID for the update
+    editLogCard = $(this).data('id');
 });
 
 function openUpdateLogModal(logCard) {
     document.updateTargetLogCard = logCard[0];
 
-    // Populate modal fields with the data from the selected card
-    $('#updateLogDate').val(logCard.find('.log-date').text().trim()); // Fixed: Added proper class selector
-    $('#updateLogDetails').val(logCard.find('.log-details').text().trim()); // Fixed: Added proper class selector
+    $('#updateLogDate').val(logCard.find('.log-date').text().trim());
+    $('#updateLogDetails').val(logCard.find('.log-details').text().trim());
 
-    // Check if the card has an image and show the preview
     const logImgSrc = logCard.find('.log-img').attr('src');
     if (logImgSrc) {
         $('#updateObservedImagePreview').attr('src', logImgSrc).show();
@@ -221,8 +204,7 @@ $("#saveUpdatedLog").off("click").on("click", function () {
     if (logImg) {
         formData.append("logImg", logImg);
     }
-
-    // AJAX request to update log data
+a
     $.ajax({
         url: `http://localhost:9090/greenShadow/api/v1/log/` + editLogCard,
         method: "PUT",
@@ -236,23 +218,21 @@ $("#saveUpdatedLog").off("click").on("click", function () {
             const logCard = $(document.updateTargetLogCard);
 
             // Update log card dynamically
-            logCard.find(".log-date").text(logDate);  // Update the date in the card
-            logCard.find(".log-details").text(logDetails);  // Update details in the card
+            logCard.find(".log-date").text(logDate);
+            logCard.find(".log-details").text(logDetails);
 
             if (logImg) {
-                logCard.find(".log-img").attr("src", URL.createObjectURL(logImg));  // Update the image preview in the card
+                logCard.find(".log-img").attr("src", URL.createObjectURL(logImg));
             }
 
             Swal.fire("Success", "Log updated successfully!", "success");
-            closeUpdateLogModal(); // Close modal after success
+            closeUpdateLogModal();
         },
         error: function () {
             Swal.fire("Error", "Failed to update log. Please try again.", "error");
         }
     });
 });
-
-// Function to close the update log modal
 function closeUpdateLogModal() {
     $("#updateLogModal").hide();
 }

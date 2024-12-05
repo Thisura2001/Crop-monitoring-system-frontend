@@ -85,7 +85,6 @@ $("#fieldSaveBtn").on("click", function (e) {
 
             initializeStaff()
 
-
         },
         error: function (xhr, status, error) {
             // Display error message

@@ -1,20 +1,16 @@
 import {initializeVehicle} from "./vehicle.js";
-// Get the elements for the Staff form
 const addStaffBtn = document.getElementById('addStaffBtn');
 const staffFormCard = document.getElementById('staffFormCard');
 const closeStaffFormBtn = document.getElementById('closeStaffForm');
 
-// Function to show the staff form card
 addStaffBtn.addEventListener('click', () => {
     staffFormCard.style.display = 'block';
 });
 
-// Function to close the staff form card
 function closeStaffForm() {
     staffFormCard.style.display = 'none';
 }
 
-// Close button event for staff form
 closeStaffFormBtn.addEventListener('click', closeStaffForm);
 
 initializeStaff()
@@ -33,10 +29,9 @@ function loadFieldIds() {
         },
         success: function (fields) {
             const fieldDropdown = $("#staffField");
-            fieldDropdown.empty(); // Clear existing options
+            fieldDropdown.empty();
             fieldDropdown.append('<option selected disabled value="">Select Field...</option>');
 
-            // Add options dynamically
             fields.forEach(field => {
                 fieldDropdown.append(`<option value="${field.fieldId}">${field.fieldId}</option>`);
             });
@@ -90,16 +85,14 @@ export function appendStaff(staff) {
 $(document).ready(function() {
     let editingRow = null;
 
-    // Show the staff form card when "Add New Staff" button is clicked
     $("#addStaffBtn").on("click", function () {
         $("#staffFormCard").show();
         $("#btnStaffSave").show();
         $("#btnStaffUpdate").hide();
-        $("#staffForm")[0].reset(); // Clear form fields
+        $("#staffForm")[0].reset();
         editingRow = null;
     });
 
-    // Close the staff form card
     $("#closeStaffForm").on("click", function () {
         $("#staffFormCard").hide();
         $("#staffForm")[0].reset();
@@ -240,13 +233,12 @@ $(document).ready(function() {
     });
 
 
-    let editingStaffId = null; // Global variable to hold the current staffId being edited
+    let editingStaffId = null;
 
     $(document).on("click", ".update-row", function () {
-        const row = $(this).closest("tr"); // Get the current row
+        const row = $(this).closest("tr");
 
-        // Retrieve the staffId and other data from the row
-        editingStaffId = row.find("td:eq(0)").text(); // Assuming the staffId is in the first column
+        editingStaffId = row.find("td:eq(0)").text();
         const firstName = row.find("td:eq(1)").text();
         const designation = row.find("td:eq(2)").text();
         const gender = row.find("td:eq(3)").text();
@@ -257,7 +249,6 @@ $(document).ready(function() {
         const role = row.find("td:eq(8)").text();
         const address = row.find("td:eq(9)").text();
 
-        // Populate the form fields with the retrieved data
         $("#StaffFirstName").val(firstName);
         $("#designation").val(designation);
         $("#gender").val(gender);
@@ -268,7 +259,6 @@ $(document).ready(function() {
         $("#addressLine3").val(address);
         $("#role").val(role);
 
-        // Show the form and switch to update mode
         $("#staffFormCard").show();
         $("#btnStaffSave").hide();
         $("#btnStaffUpdate").show();
@@ -277,9 +267,8 @@ $(document).ready(function() {
     $("#btnStaffUpdate").on("click", function (event) {
         event.preventDefault();
 
-        const staffId = editingStaffId;  // Use the correct staffId
+        const staffId = editingStaffId;
 
-        // Collect the updated data from the form
         const firstName = $("#StaffFirstName").val();
         const designation = $("#designation").val();
         const field = $("#staffField").val();
@@ -304,7 +293,6 @@ $(document).ready(function() {
             address: address
         };
 
-        // Send the PUT request to update the staff data
         $.ajax({
             url: `http://localhost:9090/greenShadow/api/v1/staff/${staffId}`,
             type: "PUT",

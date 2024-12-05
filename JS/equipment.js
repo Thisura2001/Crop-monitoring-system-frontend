@@ -1,23 +1,20 @@
-// Get elements
+
 const addEquipmentBtn = document.getElementById('addEquipmentBtn');
 const equipmentFormCard = document.getElementById('equipmentFormCard');
 const closeEquipmentFormBtn = document.getElementById('closeEquipmentForm');
 let editingRow = null;
 
-// Show the equipment form card for adding new equipment
 addEquipmentBtn.addEventListener('click', () => {
     equipmentFormCard.style.display = 'block';
     editingRow = null;
     $("#equipmentForm")[0].reset();
 });
 
-// Close the equipment form card
 function closeEquipmentForm() {
     equipmentFormCard.style.display = 'none';
     $("#equipmentForm")[0].reset();
 }
 
-// Close button event
 closeEquipmentFormBtn.addEventListener('click', closeEquipmentForm);
 $(document).ready(function () {
    loadStaff();
@@ -149,7 +146,7 @@ $(document).ready(function() {
 
         // Send the data to the backend using AJAX
         $.ajax({
-            url: "http://localhost:9090/greenShadow/api/v1/equipment", // Replace with your API endpoint
+            url: "http://localhost:9090/greenShadow/api/v1/equipment",
             type: "POST",
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
@@ -181,25 +178,19 @@ $(document).ready(function() {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                console.error("Error:", xhr.responseText); // Log the error for debugging
+                console.error("Error:", xhr.responseText);
             }
         });
     });
 
+    let editingEquipmentRow = null;
 
-    // Handle Update button click for editing existing equipment
-    let editingEquipmentRow = null; // Variable to store the row being edited
-
-// Edit row event
     $("#equipmentTbody").on("click", ".update-row", function() {
-        // Show the form card for updating
         $("#equipmentFormCard").show();
 
-        // Set the selected row to be edited
         editingEquipmentRow = $(this).closest("tr");
 
-        // Populate form fields with the selected row's data
-        $("#equipmentId").val(editingEquipmentRow.find("td:eq(0)").text()); // Assuming equipment ID is in the first column
+        $("#equipmentId").val(editingEquipmentRow.find("td:eq(0)").text());
         $("#equipmentName").val(editingEquipmentRow.find("td:eq(1)").text());
         $("#equipmentType").val(editingEquipmentRow.find("td:eq(2)").text());
         $("#equipmentStatus").val(editingEquipmentRow.find("td:eq(3)").text());
@@ -210,12 +201,9 @@ $(document).ready(function() {
         $("#btnEquipmentUpdate").show();
     });
 
-// Update button click event
     $("#btnEquipmentUpdate").on("click", function(event) {
         event.preventDefault();
 
-
-            // Get updated values from the form
             const equipmentId = $(editingEquipmentRow).find("td:eq(0)").text();
             const equipmentName = $("#equipmentName").val();
             const equipmentType = $("#equipmentType").val();
@@ -225,7 +213,7 @@ $(document).ready(function() {
 
             // Send the updated data to the backend via AJAX
             $.ajax({
-                url: `http://localhost:9090/greenShadow/api/v1/equipment/${equipmentId}`, // Adjust URL as per your backend API
+                url: `http://localhost:9090/greenShadow/api/v1/equipment/${equipmentId}`,
                 type: "PUT",
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("token")
@@ -240,7 +228,6 @@ $(document).ready(function() {
                 }),
                 contentType: "application/json",
                 success: function(response) {
-                    // On success, update the row on the frontend
                     $(editingEquipmentRow).find("td:eq(0)").text(equipmentId);
                     $(editingEquipmentRow).find("td:eq(1)").text(equipmentName);
                     $(editingEquipmentRow).find("td:eq(2)").text(equipmentType);
@@ -257,13 +244,11 @@ $(document).ready(function() {
                         showConfirmButton: false
                     });
                     loadEquipments();
-                    // Reset form and hide the form card
-                    editingRow = null; // Reset editingRow
+                    editingRow = null;
                     $("#equipmentFormCard").hide();
                     $("#equipmentForm")[0].reset();
                 },
                 error: function(xhr, status, error) {
-                    // Error handling
                     Swal.fire({
                         title: "Error!",
                         text: "There was an issue updating the equipment details.",
@@ -289,7 +274,6 @@ $(document).ready(function() {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                // Make an AJAX request to delete the entry
                 $.ajax({
                     url: `http://localhost:9090/greenShadow/api/v1/equipment/${equipmentId}`,
                     type: "DELETE",
