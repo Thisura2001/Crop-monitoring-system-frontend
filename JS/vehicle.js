@@ -19,10 +19,11 @@ function closeVehicleForm() {
 closeVehicleFormBtn.addEventListener('click', closeVehicleForm);
 
 ///////////////////////////////////////////////////////////////////
-$(document).ready(function () {
+initializeVehicle()
+export function initializeVehicle() {
     loadStaffId();
     loadVehicleData();
-});
+}
 function loadStaffId() {
    $.ajax(
        {
@@ -133,6 +134,7 @@ $(document).ready(function() {
             contentType: "application/json",
             data: JSON.stringify(vehicleData),
             success: function(response) {
+                loadVehicleData();
                 console.log(response)
                 // Optionally, show a success message or alert
                 Swal.fire({
@@ -146,8 +148,6 @@ $(document).ready(function() {
                 // Clear the form fields and hide the form card
                 $("#vehicleForm")[0].reset();
                 $("#vehicleFormCard").hide();
-
-                loadVehicleData();
             },
             error: function(xhr, status, error) {
                 // Handle any error that occurs during the AJAX request

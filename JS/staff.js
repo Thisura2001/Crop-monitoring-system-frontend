@@ -1,3 +1,4 @@
+import {initializeVehicle} from "./vehicle.js";
 // Get the elements for the Staff form
 const addStaffBtn = document.getElementById('addStaffBtn');
 const staffFormCard = document.getElementById('staffFormCard');
@@ -163,6 +164,8 @@ $(document).ready(function() {
                 });
                 $("#staffForm")[0].reset();
                 $("#staffFormCard").hide();
+
+                initializeVehicle()
             },
             error: function (response) {
                 if (response.status === 409) {
@@ -189,7 +192,6 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log(response);
-                alert("Field assigned to staff successfully!");
             },
             error: function () {
                 Swal.fire('Error', 'Failed to save field to staff. Please try again.', 'error');
