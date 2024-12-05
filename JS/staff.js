@@ -165,12 +165,10 @@ $(document).ready(function() {
                     Swal.fire({
                         title: "Error!",
                         text: "Email already exists.",
-                        icon: "error",
+                        icon: "warning",
                         timer: 1500,
-                        showConfirmButton: false
                     })
                 }
-                Swal.fire('Error', 'Failed to save staff details. Please try again.', 'error');
             }
         });
     });

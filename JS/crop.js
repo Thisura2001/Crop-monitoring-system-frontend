@@ -13,6 +13,11 @@ addCropBtn.on('click', function () {
 closeCropForm.on('click', function () {
     closeCropFormModal();
 });
+initializeCrop()
+export function initializeCrop() {
+    loadFieldIds();
+    loadCrops();
+}
 
 function closeCropFormModal() {
     cropFormCard.hide();
@@ -39,93 +44,6 @@ function loadFieldIds() {
         }
     });
 }
-
-$(document).ready(function () {
-    loadFieldIds();
-    loadCrops();
-});
-
-// Save Crop Data
-$("#cropSaveBtn").on("click", function (e) {
-    e.preventDefault();
-
-    const cropCommonName = $("#cropCommonName").val();
-    const cropScientificName = $("#cropScientificName").val();
-    const cropCategory = $("#cropCategory").val();
-    const cropSeason = $("#cropSeason").val();
-    const fieldId = $("#fieldIdInCrop").val();
-    const cropImageFile = $("#cropImageFile")[0].files[0];
-
-    if (!cropCommonName || !cropScientificName || !cropCategory || !cropSeason || !fieldId || !cropImageFile) {
-        Swal.fire({
-            icon: "error",
-            title: "Validation Error",
-            text: "Please fill in all fields !",
-        });
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append("commonName", cropCommonName);
-    formData.append("scientificName", cropScientificName);
-    formData.append("category", cropCategory);
-    formData.append("season", cropSeason);
-    formData.append("field", fieldId);
-    formData.append("cropImg", cropImageFile);
-
-    // AJAX POST request to save crop
-    $.ajax({
-        url: "http://localhost:9090/greenShadow/api/v1/crop",
-        type: "POST",
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            Swal.fire({
-                icon: "success",
-                title: "Crop Saved",
-                text: "Crop data has been saved successfully!",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-
-            // Add the new crop card dynamically
-            const newCard = `
-                <div class="card mt-3" style="width: 300px;">
-                    <div class="card-header">
-                        <h5>Crop Details</h5>
-                    </div>
-                    <div class="card-body">
-                        <img src="${URL.createObjectURL(cropImageFile)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Crop Image">
-                        <p><strong>Common Name:</strong> ${cropCommonName}</p>
-                        <p><strong>Scientific Name:</strong> ${cropScientificName}</p>
-                        <p><strong>Category:</strong> ${cropCategory}</p>
-                        <p><strong>Season:</strong> ${cropSeason}</p>
-                        <p><strong>Field ID:</strong> ${fieldId}</p>
-                        <button class="btn btn-danger cropCardDeleteBtn">Delete</button>
-                        <button class="btn btn-primary cropCardUpdateBtn">Update</button>
-                    </div>
-                </div>
-            `;
-            $("#corpCardsContainer").append(newCard);
-
-            // Reset form and hide the form card
-            $("#cropForm")[0].reset();
-            $("#cropFormCard").hide();
-            loadCrops();
-        },
-        error: function (xhr, status, error) {
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "An error occurred while saving the crop data. Please try again.",
-            });
-        },
-    });
-});
 function loadCrops() {
     $.ajax({
         url: "http://localhost:9090/greenShadow/api/v1/crop",
@@ -178,6 +96,87 @@ function renderCrops(crops) {
     });
 }
 loadCrops();
+// Save Crop Data
+$("#cropSaveBtn").on("click", function (e) {
+    e.preventDefault();
+
+    const cropCommonName = $("#cropCommonName").val();
+    const cropScientificName = $("#cropScientificName").val();
+    const cropCategory = $("#cropCategory").val();
+    const cropSeason = $("#cropSeason").val();
+    const fieldId = $("#fieldIdInCrop").val();
+    const cropImageFile = $("#cropImageFile")[0].files[0];
+
+    if (!cropCommonName || !cropScientificName || !cropCategory || !cropSeason || !fieldId || !cropImageFile) {
+        Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Please fill in all fields !",
+        });
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("commonName", cropCommonName);
+    formData.append("scientificName", cropScientificName);
+    formData.append("category", cropCategory);
+    formData.append("season", cropSeason);
+    formData.append("field", fieldId);
+    formData.append("cropImg", cropImageFile);
+
+    // AJAX POST request to save crop
+    $.ajax({
+        url: "http://localhost:9090/greenShadow/api/v1/crop",
+        type: "POST",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            loadCrops();
+            Swal.fire({
+                icon: "success",
+                title: "Crop Saved",
+                text: "Crop data has been saved successfully!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
+            // Add the new crop card dynamically
+            const newCard = `
+                <div class="card mt-3" style="width: 300px;">
+                    <div class="card-header">
+                        <h5>Crop Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="${URL.createObjectURL(cropImageFile)}" class="card-img" style="max-height: 150px; object-fit: cover; margin-bottom: 10px;" alt="Crop Image">
+                        <p><strong>Common Name:</strong> ${cropCommonName}</p>
+                        <p><strong>Scientific Name:</strong> ${cropScientificName}</p>
+                        <p><strong>Category:</strong> ${cropCategory}</p>
+                        <p><strong>Season:</strong> ${cropSeason}</p>
+                        <p><strong>Field ID:</strong> ${fieldId}</p>
+                        <button class="btn btn-danger cropCardDeleteBtn">Delete</button>
+                        <button class="btn btn-primary cropCardUpdateBtn">Update</button>
+                    </div>
+                </div>
+            `;
+            $("#corpCardsContainer").append(newCard);
+
+            // Reset form and hide the form card
+            $("#cropForm")[0].reset();
+            $("#cropFormCard").hide();
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "An error occurred while saving the crop data. Please try again.",
+            });
+        },
+    });
+});
 
 corpCardsContainer.on('click', '.CropCardDeleteBtn', function () {
     console.log("Delete btn clicked");
