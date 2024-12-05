@@ -48,7 +48,6 @@ function renderLogs(logs) {
                     <p><strong>Details:</strong> ${log.log_details || "Not Specified"}</p>
 
                     <button class="btn btn-danger logCardDeleteBtn" data-id="${log.id}">Delete</button>
-                    <button class="btn btn-primary logCardUpdateBtn" data-id="${log.id}">Update</button>
                 </div>
             </div>
         `;

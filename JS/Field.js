@@ -187,8 +187,11 @@ fieldCardsContainer.on("click", ".FieldCardDeleteBtn", function () {
                     Swal.fire('Deleted!', 'The card has been deleted.', 'success');
                 },
                 error: function (xhr, status, error) {
-                    // If there is an error in deletion, show error message
-                    Swal.fire('Error', 'An error occurred while deleting the field. Please try again.', 'error');
+                        swal.fire({
+                            icon: 'warning',
+                            title: 'warning',
+                            text: 'can not delete field because it is associated if you want delete please delete the staff first',
+                        })
                 }
             });
         }
