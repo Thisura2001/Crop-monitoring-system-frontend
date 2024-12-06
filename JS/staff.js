@@ -115,6 +115,31 @@ $(document).ready(function() {
         const role = $("#role").val();
         const address = $("#addressLine3").val();
 
+        const staffNameRegex = /^[A-Za-z\s]+$/;
+        const contactNoRegex = /^\d{10}$/;
+
+        if (!contactNoRegex.test(contactNo)) {
+            Swal.fire({
+                title: "Error!",
+                text: "Please enter a valid contact number.",
+                icon: "error",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        }
+
+        if (!staffNameRegex.test(firstName)) {
+            Swal.fire({
+                title: "Error!",
+                text: "Please enter a valid first name.",
+                icon: "error",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        }
+
         if (firstName === "" || designation === "" || field === "" || gender === "" || joinedDate === "" || dob === "" || contactNo === "" || email === "" || role === "" || address === "") {
             Swal.fire({
                 title: "Error!",

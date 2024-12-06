@@ -40,7 +40,15 @@ $("#fieldSaveBtn").on("click", function (e) {
     if (fieldImg2) {
         console.log("Field Image 2:", fieldImg2);
     }
-
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(fieldName)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Field name should only contain letters !',
+        });
+        return;
+    }
     if (!fieldName || !location || !extent || !fieldImg1 || !fieldImg2) {
         Swal.fire({
             icon: 'error',

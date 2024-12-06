@@ -107,11 +107,41 @@ $("#cropSaveBtn").on("click", function (e) {
     const fieldId = $("#fieldIdInCrop").val();
     const cropImageFile = $("#cropImageFile")[0].files[0];
 
+    const CommonNameRegex = /^[A-Za-z\s]+$/;
+    const scientificNameRegex = /^[A-Za-z\s]+$/;
+    const categoryRegex = /^[A-Za-z\s]+$/;
+
+    if (!CommonNameRegex.test(cropCommonName)) {
+        Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Invalid Crop Common Name !",
+        });
+        return;
+    }
+    if (!scientificNameRegex.test(cropScientificName)) {
+        Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Invalid Crop Scientific Name !",
+        });
+        return;
+    }
+
     if (!cropCommonName || !cropScientificName || !cropCategory || !cropSeason || !fieldId || !cropImageFile) {
         Swal.fire({
             icon: "error",
             title: "Validation Error",
             text: "Please fill in all fields !",
+        });
+        return;
+    }
+
+    if (!categoryRegex.test(cropCategory)) {
+        Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Invalid Crop Category !",
         });
         return;
     }
